@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: type check
+      run: pnpm type-check
+      glob: "*.{ts,tsx,js,jsx}"
+    - name: lint
+      stage_fixed: true
+      run: pnpm lint {staged_files}
+      glob:
+        - "!*.{yml,yaml}"
+    - name: format
+      stage_fixed: true
+      run: pnpm format {staged_files}
+      glob:
+        - "!*.{yml,yaml}"
+
+commit-msg:
+  jobs:
+    - name: commit lint
+      run: pnpm commitlint --color --edit {1}
