@@ -30,7 +30,7 @@ export default function Input({
         ) : null}
 
         <TextInput
-          className={`w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 text-xl ${
+          className={`w-full rounded-xl border border-gray-200 bg-gray-50 pt-4 pb-4 text-xl ${
             leftAdornment ? "pl-12" : "pl-4"
           } ${rightAdornment ? "pr-12" : "pr-4"} ${
             error ? "border-red-500" : ""
