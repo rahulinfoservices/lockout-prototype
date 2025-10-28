@@ -24,7 +24,9 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.rsureshinfo.lockoutprototype",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
