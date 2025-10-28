@@ -17,9 +17,9 @@ export default function Input({
   ...textInputProps
 }: InputProps) {
   return (
-    <View className="gap-1">
+    <View className="gap-0.5">
       {label ? (
-        <Text className="mb-2 text-sm font-medium text-gray-700">{label}</Text>
+        <Text className="mb-2 text-lg font-medium text-gray-700">{label}</Text>
       ) : null}
 
       <View className="relative">

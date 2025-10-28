@@ -1,10 +1,11 @@
 import { Container } from "@/shared/components/core/container";
 import LabelDivider from "@/shared/components/core/divider/label-divider";
+import Button from "@/shared/components/core/form/button";
 import Input from "@/shared/components/core/form/input";
 import { Link } from "expo-router";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
 import { useState } from "react";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 export default function Login() {
@@ -65,14 +66,7 @@ export default function Login() {
                 </View>
 
                 {/* Login Button */}
-                <TouchableOpacity
-                  onPress={handleLogin}
-                  className="w-full rounded-xl bg-teal-500 py-4 shadow-lg active:opacity-80"
-                >
-                  <Text className="text-center text-xl font-semibold text-white">
-                    Sign In
-                  </Text>
-                </TouchableOpacity>
+                <Button onPress={handleLogin}>Sign in</Button>
               </View>
 
               {/* Divider with text */}
@@ -85,7 +79,7 @@ export default function Login() {
                     Don't have an account?{" "}
                     <Link href="/signup">
                       <Text className="font-semibold text-teal-500">
-                        Sign Up
+                        Sign up
                       </Text>
                     </Link>
                   </Text>
