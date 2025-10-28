@@ -1,11 +1,13 @@
+import "react-native-reanimated";
+import "../global.css";
+
 import { AuthProvider } from "@/shared/contexts/auth";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import "react-native-reanimated";
-import "../global.css";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,12 +48,14 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <AuthProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
-    </AuthProvider>
+    <KeyboardProvider>
+      <AuthProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        />
+      </AuthProvider>
+    </KeyboardProvider>
   );
 }
