@@ -1,5 +1,7 @@
 import { Container } from "@/shared/components/core/container";
+import LabelDivider from "@/shared/components/core/divider/label-divider";
 import Input from "@/shared/components/core/form/input";
+import { Link } from "expo-router";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
@@ -73,12 +75,19 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
 
+              {/* Divider with text */}
+              <LabelDivider label="OR" />
+
               {/* Sign Up Link */}
               <View className="items-center">
                 <View className="flex-row">
                   <Text className="text-lg text-gray-600">
                     Don't have an account?{" "}
-                    <Text className="font-semibold text-teal-500">Sign Up</Text>
+                    <Link href="/signup">
+                      <Text className="font-semibold text-teal-500">
+                        Sign Up
+                      </Text>
+                    </Link>
                   </Text>
                 </View>
               </View>
