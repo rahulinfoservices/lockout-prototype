@@ -8,9 +8,11 @@ const noSecrets = require("eslint-plugin-no-secrets");
 const {
   createTypeScriptImportResolver,
 } = require("eslint-import-resolver-typescript");
+const reactHooks = require("eslint-plugin-react-hooks");
 
 module.exports = defineConfig([
   expoConfig,
+  reactHooks.configs.flat.recommended,
   prettier,
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,

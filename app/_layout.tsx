@@ -1,5 +1,6 @@
 import "react-native-reanimated";
 
+import { AuthProvider } from "@/shared/contexts/auth";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -45,10 +46,12 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    />
+    <AuthProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
+    </AuthProvider>
   );
 }
