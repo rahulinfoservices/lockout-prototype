@@ -16,6 +16,8 @@ export default function Input({
   className = "",
   ...textInputProps
 }: InputProps) {
+  const [isFocused, setIsFocused] = React.useState(false);
+
   return (
     <View className="gap-0.5">
       {label ? (
@@ -30,12 +32,22 @@ export default function Input({
         ) : null}
 
         <TextInput
-          className={`w-full rounded-xl border border-gray-200 bg-gray-50 pt-4 pb-4 text-xl ${
+          className={`w-full rounded-xl border ${
+            isFocused ? "border-teal-500" : "border-gray-200"
+          } bg-gray-50 pt-4 pb-4 text-xl ${
             leftAdornment ? "pl-12" : "pl-4"
           } ${rightAdornment ? "pr-12" : "pr-4"} ${
             error ? "border-red-500" : ""
           } ${className}`}
           {...textInputProps}
+          onFocus={e => {
+            setIsFocused(true);
+            textInputProps.onFocus?.(e);
+          }}
+          onBlur={e => {
+            setIsFocused(false);
+            textInputProps.onBlur?.(e);
+          }}
         />
 
         {rightAdornment ? (
