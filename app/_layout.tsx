@@ -43,27 +43,29 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <KeyboardProvider>
+      <AuthProvider>
+        <RootLayoutNav />
+      </AuthProvider>
+    </KeyboardProvider>
+  );
 }
 
 function RootLayoutNav() {
   return (
-    <KeyboardProvider>
-      <AuthProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Protected guard>
-            <Stack.Screen name="(protected)" />
-          </Stack.Protected>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Protected guard>
+        <Stack.Screen name="(protected)" />
+      </Stack.Protected>
 
-          <Stack.Protected guard={false}>
-            <Stack.Screen name="(auth)" />
-          </Stack.Protected>
-        </Stack>
-      </AuthProvider>
-    </KeyboardProvider>
+      <Stack.Protected guard={false}>
+        <Stack.Screen name="(auth)" />
+      </Stack.Protected>
+    </Stack>
   );
 }
