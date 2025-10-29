@@ -9,3 +9,6 @@ declare module "*.svg" {
   // Also export as image source
   export const ReactComponent: React.FC<SvgProps>;
 }
+
+declare module "*.jpg";
+declare module "*.png";

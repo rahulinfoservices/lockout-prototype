@@ -3,7 +3,6 @@ import LabelDivider from "@/shared/components/core/divider/label-divider";
 import Button from "@/shared/components/core/form/button";
 import FormError from "@/shared/components/core/form/form-error";
 import Input from "@/shared/components/core/form/input";
-import Logo from "@/shared/components/domain/logo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "expo-router";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
@@ -11,6 +10,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import AuthLogo from "../_shared/components/auth-logo";
 import { LoginFormData, loginSchema } from "./_shared/util";
 
 export default function Login() {
@@ -42,7 +42,7 @@ export default function Login() {
         >
           <View className="w-full p-8">
             {/* Logo */}
-            <Logo />
+            <AuthLogo />
 
             {/* Login Form Card */}
             <View className="rounded-3xl bg-white p-8 shadow-2xl">

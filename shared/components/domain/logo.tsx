@@ -1,17 +1,22 @@
-import { Text, View } from "react-native";
+import LogoImg from "@/assets/images/logo/lockoutusa.jpg";
+import { Image } from "expo-image";
 
-export default function Logo() {
+export interface LogoProps {
+  width?: number;
+  height?: number;
+}
+
+export default function Logo(props: LogoProps) {
+  const { width = 150, height = 150 } = props;
+
   return (
-    <View className="mb-2 flex-row items-center justify-center gap-4">
-      <View className="h-2 w-2 rounded-full bg-white" />
-
-      <View className="rounded-full bg-white p-4 shadow-2xl">
-        <Text className="bold text-center text-2xl text-teal-500 uppercase">
-          Lockout USA
-        </Text>
-      </View>
-
-      <View className="h-2 w-2 rounded-full bg-white" />
-    </View>
+    <Image
+      source={LogoImg}
+      style={{
+        width: width,
+        height: height,
+        borderRadius: width / 2,
+      }}
+    />
   );
 }

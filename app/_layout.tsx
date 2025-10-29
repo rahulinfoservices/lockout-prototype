@@ -54,7 +54,15 @@ function RootLayoutNav() {
           screenOptions={{
             headerShown: false,
           }}
-        />
+        >
+          <Stack.Protected guard>
+            <Stack.Screen name="(protected)" />
+          </Stack.Protected>
+
+          <Stack.Protected guard={false}>
+            <Stack.Screen name="(auth)" />
+          </Stack.Protected>
+        </Stack>
       </AuthProvider>
     </KeyboardProvider>
   );
