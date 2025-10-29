@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import Signup from "@/features/auth/signup/signup";
 
-export default function SignUp() {
-  return (
-    <View>
-      <Text>Sign Up</Text>
-    </View>
-  );
+export default function SignUpPage() {
+  return <Signup />;
 }

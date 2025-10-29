@@ -5,31 +5,34 @@ import FormError from "@/shared/components/core/form/form-error";
 import Input from "@/shared/components/core/form/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "expo-router";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react-native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-import { LoginFormData, loginSchema } from "./_shared/util";
+import { SignupFormData, signupSchema } from "./_shared/util";
 
-export default function Login() {
+export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log("Login data:", data);
-    // Handle login logic here
+  const onSubmit = (data: SignupFormData) => {
+    console.log("Signup data:", data);
+    // Handle signup logic here
   };
 
   return (
@@ -37,9 +40,34 @@ export default function Login() {
       <Container>
         <KeyboardAwareScrollView contentContainerClassName="grow justify-center items-center">
           <View className="w-full p-8">
-            {/* Login Form Card */}
+            {/* Signup Form Card */}
             <View className="rounded-3xl bg-white p-8 shadow-2xl">
               <View className="gap-2">
+                {/* Name Field */}
+                <View>
+                  <Controller
+                    control={control}
+                    name="name"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <>
+                        <Input
+                          label="Name"
+                          placeholder="John Doe"
+                          value={value}
+                          onChangeText={onChange}
+                          onBlur={onBlur}
+                          error={errors.name?.message}
+                          autoCapitalize="words"
+                          autoComplete="name"
+                          leftAdornment={<User color="#9ca3af" size={20} />}
+                        />
+                        <FormError>{errors.name?.message}</FormError>
+                      </>
+                    )}
+                  />
+                </View>
+
+                {/* Email Field */}
                 <View>
                   <Controller
                     control={control}
@@ -58,7 +86,6 @@ export default function Login() {
                           autoComplete="email"
                           leftAdornment={<Mail color="#9ca3af" size={20} />}
                         />
-
                         <FormError>{errors.email?.message}</FormError>
                       </>
                     )}
@@ -96,42 +123,71 @@ export default function Login() {
                             </Pressable>
                           }
                         />
-
                         <FormError>{errors.password?.message}</FormError>
                       </>
                     )}
                   />
                 </View>
 
-                {/* Forgot Password */}
-                <View className="items-end">
-                  <Pressable>
-                    <Text className="text-lg font-medium text-teal-500">
-                      Forgot password?
-                    </Text>
-                  </Pressable>
+                {/* Confirm Password Field */}
+                <View>
+                  <Controller
+                    control={control}
+                    name="confirmPassword"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <>
+                        <Input
+                          label="Confirm Password"
+                          placeholder="Confirm your password"
+                          value={value}
+                          onChangeText={onChange}
+                          onBlur={onBlur}
+                          secureTextEntry={!showConfirmPassword}
+                          autoCapitalize="none"
+                          autoComplete="password"
+                          error={errors.confirmPassword?.message}
+                          leftAdornment={<Lock color="#9ca3af" size={20} />}
+                          rightAdornment={
+                            <Pressable
+                              className="p-1"
+                              onPress={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                              }
+                            >
+                              {showConfirmPassword ? (
+                                <EyeOff color="#9ca3af" size={20} />
+                              ) : (
+                                <Eye color="#9ca3af" size={20} />
+                              )}
+                            </Pressable>
+                          }
+                        />
+                        <FormError>{errors.confirmPassword?.message}</FormError>
+                      </>
+                    )}
+                  />
                 </View>
 
-                {/* Login Button */}
+                {/* Signup Button */}
                 <Button
                   onPress={handleSubmit(onSubmit)}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Signing in..." : "Sign in"}
+                  {isSubmitting ? "Creating account..." : "Sign up"}
                 </Button>
               </View>
 
               {/* Divider with text */}
               <LabelDivider label="OR" />
 
-              {/* Sign Up Link */}
+              {/* Login Link */}
               <View className="items-center">
                 <View className="flex-row">
                   <Text className="text-lg text-gray-600">
-                    Don't have an account?{" "}
-                    <Link href="/signup" push>
+                    Already have an account?{" "}
+                    <Link href="/login" dismissTo>
                       <Text className="font-semibold text-teal-500">
-                        Sign up
+                        Sign in
                       </Text>
                     </Link>
                   </Text>
