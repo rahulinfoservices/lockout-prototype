@@ -1,5 +1,6 @@
-import Logo from "@/shared/components/domain/logo";
 import { View } from "react-native";
+
+import Logo from "@/shared/components/domain/logo";
 
 export default function AuthLogo() {
   return (

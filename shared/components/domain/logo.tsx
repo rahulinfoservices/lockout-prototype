@@ -1,5 +1,6 @@
-import LogoImg from "@/assets/images/logo/lockoutusa.jpg";
 import { Image } from "expo-image";
+
+import LogoImg from "@/assets/images/logo/lockoutusa.jpg";
 
 export interface LogoProps {
   width?: number;

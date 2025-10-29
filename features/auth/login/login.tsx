@@ -1,8 +1,3 @@
-import { Container } from "@/shared/components/core/container";
-import LabelDivider from "@/shared/components/core/divider/label-divider";
-import Button from "@/shared/components/core/form/button";
-import FormError from "@/shared/components/core/form/form-error";
-import Input from "@/shared/components/core/form/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "expo-router";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
@@ -10,6 +5,13 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+
+import { Container } from "@/shared/components/core/container";
+import LabelDivider from "@/shared/components/core/divider/label-divider";
+import Button from "@/shared/components/core/form/button";
+import FormError from "@/shared/components/core/form/form-error";
+import Input from "@/shared/components/core/form/input";
+
 import AuthLogo from "../_shared/components/auth-logo";
 import { LoginFormData, loginSchema } from "./_shared/util";
 
@@ -131,7 +133,7 @@ export default function Login() {
               <View className="items-center">
                 <View className="flex-row">
                   <Text className="text-lg text-gray-600">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link href="/signup" push>
                       <Text className="font-semibold text-teal-500">
                         Sign up

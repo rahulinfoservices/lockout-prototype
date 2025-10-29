@@ -1,18 +1,27 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "expo-router";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react-native";
+import { styled } from "nativewind";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Pressable, Text, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+
 import { Container } from "@/shared/components/core/container";
 import LabelDivider from "@/shared/components/core/divider/label-divider";
 import Button from "@/shared/components/core/form/button";
 import FormError from "@/shared/components/core/form/form-error";
 import Input from "@/shared/components/core/form/input";
 import { useAuth } from "@/shared/contexts/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "expo-router";
-import { Eye, EyeOff, Lock, Mail, User } from "lucide-react-native";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Pressable, Text, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+
 import AuthLogo from "../_shared/components/auth-logo";
 import { SignupFormData, signupSchema } from "./_shared/util";
+
+const UserIcon = styled(User);
+const MailIcon = styled(Mail);
+const LockIcon = styled(Lock);
+const EyeIcon = styled(Eye);
+const EyeOffIcon = styled(EyeOff);
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,7 +75,9 @@ export default function Signup() {
                         error={errors.name?.message}
                         autoCapitalize="words"
                         autoComplete="name"
-                        leftAdornment={<User color="#9ca3af" size={20} />}
+                        leftAdornment={
+                          <UserIcon className="text-gray-400" size={20} />
+                        }
                       />
 
                       <FormError>{errors.name?.message}</FormError>
@@ -90,7 +101,9 @@ export default function Signup() {
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoComplete="email"
-                        leftAdornment={<Mail color="#9ca3af" size={20} />}
+                        leftAdornment={
+                          <MailIcon className="text-gray-400" size={20} />
+                        }
                       />
                       <FormError>{errors.email?.message}</FormError>
                     </View>
