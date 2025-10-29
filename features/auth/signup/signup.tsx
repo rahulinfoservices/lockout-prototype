@@ -50,129 +50,123 @@ export default function Signup() {
             <View className="rounded-3xl bg-white p-8 shadow-2xl">
               <View className="gap-2">
                 {/* Name Field */}
-                <View>
-                  <Controller
-                    control={control}
-                    name="name"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <>
-                        <Input
-                          label="Name"
-                          placeholder="John Doe"
-                          value={value}
-                          onChangeText={onChange}
-                          onBlur={onBlur}
-                          error={errors.name?.message}
-                          autoCapitalize="words"
-                          autoComplete="name"
-                          leftAdornment={<User color="#9ca3af" size={20} />}
-                        />
-                        <FormError>{errors.name?.message}</FormError>
-                      </>
-                    )}
-                  />
-                </View>
+                <Controller
+                  control={control}
+                  name="name"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <View>
+                      <Input
+                        label="Name"
+                        placeholder="John Doe"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        error={errors.name?.message}
+                        autoCapitalize="words"
+                        autoComplete="name"
+                        leftAdornment={<User color="#9ca3af" size={20} />}
+                      />
+
+                      <FormError>{errors.name?.message}</FormError>
+                    </View>
+                  )}
+                />
 
                 {/* Email Field */}
-                <View>
-                  <Controller
-                    control={control}
-                    name="email"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <>
-                        <Input
-                          label="Email"
-                          placeholder="your@lockoutusa.com"
-                          value={value}
-                          onChangeText={onChange}
-                          onBlur={onBlur}
-                          error={errors.email?.message}
-                          keyboardType="email-address"
-                          autoCapitalize="none"
-                          autoComplete="email"
-                          leftAdornment={<Mail color="#9ca3af" size={20} />}
-                        />
-                        <FormError>{errors.email?.message}</FormError>
-                      </>
-                    )}
-                  />
-                </View>
+                <Controller
+                  control={control}
+                  name="email"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <View>
+                      <Input
+                        label="Email"
+                        placeholder="your@lockoutusa.com"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        error={errors.email?.message}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        leftAdornment={<Mail color="#9ca3af" size={20} />}
+                      />
+                      <FormError>{errors.email?.message}</FormError>
+                    </View>
+                  )}
+                />
 
                 {/* Password Field */}
-                <View>
-                  <Controller
-                    control={control}
-                    name="password"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <>
-                        <Input
-                          label="Password"
-                          placeholder="Enter your password"
-                          value={value}
-                          onChangeText={onChange}
-                          onBlur={onBlur}
-                          secureTextEntry={!showPassword}
-                          autoCapitalize="none"
-                          autoComplete="password"
-                          error={errors.password?.message}
-                          leftAdornment={<Lock color="#9ca3af" size={20} />}
-                          rightAdornment={
-                            <Pressable
-                              className="p-1"
-                              onPress={() => setShowPassword(!showPassword)}
-                            >
-                              {showPassword ? (
-                                <EyeOff color="#9ca3af" size={20} />
-                              ) : (
-                                <Eye color="#9ca3af" size={20} />
-                              )}
-                            </Pressable>
-                          }
-                        />
-                        <FormError>{errors.password?.message}</FormError>
-                      </>
-                    )}
-                  />
-                </View>
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <View>
+                      <Input
+                        label="Password"
+                        placeholder="Enter your password"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        secureTextEntry={!showPassword}
+                        autoCapitalize="none"
+                        autoComplete="password"
+                        error={errors.password?.message}
+                        leftAdornment={<Lock color="#9ca3af" size={20} />}
+                        rightAdornment={
+                          <Pressable
+                            className="p-1"
+                            onPress={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff color="#9ca3af" size={20} />
+                            ) : (
+                              <Eye color="#9ca3af" size={20} />
+                            )}
+                          </Pressable>
+                        }
+                      />
+                      <FormError>{errors.password?.message}</FormError>
+                    </View>
+                  )}
+                />
 
                 {/* Confirm Password Field */}
-                <View>
-                  <Controller
-                    control={control}
-                    name="confirmPassword"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <>
-                        <Input
-                          label="Confirm Password"
-                          placeholder="Confirm your password"
-                          value={value}
-                          onChangeText={onChange}
-                          onBlur={onBlur}
-                          secureTextEntry={!showConfirmPassword}
-                          autoCapitalize="none"
-                          autoComplete="password"
-                          error={errors.confirmPassword?.message}
-                          leftAdornment={<Lock color="#9ca3af" size={20} />}
-                          rightAdornment={
-                            <Pressable
-                              className="p-1"
-                              onPress={() =>
-                                setShowConfirmPassword(!showConfirmPassword)
-                              }
-                            >
-                              {showConfirmPassword ? (
-                                <EyeOff color="#9ca3af" size={20} />
-                              ) : (
-                                <Eye color="#9ca3af" size={20} />
-                              )}
-                            </Pressable>
-                          }
-                        />
-                        <FormError>{errors.confirmPassword?.message}</FormError>
-                      </>
-                    )}
-                  />
-                </View>
+
+                <Controller
+                  control={control}
+                  name="confirmPassword"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <View>
+                      <Input
+                        label="Confirm Password"
+                        placeholder="Confirm your password"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        secureTextEntry={!showConfirmPassword}
+                        autoCapitalize="none"
+                        autoComplete="password"
+                        error={errors.confirmPassword?.message}
+                        leftAdornment={<Lock color="#9ca3af" size={20} />}
+                        rightAdornment={
+                          <Pressable
+                            className="p-1"
+                            onPress={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                          >
+                            {showConfirmPassword ? (
+                              <EyeOff color="#9ca3af" size={20} />
+                            ) : (
+                              <Eye color="#9ca3af" size={20} />
+                            )}
+                          </Pressable>
+                        }
+                      />
+                      <FormError>{errors.confirmPassword?.message}</FormError>
+                    </View>
+                  )}
+                />
 
                 {/* Signup Button */}
                 <Button
