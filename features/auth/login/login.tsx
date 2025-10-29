@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "expo-router";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
+import { styled } from "nativewind";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, Text, View } from "react-native";
@@ -14,6 +15,11 @@ import Input from "@/shared/components/core/form/input";
 
 import AuthLogo from "../_shared/components/auth-logo";
 import { LoginFormData, loginSchema } from "./_shared/util";
+
+const EyeIcon = styled(Eye);
+const EyeOffIcon = styled(EyeOff);
+const LockIcon = styled(Lock);
+const MailIcon = styled(Mail);
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +70,9 @@ export default function Login() {
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoComplete="email"
-                        leftAdornment={<Mail color="#9ca3af" size={20} />}
+                        leftAdornment={
+                          <MailIcon className="text-gray-400" size={20} />
+                        }
                       />
 
                       <FormError>{errors.email?.message}</FormError>
@@ -88,16 +96,18 @@ export default function Login() {
                         autoCapitalize="none"
                         autoComplete="password"
                         error={errors.password?.message}
-                        leftAdornment={<Lock color="#9ca3af" size={20} />}
+                        leftAdornment={
+                          <LockIcon className="text-gray-400" size={20} />
+                        }
                         rightAdornment={
                           <Pressable
                             className="p-1"
                             onPress={() => setShowPassword(!showPassword)}
                           >
                             {showPassword ? (
-                              <EyeOff color="#9ca3af" size={20} />
+                              <EyeOffIcon className="text-gray-400" size={20} />
                             ) : (
-                              <Eye color="#9ca3af" size={20} />
+                              <EyeIcon className="text-gray-400" size={20} />
                             )}
                           </Pressable>
                         }

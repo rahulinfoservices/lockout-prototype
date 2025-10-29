@@ -126,16 +126,18 @@ export default function Signup() {
                         autoCapitalize="none"
                         autoComplete="password"
                         error={errors.password?.message}
-                        leftAdornment={<Lock color="#9ca3af" size={20} />}
+                        leftAdornment={
+                          <LockIcon className="text-gray-400" size={20} />
+                        }
                         rightAdornment={
                           <Pressable
                             className="p-1"
                             onPress={() => setShowPassword(!showPassword)}
                           >
                             {showPassword ? (
-                              <EyeOff color="#9ca3af" size={20} />
+                              <EyeOffIcon className="text-gray-400" size={20} />
                             ) : (
-                              <Eye color="#9ca3af" size={20} />
+                              <EyeIcon className="text-gray-400" size={20} />
                             )}
                           </Pressable>
                         }
@@ -162,7 +164,9 @@ export default function Signup() {
                         autoCapitalize="none"
                         autoComplete="password"
                         error={errors.confirmPassword?.message}
-                        leftAdornment={<Lock color="#9ca3af" size={20} />}
+                        leftAdornment={
+                          <LockIcon className="text-gray-400" size={20} />
+                        }
                         rightAdornment={
                           <Pressable
                             className="p-1"
@@ -171,9 +175,9 @@ export default function Signup() {
                             }
                           >
                             {showConfirmPassword ? (
-                              <EyeOff color="#9ca3af" size={20} />
+                              <EyeOffIcon className="text-gray-400" size={20} />
                             ) : (
-                              <Eye color="#9ca3af" size={20} />
+                              <EyeIcon className="text-gray-400" size={20} />
                             )}
                           </Pressable>
                         }
