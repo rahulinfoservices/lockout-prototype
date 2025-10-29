@@ -3,6 +3,7 @@ import LabelDivider from "@/shared/components/core/divider/label-divider";
 import Button from "@/shared/components/core/form/button";
 import FormError from "@/shared/components/core/form/form-error";
 import Input from "@/shared/components/core/form/input";
+import { useAuth } from "@/shared/contexts/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "expo-router";
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react-native";
@@ -16,6 +17,7 @@ import { SignupFormData, signupSchema } from "./_shared/util";
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { signUp } = useAuth();
 
   const {
     control,
@@ -33,7 +35,7 @@ export default function Signup() {
 
   const onSubmit = (data: SignupFormData) => {
     console.log("Signup data:", data);
-    // Handle signup logic here
+    signUp(data);
   };
 
   return (

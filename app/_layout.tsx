@@ -60,7 +60,7 @@ function RootLayoutNav() {
       }}
     >
       <Stack.Protected guard>
-        <Stack.Screen name="(protected)" />
+        <Stack.Screen name="(protected)/index" />
       </Stack.Protected>
 
       <Stack.Protected guard={false}>
