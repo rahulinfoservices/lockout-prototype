@@ -4,6 +4,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import { cn } from "tailwind-variants/lite";
 
 export default function Button({ children, ...restProps }: PressableProps) {
   const scale = useSharedValue(1);
@@ -28,7 +29,10 @@ export default function Button({ children, ...restProps }: PressableProps) {
     <Animated.View style={[animatedStyle]}>
       <Pressable
         {...restProps}
-        className="w-full rounded-4xl bg-teal-500 py-4 shadow-lg active:opacity-80"
+        className={cn(
+          "w-full rounded-4xl bg-teal-500 py-4 shadow-lg active:opacity-80",
+          restProps.className,
+        )}
         onPressIn={() => {
           scale.value = withSpring(0.95);
         }}

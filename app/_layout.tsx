@@ -8,7 +8,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 
-import { AuthProvider } from "@/shared/contexts/auth";
+import { AuthProvider, useAuth } from "@/shared/contexts/auth";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,17 +54,20 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const { user } = useAuth();
+  console.log("user:", !user);
+
   return (
     <Stack
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Protected guard>
-        <Stack.Screen name="(protected)/index" />
+      <Stack.Protected guard={!!user}>
+        <Stack.Screen name="(protected)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={false}>
+      <Stack.Protected guard={!user}>
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
     </Stack>

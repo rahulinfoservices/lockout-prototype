@@ -3,6 +3,7 @@ import {
   FirebaseAuthTypes,
   getAuth,
   onAuthStateChanged,
+  signOut as signUserOut,
 } from "@react-native-firebase/auth";
 import {
   createContext,
@@ -63,7 +64,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
     console.log("signOut result:", result);
   }, []);
 
-  const signOut = useCallback(() => null, []);
+  const signOut = useCallback(() => {
+    signUserOut(getAuth());
+  }, []);
 
   const handleAuthStateChanged = useCallback((user: User) => {
     setUser(user);
