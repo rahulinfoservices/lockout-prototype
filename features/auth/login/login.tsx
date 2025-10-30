@@ -12,6 +12,7 @@ import LabelDivider from "@/shared/components/core/divider/label-divider";
 import Button from "@/shared/components/core/form/button";
 import FormError from "@/shared/components/core/form/form-error";
 import Input from "@/shared/components/core/form/input";
+import { useAuth } from "@/shared/contexts/auth";
 
 import AuthLogo from "../_shared/components/auth-logo";
 import { LoginFormData, loginSchema } from "./_shared/util";
@@ -23,6 +24,7 @@ const MailIcon = styled(Mail);
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const { signIn } = useAuth();
 
   const {
     control,
@@ -35,11 +37,6 @@ export default function Login() {
       password: "",
     },
   });
-
-  const onSubmit = (data: LoginFormData) => {
-    console.log("Login data:", data);
-    // Handle login logic here
-  };
 
   return (
     <View className="flex-1 bg-linear-to-br from-cyan-500 via-teal-500 to-cyan-600">
@@ -128,10 +125,7 @@ export default function Login() {
                 </View>
 
                 {/* Login Button */}
-                <Button
-                  onPress={handleSubmit(onSubmit)}
-                  disabled={isSubmitting}
-                >
+                <Button onPress={handleSubmit(signIn)} disabled={isSubmitting}>
                   {isSubmitting ? "Signing in..." : "Sign in"}
                 </Button>
               </View>

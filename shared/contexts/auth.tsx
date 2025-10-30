@@ -3,6 +3,7 @@ import {
   FirebaseAuthTypes,
   getAuth,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signOut as signUserOut,
 } from "@react-native-firebase/auth";
 import {
@@ -23,17 +24,19 @@ export type SignUpData = {
   password: string;
 };
 
+export type SignInData = Omit<SignUpData, "name">;
+
 export type User = FirebaseAuthTypes.User | null;
 
 export type AuthContextType = {
-  signIn: () => void;
+  signIn: (data: SignInData) => Promise<void>;
   signUp: (data: SignUpData) => Promise<void>;
   signOut: () => void;
   user: User;
 };
 
 const AuthContext = createContext<AuthContextType>({
-  signIn: () => null,
+  signIn: () => Promise.resolve(),
   signUp: () => Promise.resolve(),
   signOut: () => null,
   user: null,
@@ -52,16 +55,12 @@ export function useAuth() {
 export function AuthProvider({ children }: PropsWithChildren) {
   const [authenticating, setAuthenticating] = useState(true);
   const [user, setUser] = useState<User>(null);
-  const signIn = useCallback(() => null, []);
+  const signIn = useCallback(async (data: SignInData) => {
+    await signInWithEmailAndPassword(getAuth(), data.email, data.password);
+  }, []);
 
   const signUp = useCallback(async (data: SignUpData) => {
-    const result = await createUserWithEmailAndPassword(
-      getAuth(),
-      data.email,
-      data.password,
-    );
-
-    console.log("signOut result:", result);
+    await createUserWithEmailAndPassword(getAuth(), data.email, data.password);
   }, []);
 
   const signOut = useCallback(() => {

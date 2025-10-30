@@ -55,7 +55,6 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const { user } = useAuth();
-  console.log("user:", !user);
 
   return (
     <Stack

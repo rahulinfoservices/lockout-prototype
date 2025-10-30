@@ -42,11 +42,6 @@ export default function Signup() {
     },
   });
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log("Signup data:", data);
-    signUp(data);
-  };
-
   return (
     <View className="flex-1 bg-linear-to-br from-cyan-500 via-teal-500 to-cyan-600">
       <Container>
@@ -188,10 +183,7 @@ export default function Signup() {
                 />
 
                 {/* Signup Button */}
-                <Button
-                  onPress={handleSubmit(onSubmit)}
-                  disabled={isSubmitting}
-                >
+                <Button onPress={handleSubmit(signUp)} disabled={isSubmitting}>
                   {isSubmitting ? "Creating account..." : "Sign up"}
                 </Button>
               </View>
