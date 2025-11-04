@@ -1,28 +1,124 @@
+import { useEffect } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+import { cn } from "tailwind-variants/lite";
 
 import { Facility } from "../hooks/use-get-facilities";
 
-export const FacilityCard = ({ item }: { item: Facility }) => (
-  <TouchableOpacity
-    className="mb-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm active:opacity-70"
-    activeOpacity={0.7}
-  >
-    <Text className="mb-2 text-xl font-semibold text-gray-800">
-      {item.name}
-    </Text>
+interface FacilityCardProps {
+  item: Facility;
+  status?: string;
+}
 
-    <View className="flex-row flex-wrap items-center gap-3">
-      <View className="rounded-full bg-blue-50 px-3 py-1">
-        <Text className="text-base font-medium text-blue-700">{item.zip}</Text>
-      </View>
+export const FacilityCard = ({ item, status }: FacilityCardProps) => {
+  const isLockdown = status === "LOCKDOWN";
+  const opacity = useSharedValue(1);
+  const scale = useSharedValue(1);
 
-      {item.district ? (
-        <View className="rounded-full bg-cyan-50 px-3 py-1">
-          <Text className="text-base font-medium text-cyan-700">
-            {item.district}
+  useEffect(() => {
+    if (isLockdown) {
+      // Pulsing animation
+      opacity.value = withRepeat(
+        withSequence(
+          withTiming(0.8, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+          withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        false,
+      );
+
+      // Subtle scale animation
+      scale.value = withRepeat(
+        withSequence(
+          withTiming(1.02, {
+            duration: 800,
+            easing: Easing.inOut(Easing.ease),
+          }),
+          withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        false,
+      );
+    }
+  }, [isLockdown, opacity, scale]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    if (!isLockdown) return {};
+
+    return {
+      opacity: opacity.value,
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <TouchableOpacity
+        className={cn(
+          "mb-3 rounded-xl border p-4 shadow-sm active:opacity-70",
+          {
+            "border-red-500 bg-red-50 shadow-md": isLockdown,
+            "border-gray-200 bg-white shadow-sm": !isLockdown,
+          },
+        )}
+        activeOpacity={0.7}
+      >
+        <View className="mb-2 flex-row items-center justify-between">
+          <Text
+            className={cn("text-xl font-semibold text-gray-800", {
+              "text-xl font-bold text-red-800": isLockdown,
+            })}
+          >
+            {item.name}
           </Text>
+          {isLockdown ? (
+            <View className="rounded-full bg-red-500 px-3 py-1">
+              <Text className="text-xs font-bold text-white">LOCKDOWN</Text>
+            </View>
+          ) : null}
         </View>
-      ) : null}
-    </View>
-  </TouchableOpacity>
-);
+
+        <View className="flex-row flex-wrap items-center gap-3">
+          <View
+            className={cn("rounded-full px-3 py-1", {
+              "bg-red-100": isLockdown,
+              "bg-blue-50": !isLockdown,
+            })}
+          >
+            <Text
+              className={cn("text-base font-medium text-blue-700", {
+                "text-red-800": isLockdown,
+              })}
+            >
+              {item.zip}
+            </Text>
+          </View>
+
+          {item.district ? (
+            <View
+              className={cn("rounded-full px-3 py-1", {
+                "bg-cyan-50": !isLockdown,
+                "bg-red-100": isLockdown,
+              })}
+            >
+              <Text
+                className={cn("text-base font-medium text-cyan-700", {
+                  "text-red-800": isLockdown,
+                })}
+              >
+                {item.district}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};

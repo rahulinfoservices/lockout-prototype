@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, ListRenderItem, Text, View } from "react-native";
 
 import { FacilitiesError } from "./_shared/components/facilities-error";
 import { FacilitiesLoader } from "./_shared/components/facilities-loader";
@@ -27,8 +27,11 @@ export default function Home() {
     );
   }, [facilities, searchQuery]);
 
-  const renderFacilityCard = ({ item }: { item: Facility }) => (
-    <FacilityCard item={item} />
+  const renderFacilityCard: ListRenderItem<Facility> = ({ item }) => (
+    <FacilityCard
+      item={item}
+      status={item.id === "parma-es" ? "LOCKDOWN" : undefined}
+    />
   );
 
   if (isLoading) {
