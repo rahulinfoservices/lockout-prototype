@@ -4,7 +4,7 @@ import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
 import { styled } from "nativewind";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Pressable, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 import { Container } from "@/shared/components/core/container";
@@ -37,6 +37,14 @@ export default function Login() {
       password: "",
     },
   });
+
+  const handleSignIn = async (data: LoginFormData) => {
+    try {
+      await signIn(data);
+    } catch (error) {
+      Alert.alert("Error", (error as Error).message);
+    }
+  };
 
   return (
     <View className="flex-1 bg-linear-to-br from-cyan-500 via-teal-500 to-cyan-600">
@@ -125,7 +133,10 @@ export default function Login() {
                 </View>
 
                 {/* Login Button */}
-                <Button onPress={handleSubmit(signIn)} disabled={isSubmitting}>
+                <Button
+                  onPress={handleSubmit(handleSignIn)}
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? "Signing in..." : "Sign in"}
                 </Button>
               </View>

@@ -56,6 +56,7 @@ export function useAuth() {
 export function AuthProvider({ children }: PropsWithChildren) {
   const [authenticating, setAuthenticating] = useState(true);
   const [user, setUser] = useState<User>(null);
+
   const signIn = useCallback(async (data: SignInData) => {
     await signInWithEmailAndPassword(getAuth(), data.email, data.password);
   }, []);
