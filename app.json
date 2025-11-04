@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rsureshinfo.lockout-prototype",
+      "bundleIdentifier": "com.lockout.prototype",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
@@ -25,7 +25,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.rsureshinfo.lockoutprototype",
+      "package": "com.lockout.prototype",
       "googleServicesFile": "./google-services.json"
     },
     "web": {
