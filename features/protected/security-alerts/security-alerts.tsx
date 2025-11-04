@@ -8,7 +8,7 @@ import { FacilityHeader } from "./_shared/components/facility-header";
 import { FacilitiesSearch } from "./_shared/components/facilties-search";
 import { Facility, useGetFacilities } from "./_shared/hooks/use-get-facilities";
 
-export default function Home() {
+export default function SecurityAlerts() {
   const { facilities, isLoading, error } = useGetFacilities();
   const [searchQuery, setSearchQuery] = useState("");
 
