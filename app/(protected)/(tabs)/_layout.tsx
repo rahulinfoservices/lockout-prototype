@@ -11,22 +11,23 @@ export default function ProtectedLayout() {
       }}
     >
       <Tabs.Screen
-        name="device-health/index"
-        options={{
-          title: "Device Health",
-          tabBarLabel: "Device Health",
-          tabBarIcon: ({ color, size }) => (
-            <Activity size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="security-alerts/index"
         options={{
           title: "Security Alerts",
           tabBarLabel: "Security Alerts",
           tabBarIcon: ({ color, size }) => (
             <ShieldAlert size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="device-health/index"
+        options={{
+          title: "Device Health",
+          tabBarLabel: "Device Health",
+          tabBarIcon: ({ color, size }) => (
+            <Activity size={size} color={color} />
           ),
         }}
       />
