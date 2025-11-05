@@ -80,9 +80,13 @@ export const FacilityCard = ({ item, status }: FacilityCardProps) => {
           </Text>
           {isLockdown ? (
             <View className="rounded-full bg-red-500 px-3 py-1">
-              <Text className="text-xs font-bold text-white">LOCKDOWN</Text>
+              <Text className="text-sm font-bold text-white">LOCKDOWN</Text>
             </View>
-          ) : null}
+          ) : (
+            <View className="rounded-full bg-gray-200 px-3 py-1">
+              <Text className="text-sm font-bold text-gray-800">All Clear</Text>
+            </View>
+          )}
         </View>
 
         <View className="flex-row flex-wrap items-center gap-3">
