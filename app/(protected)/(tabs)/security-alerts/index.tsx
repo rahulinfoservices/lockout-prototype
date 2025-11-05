@@ -1,4 +1,4 @@
-import SecurityAlerts from "@/features/protected/security-alerts/security-alerts";
+import SecurityAlerts from "@/features/protected/tabs/security-alerts/security-alerts";
 
 export default function SecurityAlertsPage() {
   return <SecurityAlerts />;
