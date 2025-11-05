@@ -1,13 +1,7 @@
 import firestore from "@react-native-firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 
-export interface Facility {
-  id: string;
-  name: string;
-  zip: string;
-  district: string;
-  stateCode: string;
-}
+import { Facility } from "@/shared/types/facility";
 
 // Fetch all facilities under MI state
 export const useGetFacilities = () => {

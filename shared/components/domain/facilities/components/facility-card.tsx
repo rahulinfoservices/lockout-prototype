@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { cn } from "tailwind-variants/lite";
 
-import { Facility } from "../hooks/use-get-facilities";
+import { Facility } from "@/shared/types/facility";
 
 interface FacilityCardProps {
   item: Facility;

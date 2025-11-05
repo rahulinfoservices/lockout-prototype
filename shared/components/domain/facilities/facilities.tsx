@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { FlatList, ListRenderItem, Text, View } from "react-native";
 
-import { FacilitiesError } from "@/features/protected/tabs/security-alerts/_shared/components/facilities-error";
-import { FacilitiesLoader } from "@/features/protected/tabs/security-alerts/_shared/components/facilities-loader";
-import { FacilityHeader } from "@/features/protected/tabs/security-alerts/_shared/components/facility-header";
-import { FacilitiesSearch } from "@/features/protected/tabs/security-alerts/_shared/components/facilties-search";
-import { Facility } from "@/features/protected/tabs/security-alerts/_shared/hooks/use-get-facilities";
+import { FacilitiesError } from "@/shared/components/domain/facilities/components/facilities-error";
+import { FacilitiesLoader } from "@/shared/components/domain/facilities/components/facilities-loader";
+import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header";
+import { FacilitiesSearch } from "@/shared/components/domain/facilities/components/facilties-search";
+import { Facility } from "@/shared/types/facility";
 
 interface FacilitiesProps {
   facilities: Facility[];

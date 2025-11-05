@@ -1,9 +1,10 @@
 import { ListRenderItem } from "react-native";
 
-import Facilities from "@/shared/components/domain/facilities";
+import Facilities from "@/shared/components/domain/facilities/facilities";
+import { Facility } from "@/shared/types/facility";
 
-import { FacilityCard } from "./_shared/components/facility-card";
-import { Facility, useGetFacilities } from "./_shared/hooks/use-get-facilities";
+import { FacilityCard } from "../../../../shared/components/domain/facilities/components/facility-card";
+import { useGetFacilities } from "./_shared/hooks/use-get-facilities";
 
 export default function SecurityAlerts() {
   const { facilities, isLoading, error } = useGetFacilities();
