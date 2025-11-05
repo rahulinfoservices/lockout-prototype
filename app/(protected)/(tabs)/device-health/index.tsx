@@ -1,11 +1,5 @@
-import { Text } from "react-native";
-
-import { Container } from "@/shared/components/core/container";
+import DeviceHealth from "@/features/protected/tabs/device-health/device-health";
 
 export default function DeviceHealthPage() {
-  return (
-    <Container>
-      <Text>Device Health</Text>
-    </Container>
-  );
+  return <DeviceHealth />;
 }

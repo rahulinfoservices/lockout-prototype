@@ -42,6 +42,9 @@ module.exports = defineConfig([
 
       // No secrets
       "no-secrets/no-secrets": "error",
+
+      // Javascript rules
+      "no-console": "error",
     },
   },
 ]);

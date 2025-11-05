@@ -1,24 +1,8 @@
 import firestore from "@react-native-firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 
-export interface Device {
-  id: string;
-  name: string;
-  type: string;
-  status: string;
-}
-
-export interface FacilityWithDevices {
-  id: string;
-  name: string;
-  zip: string;
-  district: string;
-  stateCode: string;
-  devices: Device[];
-  hasIssues: boolean;
-  hasTampered: boolean;
-  hasLowBattery: boolean;
-}
+import { Device } from "@/shared/types/device";
+import { FacilityWithDevices } from "@/shared/types/facility";
 
 // Fetch all facilities with their devices, sorted by priority (Tampered > Low Battery > Online)
 export const useGetFacilitiesWithDevices = () => {

@@ -1,37 +1,30 @@
-import { useMemo, useState } from "react";
 import { FlatList, ListRenderItem, Text, View } from "react-native";
 
 import { FacilitiesError } from "@/shared/components/domain/facilities/components/facilities-error";
 import { FacilitiesLoader } from "@/shared/components/domain/facilities/components/facilities-loader";
 import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header";
 import { FacilitiesSearch } from "@/shared/components/domain/facilities/components/facilties-search";
-import { Facility } from "@/shared/types/facility";
 
-interface FacilitiesProps {
-  facilities: Facility[];
+interface FacilitiesProps<T extends { id: string }> {
+  facilities: T[];
   isLoading: boolean;
   error: string;
-  renderFacility: ListRenderItem<Facility>;
+  renderFacility: ListRenderItem<T>;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
-export default function Facilities(props: FacilitiesProps) {
-  const { facilities, isLoading, error, renderFacility } = props;
-  const [searchQuery, setSearchQuery] = useState("");
-
-  // Filter facilities based on search query
-  const filteredFacilities = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return facilities;
-    }
-
-    const query = searchQuery.toLowerCase();
-    return facilities.filter(
-      facility =>
-        facility.name.toLowerCase().includes(query) ||
-        facility.zip.includes(query) ||
-        facility.district.toLowerCase().includes(query),
-    );
-  }, [facilities, searchQuery]);
+export default function Facilities<T extends { id: string }>(
+  props: FacilitiesProps<T>,
+) {
+  const {
+    facilities,
+    isLoading,
+    error,
+    renderFacility,
+    searchQuery,
+    setSearchQuery,
+  } = props;
 
   if (isLoading) {
     return <FacilitiesLoader />;
@@ -43,7 +36,7 @@ export default function Facilities(props: FacilitiesProps) {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <FacilityHeader facilityCount={filteredFacilities.length} />
+      <FacilityHeader facilityCount={facilities.length} />
 
       <FacilitiesSearch
         searchQuery={searchQuery}
@@ -51,7 +44,7 @@ export default function Facilities(props: FacilitiesProps) {
       />
 
       <FlatList
-        data={filteredFacilities}
+        data={facilities as T[]}
         renderItem={renderFacility}
         keyExtractor={item => item.id}
         contentContainerClassName="p-4"
