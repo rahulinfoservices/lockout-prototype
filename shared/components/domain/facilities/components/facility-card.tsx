@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useCallback, useEffect } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -12,15 +12,17 @@ import Animated, {
 import { cn } from "tailwind-variants/lite";
 
 import { Facility } from "@/shared/types/facility";
+import { SecurityAlert } from "@/shared/types/security-alert";
 
 interface FacilityCardProps {
   item: Facility;
-  status?: string;
+  status?: SecurityAlert["alertType"];
+  error?: string;
 }
 
-export const FacilityCard = ({ item, status }: FacilityCardProps) => {
+export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
   const router = useRouter();
-  const isLockdown = status === "LOCKDOWN";
+  const isLockdown = status === "full_lockdown_mode";
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
 
@@ -54,6 +56,16 @@ export const FacilityCard = ({ item, status }: FacilityCardProps) => {
       );
     }
   }, [isLockdown, opacity, scale]);
+
+  useEffect(() => {
+    if (error) {
+      // Fade out card
+      Alert.alert(
+        "Oops!",
+        `There seems to be an issue fetching security alerts for ${item.name}. ${error}`,
+      );
+    }
+  }, [error, item.name]);
 
   const animatedStyle = useAnimatedStyle(() => {
     if (!isLockdown) return {};

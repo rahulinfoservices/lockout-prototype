@@ -6,9 +6,11 @@ import { Facility } from "@/shared/types/facility";
 
 import { FacilityCard } from "../../../../shared/components/domain/facilities/components/facility-card";
 import { useGetFacilities } from "./_shared/hooks/use-get-facilities";
+import { useGetSecurityAlert } from "./_shared/hooks/use-get-security-alert";
 
 export default function SecurityAlerts() {
   const { facilities, isLoading, error } = useGetFacilities();
+  const { alert, error: alertError } = useGetSecurityAlert();
   const [searchQuery, setSearchQuery] = useState("");
 
   // Filter facilities based on search query
@@ -29,7 +31,8 @@ export default function SecurityAlerts() {
   const renderFacilityCard: ListRenderItem<Facility> = ({ item }) => (
     <FacilityCard
       item={item}
-      status={item.id === "parma-es" ? "LOCKDOWN" : undefined}
+      status={item.schoolId === "ST MICHAEL-ES" ? alert?.alertType : undefined}
+      error={item.schoolId === "ST MICHAEL-ES" ? alertError : undefined}
     />
   );
 
