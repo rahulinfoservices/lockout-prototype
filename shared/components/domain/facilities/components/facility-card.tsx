@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useRouter } from "expo-router";
+import { useCallback, useEffect } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import Animated, {
   Easing,
@@ -18,9 +19,14 @@ interface FacilityCardProps {
 }
 
 export const FacilityCard = ({ item, status }: FacilityCardProps) => {
+  const router = useRouter();
   const isLockdown = status === "LOCKDOWN";
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
+
+  const onPress = useCallback(() => {
+    router.push(`/security-alerts/${item.id}`);
+  }, [item.id, router]);
 
   useEffect(() => {
     if (isLockdown) {
@@ -69,6 +75,7 @@ export const FacilityCard = ({ item, status }: FacilityCardProps) => {
           },
         )}
         activeOpacity={0.7}
+        onPress={onPress}
       >
         <View className="mb-2 flex-row items-center justify-between">
           <Text

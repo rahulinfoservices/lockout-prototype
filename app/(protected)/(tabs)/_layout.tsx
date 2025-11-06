@@ -6,12 +6,13 @@ export default function ProtectedLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#007AFF",
+        tabBarActiveTintColor: "teal",
         tabBarLabelStyle: { fontSize: 14 },
       }}
+      backBehavior="order"
     >
       <Tabs.Screen
-        name="security-alerts/index"
+        name="security-alerts"
         options={{
           title: "Security Alerts",
           tabBarLabel: "Security Alerts",
