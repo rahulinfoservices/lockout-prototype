@@ -71,6 +71,7 @@ export const useGetFacilitiesWithDevices = () => {
             zip: facilityData.zip || zipCode,
             district: facilityData.district || "",
             stateCode: facilityData.stateCode || "MI",
+            schoolId: facilityData.schoolId || "",
             devices,
             hasIssues,
             hasTampered,

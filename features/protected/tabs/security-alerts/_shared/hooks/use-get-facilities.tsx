@@ -43,11 +43,19 @@ export const useGetFacilities = () => {
             zip: facilityData.zip || zipCode,
             district: facilityData.district || "",
             stateCode: facilityData.stateCode || "MI",
+            schoolId: facilityData.schoolId || facilityDoc.id,
           });
         });
       }
 
-      setFacilities(allFacilities);
+      // Sort facilities: "ST MICHAEL-ES" first, then alphabetically
+      const sortedFacilities = allFacilities.sort((a, b) => {
+        if (a.schoolId === "ST MICHAEL-ES") return -1;
+        if (b.schoolId === "ST MICHAEL-ES") return 1;
+        return a.schoolId.localeCompare(b.schoolId);
+      });
+
+      setFacilities(sortedFacilities);
       setError("");
     } catch (error) {
       setError((error as Error).message);
