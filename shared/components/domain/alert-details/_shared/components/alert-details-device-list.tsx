@@ -5,15 +5,13 @@ import { useCallback, useEffect } from "react";
 import { Alert, FlatList, ListRenderItem, Text, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
-export interface SecurityDetailsDeviceListProps {
+export interface AlertDetailsDeviceListProps {
   devices: DeviceDetails[];
   zone: ZoneDetails;
   room: RoomDetails;
 }
 
-export const SecurityDetailsDeviceList = (
-  props: SecurityDetailsDeviceListProps,
-) => {
+export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   const { devices, zone, room } = props;
   const { alert, error: alertError } = useGetAlert("ALERTS");
 

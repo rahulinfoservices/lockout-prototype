@@ -1,6 +1,6 @@
 import { ActivityIndicator, Text, View } from "react-native";
 
-export const SecurityDetailsLoader = () => {
+export const AlertDetailsLoader = () => {
   return (
     <View className="flex-1 items-center justify-center bg-gray-50 px-5">
       <ActivityIndicator size="large" color="#667eea" />

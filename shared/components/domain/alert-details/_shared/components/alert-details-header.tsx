@@ -6,13 +6,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Facility } from "@/shared/types/facility";
 
-interface SecurityDetailsHeaderProps {
+interface AlertDetailsHeaderProps {
   facilty: Facility;
 }
 
 const ChevronLeftIcon = styled(ChevronLeft);
 
-export const SecurityDetailsHeader = (props: SecurityDetailsHeaderProps) => {
+export const AlertDetailsHeader = (props: AlertDetailsHeaderProps) => {
   const { facilty } = props;
   const router = useRouter();
   const insets = useSafeAreaInsets();
