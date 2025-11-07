@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { ListRenderItem } from "react-native";
 
+import { FacilityCard } from "@/shared/components/domain/facilities/components/facility-card";
 import Facilities from "@/shared/components/domain/facilities/facilities";
+import { useGetSecurityAlert } from "@/shared/hooks/use-get-security-alert";
 import { Facility } from "@/shared/types/facility";
 
-import { FacilityCard } from "../../../../shared/components/domain/facilities/components/facility-card";
 import { useGetFacilities } from "./_shared/hooks/use-get-facilities";
-import { useGetSecurityAlert } from "./_shared/hooks/use-get-security-alert";
 
 export default function SecurityAlerts() {
   const { facilities, isLoading, error } = useGetFacilities();
