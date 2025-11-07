@@ -23,7 +23,7 @@ export default function ProtectedLayout() {
       />
 
       <Tabs.Screen
-        name="device-health/index"
+        name="device-health"
         options={{
           title: "Device Health",
           tabBarLabel: "Device Health",

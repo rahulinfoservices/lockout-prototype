@@ -34,7 +34,7 @@ export const FacilityDeviceHealthCard = ({
 
   const onPress = useCallback(() => {
     router.push({
-      pathname: `/security-alerts/[school-id]`,
+      pathname: `/device-health/[school-id]`,
       params: { "school-id": item.schoolId, zipCode: item.zip },
     });
   }, [item.schoolId, item.zip, router]);
