@@ -2,7 +2,6 @@ import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { styled } from "nativewind";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Facility } from "@/shared/types/facility";
 
@@ -16,7 +15,7 @@ const ChevronLeftIcon = styled(ArrowLeft);
 export const AlertDetailsHeader = (props: AlertDetailsHeaderProps) => {
   const { facilty, status = "active" } = props;
   const router = useRouter();
-  const insets = useSafeAreaInsets();
+
 
   const isActive = status === "active";
 
@@ -47,7 +46,7 @@ export const AlertDetailsHeader = (props: AlertDetailsHeaderProps) => {
         </View>
 
          {/* Right: Status Badge */}
-        <View
+        {/* <View
           className={`px-5 py-1 p-4 rounded-full ${
             isActive ? "bg-green-100" : "bg-red-100"
           }`}
@@ -59,7 +58,7 @@ export const AlertDetailsHeader = (props: AlertDetailsHeaderProps) => {
           >
             {isActive ? "Active" : "Offline"}
           </Text>
-        </View>
+        </View> */}
         </View>
 
 

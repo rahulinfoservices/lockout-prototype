@@ -27,16 +27,18 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   };
 
   const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
-    ({ item }) => {
+    ({ item , index}) => {
       const isAlert =
         alert?.alertType === "full_lockdown_mode" &&
         item.deviceId === alert.deviceId;
+
+        const position = index + 1;
 
       return (
         <View className="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
           <View className="mb-3 flex-row items-center justify-between">
             <Text className="text-lg font-semibold text-gray-800">
-              Device #{item.deviceId}
+              Device {position} : {item.deviceId}
             </Text>
 
             <View
@@ -68,7 +70,7 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   );
 
   const renderDeviceItem: ListRenderItem<DeviceDetails> = useCallback(
-    ({ item }) => {
+    ({ item , index}) => {
       const isDeviceIdSame = alert?.deviceId === item.deviceId;
       const isOnline =
         !alert?.deviceHealth ||
@@ -76,12 +78,13 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
         !isDeviceIdSame;
       const isLowBattery = alert?.deviceHealth === "LowBat" && isDeviceIdSame;
       const isOffline = alert?.deviceHealth === "Offline" && isDeviceIdSame;
+      const position = index + 1;
 
       return (
         <View className="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
           <View className="mb-3 flex-row items-center justify-between">
             <Text className="text-lg font-semibold text-gray-800">
-              Device #{item.deviceId}
+              Device {position} : {item.deviceId}
             </Text>
 
             <View
