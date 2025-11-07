@@ -61,12 +61,12 @@ export default function Facilities(props: FacilitiesProps) {
       />
 
       {alertCategory === "ALERTS" ? (
-        <FacilitiesDeviceList
+        <FacilitiesAlertList
           facilities={filteredFacilities}
           renderEmptyList={renderEmptyList}
         />
       ) : (
-        <FacilitiesAlertList
+        <FacilitiesDeviceList
           facilities={filteredFacilities}
           renderEmptyList={renderEmptyList}
         />

@@ -13,7 +13,7 @@ interface FacilitiesAlertListProps {
 
 export const FacilitiesAlertList = (props: FacilitiesAlertListProps) => {
   const { facilities, renderEmptyList } = props;
-  const { alert, error: alertError } = useGetAlert("TELEMETRY");
+  const { alert, error: alertError } = useGetAlert("ALERTS");
 
   const renderFacilityAlertCard: ListRenderItem<Facility> = useCallback(
     ({ item }) => (
