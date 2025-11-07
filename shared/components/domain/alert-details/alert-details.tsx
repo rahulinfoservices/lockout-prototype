@@ -1,11 +1,13 @@
 import { View } from "react-native";
 
+import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header-new";
+import { FacilityInfoCard } from "@/shared/components/domain/facilities/components/facility-info-card";
 import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-details";
 import { AlertCategory } from "@/shared/types/alert";
 
 import { AlertDetailsDeviceList } from "./_shared/components/alert-details-device-list";
 import { AlertDetailsError } from "./_shared/components/alert-details-error";
-import { AlertDetailsHeader } from "./_shared/components/alert-details-header";
+import { AlertDetailsHeader } from "./_shared/components/alert-details-header-new";
 import { AlertDetailsLoader } from "./_shared/components/alert-details-loader";
 
 export interface AlertDetailsProps {
@@ -20,7 +22,7 @@ export default function AlertDetails(props: AlertDetailsProps) {
     schoolId,
     zipCode,
   );
-
+  
   if (isLoading) {
     return <AlertDetailsLoader />;
   }
@@ -47,7 +49,10 @@ export default function AlertDetails(props: AlertDetailsProps) {
 
   return (
     <View className="flex-1 bg-gray-50">
+      <FacilityHeader notificationCount={2} />
       <AlertDetailsHeader facilty={data.schoolDetails} />
+
+      <FacilityInfoCard facility ={data.schoolDetails} />
 
       <AlertDetailsDeviceList
         devices={data.devices}

@@ -105,9 +105,10 @@ export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
               <Text className="text-sm font-bold text-white">LOCKDOWN</Text>
             </View>
           ) : (
-            <View className="rounded-full bg-gray-200 px-3 py-1">
-              <Text className="text-sm font-bold text-gray-800">All Clear</Text>
+            <View className="rounded-full bg-green-100 px-3 py-1">
+              <Text className="text-sm font-bold text-green-700">All Clear</Text>
             </View>
+            
           )}
         </View>
 
