@@ -8,5 +8,11 @@ export default function DeviceHealthDetailsScreen() {
     zipCode: string;
   }>();
 
-  return <DeviceHealthDetails schoolId={schoolId} zipCode={zipCode} />;
+  return (
+    <DeviceHealthDetails
+      schoolId={schoolId}
+      zipCode={zipCode}
+      alertCategory="TELEMETRY"
+    />
+  );
 }

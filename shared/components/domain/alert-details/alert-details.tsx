@@ -1,6 +1,7 @@
 import { View } from "react-native";
 
 import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-details";
+import { AlertCategory } from "@/shared/types/alert";
 
 import { AlertDetailsDeviceList } from "./_shared/components/alert-details-device-list";
 import { AlertDetailsError } from "./_shared/components/alert-details-error";
@@ -10,10 +11,11 @@ import { AlertDetailsLoader } from "./_shared/components/alert-details-loader";
 export interface AlertDetailsProps {
   schoolId: string;
   zipCode: string;
+  alertCategory: AlertCategory;
 }
 
 export default function AlertDetails(props: AlertDetailsProps) {
-  const { schoolId, zipCode } = props;
+  const { schoolId, zipCode, alertCategory } = props;
   const { data, error, isLoading } = useGetSecurityAlertDetails(
     schoolId,
     zipCode,
@@ -51,6 +53,7 @@ export default function AlertDetails(props: AlertDetailsProps) {
         devices={data.devices}
         zone={data.zoneDetails}
         room={data.roomDetails}
+        alertCategory={alertCategory}
       />
     </View>
   );

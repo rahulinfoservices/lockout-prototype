@@ -8,5 +8,11 @@ export default function SecurityAlertDetailsScreen() {
     zipCode: string;
   }>();
 
-  return <SecurityAlertDetails schoolId={schoolId} zipCode={zipCode} />;
+  return (
+    <SecurityAlertDetails
+      schoolId={schoolId}
+      zipCode={zipCode}
+      alertCategory="ALERTS"
+    />
+  );
 }

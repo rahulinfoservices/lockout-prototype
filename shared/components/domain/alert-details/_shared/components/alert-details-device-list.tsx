@@ -1,19 +1,22 @@
-import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
-import { DeviceDetails } from "@/shared/types/device";
-import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 import { useCallback, useEffect } from "react";
 import { Alert, FlatList, ListRenderItem, Text, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
+
+import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
+import { AlertCategory } from "@/shared/types/alert";
+import { DeviceDetails } from "@/shared/types/device";
+import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
 export interface AlertDetailsDeviceListProps {
   devices: DeviceDetails[];
   zone: ZoneDetails;
   room: RoomDetails;
+  alertCategory: AlertCategory;
 }
 
 export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
-  const { devices, zone, room } = props;
-  const { alert, error: alertError } = useGetAlert("ALERTS");
+  const { devices, zone, room, alertCategory } = props;
+  const { alert, error: alertError } = useGetAlert(alertCategory);
 
   const renderHeader = () => {
     return (
@@ -23,13 +26,11 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
     );
   };
 
-  const renderItem: ListRenderItem<DeviceDetails> = useCallback(
+  const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
     ({ item }) => {
       const isAlert =
         alert?.alertType === "full_lockdown_mode" &&
         item.deviceId === alert.deviceId;
-
-      console.log(alert, item);
 
       return (
         <View className="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
@@ -63,7 +64,58 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
         </View>
       );
     },
-    [alert],
+    [alert?.alertType, alert?.deviceId, room.name, zone.name],
+  );
+
+  const renderDeviceItem: ListRenderItem<DeviceDetails> = useCallback(
+    ({ item }) => {
+      const isDeviceIdSame = alert?.deviceId === item.deviceId;
+      const isOnline =
+        !alert?.deviceHealth ||
+        alert.deviceHealth === "Online" ||
+        !isDeviceIdSame;
+      const isLowBattery = alert?.deviceHealth === "LowBat" && isDeviceIdSame;
+      const isOffline = alert?.deviceHealth === "Offline" && isDeviceIdSame;
+
+      return (
+        <View className="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
+          <View className="mb-3 flex-row items-center justify-between">
+            <Text className="text-lg font-semibold text-gray-800">
+              Device #{item.deviceId}
+            </Text>
+
+            <View
+              className={cn("rounded-full px-3 py-1.5", {
+                "bg-red-100": isOffline,
+                "bg-yellow-100": isLowBattery,
+                "bg-green-100": isOnline,
+              })}
+            >
+              <Text
+                className={cn("text-sm font-semibold", {
+                  "text-red-700": isOffline,
+                  "text-yellow-700": isLowBattery,
+                  "text-green-700": isOnline,
+                })}
+              >
+                {isOffline
+                  ? "OFFLINE"
+                  : isLowBattery
+                    ? "LOW BATTERY"
+                    : "ONLINE"}
+              </Text>
+            </View>
+          </View>
+
+          <View className="mb-2 flex-row items-center gap-2">
+            <Text className="text-sm text-gray-600">{zone.name}</Text>
+            <Text className="text-sm text-gray-400">•</Text>
+            <Text className="text-sm text-gray-600">{room.name}</Text>
+          </View>
+        </View>
+      );
+    },
+    [alert?.deviceHealth, alert?.deviceId, room.name, zone.name],
   );
 
   useEffect(() => {
@@ -79,7 +131,9 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   return (
     <FlatList
       ListHeaderComponent={renderHeader}
-      renderItem={renderItem}
+      renderItem={
+        alertCategory === "ALERTS" ? renderAlertItem : renderDeviceItem
+      }
       data={devices}
       keyExtractor={device => device.deviceId}
       ListEmptyComponent={
