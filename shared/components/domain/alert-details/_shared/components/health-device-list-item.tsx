@@ -1,13 +1,13 @@
 import { Text, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
-import { SecurityAlert } from "@/shared/types/alert";
+import { NullableSecurityAlert } from "@/shared/types/alert";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
 export interface HealthDeviceListItemProps {
   item: DeviceDetails;
-  alert: SecurityAlert | null;
+  alert: NullableSecurityAlert;
   zone: ZoneDetails;
   room: RoomDetails;
 }

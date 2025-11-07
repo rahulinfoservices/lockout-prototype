@@ -18,4 +18,6 @@ export interface SecurityAlert {
   ts: string;
 }
 
+export type NullableSecurityAlert = SecurityAlert | null;
+
 export type AlertCategory = "ALERTS" | "TELEMETRY";

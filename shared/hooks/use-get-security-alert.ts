@@ -1,10 +1,10 @@
 import database from "@react-native-firebase/database";
 import { useEffect, useState } from "react";
 
-import { AlertCategory, SecurityAlert } from "@/shared/types/alert";
+import { AlertCategory, NullableSecurityAlert } from "@/shared/types/alert";
 
 export const useGetAlert = (alertCategory: AlertCategory) => {
-  const [alert, setAlert] = useState<SecurityAlert | null>(null);
+  const [alert, setAlert] = useState<NullableSecurityAlert>(null);
   const [error, setError] = useState<string>("");
 
   // Fetch security alert

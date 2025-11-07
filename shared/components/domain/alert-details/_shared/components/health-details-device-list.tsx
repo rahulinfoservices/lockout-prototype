@@ -5,6 +5,7 @@ import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
+import { getSortedDeviceListByDeviceHealth } from "../utils/sort-device-list";
 import { HealthDeviceListItem } from "./health-device-list-item";
 
 export interface HealthDetailsDeviceListProps {
@@ -19,6 +20,7 @@ export const HealthDetailsDeviceList = (
 ) => {
   const { devices, zone, room, renderHeader } = props;
   const { alert, error: alertError } = useGetAlert("TELEMETRY");
+  const deviceList = getSortedDeviceListByDeviceHealth(devices, alert);
 
   const renderDeviceItem: ListRenderItem<DeviceDetails> = useCallback(
     ({ item }) => {
@@ -48,7 +50,7 @@ export const HealthDetailsDeviceList = (
     <FlatList
       ListHeaderComponent={renderHeader}
       renderItem={renderDeviceItem}
-      data={devices}
+      data={deviceList}
       keyExtractor={device => device.deviceId}
       ListEmptyComponent={
         <View className="rounded-xl border border-gray-200 bg-white p-6">

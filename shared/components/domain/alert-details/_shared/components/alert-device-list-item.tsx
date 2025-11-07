@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
-import { SecurityAlert } from "@/shared/types/alert";
+import { NullableSecurityAlert } from "@/shared/types/alert";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
@@ -9,7 +9,7 @@ export interface AlertDeviceListItemProps {
   item: DeviceDetails;
   zone: ZoneDetails;
   room: RoomDetails;
-  alert: SecurityAlert | null;
+  alert: NullableSecurityAlert;
 }
 
 export const AlertDeviceListItem = (props: AlertDeviceListItemProps) => {

@@ -5,6 +5,7 @@ import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
+import { getSortedDeviceListByAlertType } from "../utils/sort-device-list";
 import { AlertDeviceListItem } from "./alert-device-list-item";
 
 export interface AlertDetailsDeviceListProps {
@@ -17,6 +18,7 @@ export interface AlertDetailsDeviceListProps {
 export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   const { devices, zone, room, renderHeader } = props;
   const { alert, error: alertError } = useGetAlert("ALERTS");
+  const deviceList = getSortedDeviceListByAlertType(devices, alert);
 
   const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
     ({ item }) => {
@@ -46,7 +48,7 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
     <FlatList
       ListHeaderComponent={renderHeader}
       renderItem={renderAlertItem}
-      data={devices}
+      data={deviceList}
       keyExtractor={device => device.deviceId}
       ListEmptyComponent={
         <View className="rounded-xl border border-gray-200 bg-white p-6">
