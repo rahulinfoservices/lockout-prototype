@@ -2,12 +2,15 @@ import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { styled } from "nativewind";
 import { Text, TouchableOpacity, View } from "react-native";
+import { cn } from "tailwind-variants/lite";
 
+import { AlertCategory } from "@/shared/types/alert";
 import { Facility } from "@/shared/types/facility";
 
 interface AlertDetailsHeaderProps {
   facilty: Facility;
-  status?: "active" | "offline"; // optional status prop
+  status?: string; // optional status prop
+  alertCategory?: AlertCategory
 }
 
 const ChevronLeftIcon = styled(ArrowLeft);
@@ -17,8 +20,20 @@ export const AlertDetailsHeader = (props: AlertDetailsHeaderProps) => {
   const router = useRouter();
 
 
-  const isActive = status === "active";
+  const isOnline = status === "Online" ;
+  const isLowBattery = status=== "LowBat" ;
+  const isOffline = status === "Offline" ;
+  const isAlert = status === "full_lockdown_mode" ;
+ const isAllclear = status === "all_clear" ;
 
+const statusText = (() => {
+  if (isAlert) return "FULL LOCKDOWN";
+  if (isOffline) return "OFFLINE";
+  if (isLowBattery) return "LOW BATTERY";
+  if (isOnline) return "ONLINE";
+  if (isAllclear) return "ALL CLEAR";
+  return ""; // fallback if none match
+})();
   return (
     <View className="px-1 pb-1">
       <View
@@ -46,19 +61,26 @@ export const AlertDetailsHeader = (props: AlertDetailsHeaderProps) => {
         </View>
 
          {/* Right: Status Badge */}
-        {/* <View
-          className={`px-5 py-1 p-4 rounded-full ${
-            isActive ? "bg-green-100" : "bg-red-100"
-          }`}
-        >
-          <Text
-            className={`text-sm font-semibold ${
-              isActive ? "text-green-700" : "text-red-700"
-            }`}
-          >
-            {isActive ? "Active" : "Offline"}
-          </Text>
-        </View> */}
+       
+         <View
+                      className={cn("rounded-full px-3 py-1.5", {
+                        "bg-red-100": isOffline || isAlert,
+                        "bg-yellow-100": isLowBattery,
+                        "bg-green-100": isOnline || isAllclear,
+                       
+                      })}
+                    >
+                      <Text
+                        className={cn("text-sm font-semibold", {
+                          "text-red-700": isOffline || isAlert,
+                          "text-yellow-700": isLowBattery,
+                          "text-green-700": isOnline || isAllclear,
+                         
+                        })}
+                      >
+                        {statusText}
+                      </Text>
+                    </View>
         </View>
 
 

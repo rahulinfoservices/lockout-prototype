@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header-new";
 import { FacilityInfoCard } from "@/shared/components/domain/facilities/components/facility-info-card";
 import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-details";
+import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { AlertCategory } from "@/shared/types/alert";
 
 import { AlertDetailsDeviceList } from "./_shared/components/alert-details-device-list";
@@ -18,11 +20,23 @@ export interface AlertDetailsProps {
 
 export default function AlertDetails(props: AlertDetailsProps) {
   const { schoolId, zipCode, alertCategory } = props;
+  const { alert, error: alertError } = useGetAlert(alertCategory);
   const { data, error, isLoading } = useGetSecurityAlertDetails(
     schoolId,
     zipCode,
   );
-  
+  const [facilityAlertStatus, setFacilityAlertStatus] = useState<string>("ALL CLEAR");
+
+  // Update local state whenever alert changes
+  useEffect(() => {
+
+  if (alertCategory === "ALERTS") {
+  setFacilityAlertStatus(alert?.alertType ?? "UNKNOWN"); 
+} else {
+  setFacilityAlertStatus(alert?.deviceHealth ?? "UNKNOWN"); 
+}
+  }, [alert, alertCategory]);
+
   if (isLoading) {
     return <AlertDetailsLoader />;
   }
@@ -47,10 +61,15 @@ export default function AlertDetails(props: AlertDetailsProps) {
     return <AlertDetailsError error="No zone details found" />;
   }
 
+  
+
   return (
     <View className="flex-1 bg-gray-50">
       <FacilityHeader notificationCount={2} />
-      <AlertDetailsHeader facilty={data.schoolDetails} />
+      <AlertDetailsHeader facilty={data.schoolDetails}
+      status={facilityAlertStatus}
+      alertCategory={alertCategory}
+      />
 
       <FacilityInfoCard facility ={data.schoolDetails} />
 

@@ -1,11 +1,12 @@
 import { useCallback, useEffect } from "react";
-import { Alert, FlatList, ListRenderItem, Text, View } from "react-native";
+import { Alert, FlatList, ListRenderItem, Text, TouchableOpacity, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
 import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { AlertCategory } from "@/shared/types/alert";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
+import { Download } from "lucide-react-native";
 
 export interface AlertDetailsDeviceListProps {
   devices: DeviceDetails[];
@@ -18,13 +19,22 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   const { devices, zone, room, alertCategory } = props;
   const { alert, error: alertError } = useGetAlert(alertCategory);
 
-  const renderHeader = () => {
-    return (
-      <Text className="mb-4 text-2xl font-semibold text-gray-800">
+  
+const renderHeader = () => {
+  return (
+    <View className="mb-4 flex-row items-center justify-between">
+      <Text className="text-2xl font-semibold text-gray-800">
         Devices ({devices.length})
       </Text>
-    );
-  };
+
+      {alertCategory != "ALERTS" && (
+        <TouchableOpacity>
+          <Download size={24} className="text-gray-600" />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
   const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
     ({ item , index}) => {
