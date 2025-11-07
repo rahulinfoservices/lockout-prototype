@@ -11,19 +11,12 @@ export interface AlertDetailsDeviceListProps {
   devices: DeviceDetails[];
   zone: ZoneDetails;
   room: RoomDetails;
+  renderHeader: () => React.JSX.Element;
 }
 
 export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
-  const { devices, zone, room } = props;
+  const { devices, zone, room, renderHeader } = props;
   const { alert, error: alertError } = useGetAlert("ALERTS");
-
-  const renderHeader = () => {
-    return (
-      <Text className="mb-4 text-2xl font-semibold text-gray-800">
-        Devices ({devices.length})
-      </Text>
-    );
-  };
 
   const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
     ({ item }) => {

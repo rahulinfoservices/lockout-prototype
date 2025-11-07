@@ -1,4 +1,5 @@
-import { View } from "react-native";
+import { useCallback } from "react";
+import { Text, View } from "react-native";
 
 import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-details";
 import { AlertCategory } from "@/shared/types/alert";
@@ -21,6 +22,14 @@ export default function AlertDetails(props: AlertDetailsProps) {
     schoolId,
     zipCode,
   );
+
+  const renderHeader = useCallback(() => {
+    return (
+      <Text className="mb-4 text-2xl font-semibold text-gray-800">
+        Devices ({data.devices.length})
+      </Text>
+    );
+  }, [data.devices.length]);
 
   if (isLoading) {
     return <AlertDetailsLoader />;
@@ -55,12 +64,14 @@ export default function AlertDetails(props: AlertDetailsProps) {
           devices={data.devices}
           zone={data.zoneDetails}
           room={data.roomDetails}
+          renderHeader={renderHeader}
         />
       ) : (
         <HealthDetailsDeviceList
           devices={data.devices}
           zone={data.zoneDetails}
           room={data.roomDetails}
+          renderHeader={renderHeader}
         />
       )}
     </View>
