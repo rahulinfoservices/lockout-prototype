@@ -5,17 +5,19 @@ import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
-import { AlertDeviceListItem } from "./alert-device-list-item";
+import { HealthDeviceListItem } from "./health-device-list-item";
 
-export interface AlertDetailsDeviceListProps {
+export interface HealthDetailsDeviceListProps {
   devices: DeviceDetails[];
   zone: ZoneDetails;
   room: RoomDetails;
 }
 
-export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
+export const HealthDetailsDeviceList = (
+  props: HealthDetailsDeviceListProps,
+) => {
   const { devices, zone, room } = props;
-  const { alert, error: alertError } = useGetAlert("ALERTS");
+  const { alert, error: alertError } = useGetAlert("TELEMETRY");
 
   const renderHeader = () => {
     return (
@@ -25,10 +27,10 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
     );
   };
 
-  const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
+  const renderDeviceItem: ListRenderItem<DeviceDetails> = useCallback(
     ({ item }) => {
       return (
-        <AlertDeviceListItem
+        <HealthDeviceListItem
           item={item}
           alert={alert}
           zone={zone}
@@ -52,7 +54,7 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   return (
     <FlatList
       ListHeaderComponent={renderHeader}
-      renderItem={renderAlertItem}
+      renderItem={renderDeviceItem}
       data={devices}
       keyExtractor={device => device.deviceId}
       ListEmptyComponent={

@@ -7,6 +7,7 @@ import { AlertDetailsDeviceList } from "./_shared/components/alert-details-devic
 import { AlertDetailsError } from "./_shared/components/alert-details-error";
 import { AlertDetailsHeader } from "./_shared/components/alert-details-header";
 import { AlertDetailsLoader } from "./_shared/components/alert-details-loader";
+import { HealthDetailsDeviceList } from "./_shared/components/health-details-device-list";
 
 export interface AlertDetailsProps {
   schoolId: string;
@@ -49,12 +50,19 @@ export default function AlertDetails(props: AlertDetailsProps) {
     <View className="flex-1 bg-gray-50">
       <AlertDetailsHeader facilty={data.schoolDetails} />
 
-      <AlertDetailsDeviceList
-        devices={data.devices}
-        zone={data.zoneDetails}
-        room={data.roomDetails}
-        alertCategory={alertCategory}
-      />
+      {alertCategory === "ALERTS" ? (
+        <AlertDetailsDeviceList
+          devices={data.devices}
+          zone={data.zoneDetails}
+          room={data.roomDetails}
+        />
+      ) : (
+        <HealthDetailsDeviceList
+          devices={data.devices}
+          zone={data.zoneDetails}
+          room={data.roomDetails}
+        />
+      )}
     </View>
   );
 }
