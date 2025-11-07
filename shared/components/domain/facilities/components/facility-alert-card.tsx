@@ -116,11 +116,11 @@ export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
           <View
             className={cn("rounded-full px-3 py-1", {
               "bg-red-100": isLockdown,
-              "bg-blue-50": !isLockdown,
+              "bg-gray-100": !isLockdown,
             })}
           >
             <Text
-              className={cn("text-base font-medium text-blue-700", {
+              className={cn("text-base font-medium text-gray-700", {
                 "text-red-800": isLockdown,
               })}
             >
@@ -131,12 +131,12 @@ export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
           {item.district ? (
             <View
               className={cn("rounded-full px-3 py-1", {
-                "bg-cyan-50": !isLockdown,
+                "bg-gray-100": !isLockdown,
                 "bg-red-100": isLockdown,
               })}
             >
               <Text
-                className={cn("text-base font-medium text-cyan-700", {
+                className={cn("text-base font-medium text-gray-700", {
                   "text-red-800": isLockdown,
                 })}
               >

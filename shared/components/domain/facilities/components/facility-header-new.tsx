@@ -31,7 +31,7 @@ export const FacilityHeader = (props: FacilityHeaderProps) => {
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-         <Logo width={35} height={35} />
+         <Logo width={40} height={40} />
       
           <Text className="mb-1 text-2xl font-bold text-gray-700">
             LockOut USA

@@ -39,7 +39,7 @@ export const FacilityStateDropdown = ({
   };
 
   return (
-    <View className="px-4 py-2 mt-3" >
+    <View className="px-4 py-1 mt-1" >
       {/* Dropdown Button */}
       <TouchableOpacity
         className="flex-row justify-between items-center rounded-lg border border-gray-300 bg-gray-100 px-4 py-3"
