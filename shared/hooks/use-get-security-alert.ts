@@ -1,9 +1,9 @@
 import database from "@react-native-firebase/database";
 import { useEffect, useState } from "react";
 
-import { SecurityAlert } from "@/shared/types/security-alert";
+import { AlertCategory, SecurityAlert } from "@/shared/types/alert";
 
-export const useGetSecurityAlert = () => {
+export const useGetAlert = (alertCategory: AlertCategory) => {
   const [alert, setAlert] = useState<SecurityAlert | null>(null);
   const [error, setError] = useState<string>("");
 
@@ -11,7 +11,7 @@ export const useGetSecurityAlert = () => {
   useEffect(() => {
     // Reference to this specific facility's alerts
     const alertsRef = database().ref(
-      `ALERTS/MI/FACILITIES/MI_49340_ST-MICHAEL-ES`,
+      `${alertCategory}/MI/FACILITIES/MI_49340_ST-MICHAEL-ES`,
     );
 
     const onValueChange = alertsRef.on(
@@ -32,7 +32,7 @@ export const useGetSecurityAlert = () => {
     return () => {
       alertsRef.off("value", onValueChange);
     };
-  }, []);
+  }, [alertCategory]);
 
   return {
     alert,

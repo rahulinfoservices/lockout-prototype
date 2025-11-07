@@ -1,4 +1,4 @@
-import { useGetSecurityAlert } from "@/shared/hooks/use-get-security-alert";
+import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 import { useCallback, useEffect } from "react";
@@ -15,7 +15,7 @@ export const SecurityDetailsDeviceList = (
   props: SecurityDetailsDeviceListProps,
 ) => {
   const { devices, zone, room } = props;
-  const { alert, error: alertError } = useGetSecurityAlert();
+  const { alert, error: alertError } = useGetAlert("ALERTS");
 
   const renderHeader = () => {
     return (

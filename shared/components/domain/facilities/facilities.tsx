@@ -1,30 +1,68 @@
+import { useCallback, useMemo, useState } from "react";
 import { FlatList, ListRenderItem, Text, View } from "react-native";
 
 import { FacilitiesError } from "@/shared/components/domain/facilities/components/facilities-error";
 import { FacilitiesLoader } from "@/shared/components/domain/facilities/components/facilities-loader";
 import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header";
 import { FacilitiesSearch } from "@/shared/components/domain/facilities/components/facilties-search";
+import { useGetFacilities } from "@/shared/hooks/use-get-facilities";
+import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
+import { AlertCategory } from "@/shared/types/alert";
+import { Facility } from "@/shared/types/facility";
 
-interface FacilitiesProps<T extends { schoolId: string }> {
-  facilities: T[];
-  isLoading: boolean;
-  error: string;
-  renderFacility: ListRenderItem<T>;
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
+import { FacilityCard } from "./components/facility-alert-card";
+import { FacilityDeviceHealthCard } from "./components/facilty-device-health-card";
+
+interface FacilitiesProps {
+  alertCategory: AlertCategory;
 }
 
-export default function Facilities<T extends { schoolId: string }>(
-  props: FacilitiesProps<T>,
-) {
-  const {
-    facilities,
-    isLoading,
-    error,
-    renderFacility,
-    searchQuery,
-    setSearchQuery,
-  } = props;
+export default function Facilities(props: FacilitiesProps) {
+  const { alertCategory } = props;
+  const { facilities, isLoading, error } = useGetFacilities();
+  const { alert, error: alertError } = useGetAlert(alertCategory);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter facilities based on search query
+  const filteredFacilities = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return facilities;
+    }
+
+    const query = searchQuery.toLowerCase();
+    return facilities.filter(
+      facility =>
+        facility.name.toLowerCase().includes(query) ||
+        facility.zip.includes(query) ||
+        facility.district.toLowerCase().includes(query),
+    );
+  }, [facilities, searchQuery]);
+
+  const renderFacilityAlertCard: ListRenderItem<Facility> = useCallback(
+    ({ item }) => (
+      <FacilityCard
+        item={item}
+        status={
+          item.schoolId === "ST MICHAEL-ES" ? alert?.alertType : undefined
+        }
+        error={item.schoolId === "ST MICHAEL-ES" ? alertError : undefined}
+      />
+    ),
+    [alert, alertError],
+  );
+
+  const renderFacilityDeviceHealthCard: ListRenderItem<Facility> = useCallback(
+    ({ item }) => (
+      <FacilityDeviceHealthCard
+        item={item}
+        status={
+          item.schoolId === "ST MICHAEL-ES" ? alert?.deviceHealth : undefined
+        }
+        error={item.schoolId === "ST MICHAEL-ES" ? alertError : undefined}
+      />
+    ),
+    [alert, alertError],
+  );
 
   if (isLoading) {
     return <FacilitiesLoader />;
@@ -44,8 +82,12 @@ export default function Facilities<T extends { schoolId: string }>(
       />
 
       <FlatList
-        data={facilities as T[]}
-        renderItem={renderFacility}
+        data={filteredFacilities}
+        renderItem={
+          alertCategory === "ALERTS"
+            ? renderFacilityAlertCard
+            : renderFacilityDeviceHealthCard
+        }
         keyExtractor={item => item.schoolId}
         contentContainerClassName="p-4"
         showsVerticalScrollIndicator={false}

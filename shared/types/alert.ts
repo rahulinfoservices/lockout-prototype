@@ -2,7 +2,7 @@ export interface SecurityAlert {
   alertId: string;
   alertType: "full_lockdown_mode" | "all_clear";
   description: string;
-  deviceHealth: string;
+  deviceHealth: "Online" | "LowBat" | "Offline";
   deviceId: string;
   deviceType: string;
   district: string;
@@ -17,3 +17,5 @@ export interface SecurityAlert {
   schoolStatus: string;
   ts: string;
 }
+
+export type AlertCategory = "ALERTS" | "TELEMETRY";

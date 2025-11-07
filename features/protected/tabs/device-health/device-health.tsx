@@ -1,11 +1,5 @@
-import { Text } from "react-native";
-
-import { Container } from "@/shared/components/core/container";
+import Facilities from "@/shared/components/domain/facilities/facilities";
 
 export default function DeviceHealth() {
-  return (
-    <Container>
-      <Text>Device Health</Text>
-    </Container>
-  );
+  return <Facilities alertCategory="TELEMETRY" />;
 }

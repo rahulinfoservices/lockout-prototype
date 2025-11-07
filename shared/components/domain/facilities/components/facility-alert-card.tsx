@@ -11,8 +11,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { cn } from "tailwind-variants/lite";
 
+import { SecurityAlert } from "@/shared/types/alert";
 import { Facility } from "@/shared/types/facility";
-import { SecurityAlert } from "@/shared/types/security-alert";
 
 interface FacilityCardProps {
   item: Facility;

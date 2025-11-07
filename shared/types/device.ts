@@ -1,4 +1,4 @@
-import { SecurityAlert } from "./security-alert";
+import { SecurityAlert } from "./alert";
 
 export interface DeviceDetails {
   deviceId: string;
