@@ -3,8 +3,9 @@ import { FlatList, ListRenderItem, Text, View } from "react-native";
 
 import { FacilitiesError } from "@/shared/components/domain/facilities/components/facilities-error";
 import { FacilitiesLoader } from "@/shared/components/domain/facilities/components/facilities-loader";
-import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header";
+import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header-new";
 import { FacilitiesSearch } from "@/shared/components/domain/facilities/components/facilties-search";
+import { FacilityStateDropdown } from "@/shared/components/domain/facilities/components/facilties-state-dropdown";
 import { useGetFacilities } from "@/shared/hooks/use-get-facilities";
 import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { AlertCategory } from "@/shared/types/alert";
@@ -22,6 +23,9 @@ export default function Facilities(props: FacilitiesProps) {
   const { facilities, isLoading, error } = useGetFacilities();
   const { alert, error: alertError } = useGetAlert(alertCategory);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const facilityStates = ["All States","MI"];
+  const [selectedState, setSelectedState] = useState<string>("MI");
 
   // Filter facilities based on search query
   const filteredFacilities = useMemo(() => {
@@ -74,12 +78,20 @@ export default function Facilities(props: FacilitiesProps) {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <FacilityHeader facilityCount={facilities.length} />
+      <FacilityHeader notificationCount={2} />
+
+      <FacilityStateDropdown
+        states={facilityStates}
+        selectedState={selectedState}
+        onSelect={(state) => setSelectedState(state)}
+      />
 
       <FacilitiesSearch
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
+
+    
 
       <FlatList
         data={filteredFacilities}
