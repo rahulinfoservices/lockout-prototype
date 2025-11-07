@@ -1,17 +1,23 @@
-import { Device } from "./device";
-
 export interface Facility {
-  id: string;
   name: string;
-  zip: string;
-  district: string;
-  stateCode: string;
   schoolId: string;
+  district: string;
+  zip: string;
+  stateCode: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface FacilityWithDevices extends Facility {
-  devices: Device[];
-  hasIssues: boolean;
-  hasTampered: boolean;
-  hasLowBattery: boolean;
+export interface RoomDetails {
+  name: string;
+  roomId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ZoneDetails {
+  name: string;
+  color: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -27,8 +27,11 @@ export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
   const scale = useSharedValue(1);
 
   const onPress = useCallback(() => {
-    router.push(`/security-alerts/${item.id}`);
-  }, [item.id, router]);
+    router.push({
+      pathname: `/security-alerts/[school-id]`,
+      params: { "school-id": item.schoolId, zipCode: item.zip },
+    });
+  }, [item.schoolId, item.zip, router]);
 
   useEffect(() => {
     if (isLockdown) {

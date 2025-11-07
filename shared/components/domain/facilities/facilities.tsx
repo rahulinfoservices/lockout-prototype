@@ -5,7 +5,7 @@ import { FacilitiesLoader } from "@/shared/components/domain/facilities/componen
 import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header";
 import { FacilitiesSearch } from "@/shared/components/domain/facilities/components/facilties-search";
 
-interface FacilitiesProps<T extends { id: string }> {
+interface FacilitiesProps<T extends { schoolId: string }> {
   facilities: T[];
   isLoading: boolean;
   error: string;
@@ -14,7 +14,7 @@ interface FacilitiesProps<T extends { id: string }> {
   setSearchQuery: (query: string) => void;
 }
 
-export default function Facilities<T extends { id: string }>(
+export default function Facilities<T extends { schoolId: string }>(
   props: FacilitiesProps<T>,
 ) {
   const {
@@ -46,7 +46,7 @@ export default function Facilities<T extends { id: string }>(
       <FlatList
         data={facilities as T[]}
         renderItem={renderFacility}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.schoolId}
         contentContainerClassName="p-4"
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={

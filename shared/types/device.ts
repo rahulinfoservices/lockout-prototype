@@ -1,6 +1,7 @@
-export interface Device {
-  id: string;
-  name: string;
-  type: string;
-  status: string;
+export interface DeviceDetails {
+  deviceId: string;
+  securityStatus: string;
+  deviceHealthStatus: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

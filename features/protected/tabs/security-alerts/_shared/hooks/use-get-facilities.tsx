@@ -38,12 +38,13 @@ export const useGetFacilities = () => {
         facilityNamesSnapshot.docs.forEach(facilityDoc => {
           const facilityData = facilityDoc.data();
           allFacilities.push({
-            id: facilityDoc.id,
             name: facilityData.name || facilityDoc.id,
             zip: facilityData.zip || zipCode,
             district: facilityData.district || "",
             stateCode: facilityData.stateCode || "MI",
             schoolId: facilityData.schoolId || facilityDoc.id,
+            createdAt: facilityData.createdAt?.toDate() || new Date(),
+            updatedAt: facilityData.updatedAt?.toDate() || new Date(),
           });
         });
       }
