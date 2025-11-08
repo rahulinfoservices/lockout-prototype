@@ -1,7 +1,8 @@
-import { DeviceDetails } from "@/shared/types/device";
-import { Facility, RoomDetails, ZoneDetails } from "@/shared/types/facility";
 import firestore from "@react-native-firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
+
+import { DeviceDetails } from "@/shared/types/device";
+import { Facility, RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
 export interface SecurityAlertData {
   schoolDetails: Facility | null;
@@ -50,6 +51,9 @@ export const useGetSecurityAlertDetails = (
           stateCode: schoolData?.stateCode || "",
           createdAt: schoolData?.createdAt?.toDate() || new Date(),
           updatedAt: schoolData?.updatedAt?.toDate() || new Date(),
+          fullName: schoolData?.fullName || "",
+          address: schoolData?.address || "",
+          phone: schoolData?.phone || "",
         };
       }
 

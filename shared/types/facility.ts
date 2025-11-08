@@ -6,6 +6,10 @@ export interface Facility {
   stateCode: string;
   createdAt: Date;
   updatedAt: Date;
+  fullName: string;
+  address: string;
+  phone: string;
+
 }
 
 export interface RoomDetails {

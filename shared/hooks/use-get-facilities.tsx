@@ -43,6 +43,9 @@ export const useGetFacilities = () => {
             district: facilityData.district || "",
             stateCode: facilityData.stateCode || "MI",
             schoolId: facilityData.schoolId || facilityDoc.id,
+            fullName: facilityData.fullName || "",
+            address: facilityData.address || "",
+            phone: facilityData.phone || "",
             createdAt: facilityData.createdAt?.toDate() || new Date(),
             updatedAt: facilityData.updatedAt?.toDate() || new Date(),
           });
