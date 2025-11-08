@@ -20,7 +20,7 @@ export const AppHeader = (props: AppHeaderProps) => {
   const hasNotification = notificationCount > 0;
 
   return (
-    <View className="bg-white-100 border-b border-gray-200 px-5 pt-2 pb-2">
+    <View className="border-b border-gray-200 bg-white px-5 pt-2 pb-2">
       <View
         style={{
           marginTop: insets.top,
