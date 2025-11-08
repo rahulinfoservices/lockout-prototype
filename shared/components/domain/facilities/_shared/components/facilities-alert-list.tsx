@@ -4,6 +4,7 @@ import { FlatList, ListRenderItem } from "react-native";
 import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { Facility } from "@/shared/types/facility";
 
+import { getSortedFacilitiesByAlertType } from "../utils/sort-school-list";
 import { FacilityCard } from "./facility-alert-card";
 
 interface FacilitiesAlertListProps {
@@ -14,6 +15,7 @@ interface FacilitiesAlertListProps {
 export const FacilitiesAlertList = (props: FacilitiesAlertListProps) => {
   const { facilities, renderEmptyList } = props;
   const { alert, error: alertError } = useGetAlert("ALERTS");
+  const facilityList = getSortedFacilitiesByAlertType(facilities, alert);
 
   const renderFacilityAlertCard: ListRenderItem<Facility> = useCallback(
     ({ item }) => (
@@ -30,7 +32,7 @@ export const FacilitiesAlertList = (props: FacilitiesAlertListProps) => {
 
   return (
     <FlatList
-      data={facilities}
+      data={facilityList}
       renderItem={renderFacilityAlertCard}
       keyExtractor={item => item.schoolId}
       contentContainerClassName="p-4"

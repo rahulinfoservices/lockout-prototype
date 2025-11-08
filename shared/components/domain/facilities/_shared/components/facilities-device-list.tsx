@@ -4,6 +4,7 @@ import { FlatList, ListRenderItem } from "react-native";
 import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { Facility } from "@/shared/types/facility";
 
+import { getSortedFacilitiesByDeviceHealth } from "../utils/sort-school-list";
 import { FacilityDeviceHealthCard } from "./facilty-device-health-card";
 
 interface FacilitiesDeviceListProps {
@@ -14,6 +15,7 @@ interface FacilitiesDeviceListProps {
 export const FacilitiesDeviceList = (props: FacilitiesDeviceListProps) => {
   const { facilities, renderEmptyList } = props;
   const { alert, error: alertError } = useGetAlert("TELEMETRY");
+  const facilityList = getSortedFacilitiesByDeviceHealth(facilities, alert);
 
   const renderFacilityDeviceHealthCard: ListRenderItem<Facility> = useCallback(
     ({ item }) => (
@@ -30,7 +32,7 @@ export const FacilitiesDeviceList = (props: FacilitiesDeviceListProps) => {
 
   return (
     <FlatList
-      data={facilities}
+      data={facilityList}
       renderItem={renderFacilityDeviceHealthCard}
       keyExtractor={item => item.schoolId}
       contentContainerClassName="p-4"

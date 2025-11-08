@@ -1,15 +1,15 @@
 import { useCallback, useMemo, useState } from "react";
 import { Text, View } from "react-native";
 
-import { FacilitiesError } from "@/shared/components/domain/facilities/components/facilities-error";
-import { FacilitiesLoader } from "@/shared/components/domain/facilities/components/facilities-loader";
-import { FacilityHeader } from "@/shared/components/domain/facilities/components/facility-header";
-import { FacilitiesSearch } from "@/shared/components/domain/facilities/components/facilties-search";
+import { FacilitiesError } from "@/shared/components/domain/facilities/_shared/components/facilities-error";
+import { FacilitiesLoader } from "@/shared/components/domain/facilities/_shared/components/facilities-loader";
+import { FacilityHeader } from "@/shared/components/domain/facilities/_shared/components/facility-header";
+import { FacilitiesSearch } from "@/shared/components/domain/facilities/_shared/components/facilties-search";
 import { useGetFacilities } from "@/shared/hooks/use-get-facilities";
 import { AlertCategory } from "@/shared/types/alert";
 
-import { FacilitiesAlertList } from "./components/facilities-alert-list";
-import { FacilitiesDeviceList } from "./components/facilities-device-list";
+import { FacilitiesAlertList } from "./_shared/components/facilities-alert-list";
+import { FacilitiesDeviceList } from "./_shared/components/facilities-device-list";
 
 interface FacilitiesProps {
   alertCategory: AlertCategory;
