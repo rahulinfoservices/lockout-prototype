@@ -6,7 +6,6 @@ import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-detail
 import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { AlertCategory } from "@/shared/types/alert";
 
-import { AppHeader } from "../facilities/_shared/components/app-header";
 import { FacilityInfoCard } from "../facilities/_shared/components/facility-info-card";
 import { AlertDetailsDeviceList } from "./_shared/components/alert-details-device-list";
 import { AlertDetailsError } from "./_shared/components/alert-details-error";
@@ -80,7 +79,6 @@ export default function AlertDetails(props: AlertDetailsProps) {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <AppHeader notificationCount={2} />
       <DetailsHeader
         facilty={data.schoolDetails}
         status={facilityAlertStatus}

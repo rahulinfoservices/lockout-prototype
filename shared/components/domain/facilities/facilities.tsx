@@ -7,7 +7,6 @@ import { FacilitiesSearch } from "@/shared/components/domain/facilities/_shared/
 import { useGetFacilities } from "@/shared/hooks/use-get-facilities";
 import { AlertCategory } from "@/shared/types/alert";
 
-import { AppHeader } from "./_shared/components/app-header";
 import { FacilitiesAlertList } from "./_shared/components/facilities-alert-list";
 import { FacilitiesDeviceList } from "./_shared/components/facilities-device-list";
 import { FacilityStateDropdown } from "./_shared/components/facilties-state-dropdown";
@@ -57,8 +56,6 @@ export default function Facilities(props: FacilitiesProps) {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <AppHeader notificationCount={2} />
-
       <FacilityStateDropdown
         states={facilityStates}
         selectedState={selectedState}

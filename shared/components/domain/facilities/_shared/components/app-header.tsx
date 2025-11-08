@@ -20,8 +20,7 @@ export const AppHeader = (props: AppHeaderProps) => {
   const hasNotification = notificationCount > 0;
 
   return (
-    <View className="bg-white-100 border-b border-gray-200 px-5 pb-2 pt-2">
-       
+    <View className="bg-white-100 border-b border-gray-200 px-5 pt-2 pb-2">
       <View
         style={{
           marginTop: insets.top,
@@ -31,16 +30,14 @@ export const AppHeader = (props: AppHeaderProps) => {
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-         <Logo width={40} height={40} />
-      
+          <Logo width={40} height={40} />
+
           <Text className="mb-1 text-2xl font-bold text-gray-700">
             LockOut USA
           </Text>
-    
         </View>
 
-               <View style={{ flexDirection: "row", alignItems: "center", gap: 15 }}>
-       
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 15 }}>
           <View style={{ position: "relative" }}>
             <BellIcon className="text-gray-700" size={24} />
             {hasNotification && (
@@ -58,11 +55,8 @@ export const AppHeader = (props: AppHeaderProps) => {
             )}
           </View>
           <LogOutIcon className="text-gray-700" size={28} onPress={signOut} />
-          </View>
-
-        
+        </View>
       </View>
-   
     </View>
   );
 };
