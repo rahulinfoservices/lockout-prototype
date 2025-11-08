@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Activity, ShieldAlert } from "lucide-react-native";
+import { Activity, BookDown, ShieldAlert } from "lucide-react-native";
 
 export default function ProtectedLayout() {
   return (
@@ -32,6 +32,19 @@ export default function ProtectedLayout() {
           ),
         }}
       />
+
+       <Tabs.Screen
+        name="report"
+        options={{
+          title: "Report",
+          tabBarLabel: "Report",
+          tabBarIcon: ({ color, size }) => (
+            <BookDown size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
+
+    
   );
 }

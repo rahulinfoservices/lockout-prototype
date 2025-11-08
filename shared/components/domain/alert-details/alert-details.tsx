@@ -1,13 +1,17 @@
-import { useCallback } from "react";
-import { Text, View } from "react-native";
+import { Download } from "lucide-react-native";
+import { useCallback, useEffect, useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
+import { AppHeader } from "@/shared/components/domain/facilities/components/app-header";
+import { FacilityInfoCard } from "@/shared/components/domain/facilities/components/facility-info-card";
 import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-details";
+import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
 import { AlertCategory } from "@/shared/types/alert";
 
 import { AlertDetailsDeviceList } from "./_shared/components/alert-details-device-list";
 import { AlertDetailsError } from "./_shared/components/alert-details-error";
-import { AlertDetailsHeader } from "./_shared/components/alert-details-header";
 import { AlertDetailsLoader } from "./_shared/components/alert-details-loader";
+import { DetailsHeader } from "./_shared/components/details-header";
 import { HealthDetailsDeviceList } from "./_shared/components/health-details-device-list";
 
 export interface AlertDetailsProps {
@@ -18,18 +22,42 @@ export interface AlertDetailsProps {
 
 export default function AlertDetails(props: AlertDetailsProps) {
   const { schoolId, zipCode, alertCategory } = props;
+  const { alert }  = useGetAlert(alertCategory);
   const { data, error, isLoading } = useGetSecurityAlertDetails(
     schoolId,
     zipCode,
   );
+  const [facilityAlertStatus, setFacilityAlertStatus] = useState<string>("ALL CLEAR");
+
+
+  useEffect(() => {
+
+    if (alertCategory === "ALERTS") {
+      setFacilityAlertStatus(alert?.alertType ?? "UNKNOWN");
+    } else {
+      setFacilityAlertStatus(alert?.deviceHealth ?? "UNKNOWN");
+    }
+  }, [alert, alertCategory]);
 
   const renderHeader = useCallback(() => {
     return (
-      <Text className="mb-4 text-2xl font-semibold text-gray-800">
-        Devices ({data.devices.length})
-      </Text>
+      <View className="mb-4 flex-row items-center justify-between">
+        <Text className="text-2xl font-semibold text-gray-800">
+          Devices ({data.devices.length})
+        </Text>
+
+        {alertCategory !== "ALERTS" && (
+          <TouchableOpacity>
+            <Download size={24} className="text-gray-600" />
+          </TouchableOpacity>
+        )}
+      </View>
     );
-  }, [data.devices.length]);
+  }, [alertCategory, data.devices.length]);
+
+
+
+
 
   if (isLoading) {
     return <AlertDetailsLoader />;
@@ -55,9 +83,17 @@ export default function AlertDetails(props: AlertDetailsProps) {
     return <AlertDetailsError error="No zone details found" />;
   }
 
+
+
   return (
     <View className="flex-1 bg-gray-50">
-      <AlertDetailsHeader facilty={data.schoolDetails} />
+      <AppHeader notificationCount={2} />
+      <DetailsHeader facilty={data.schoolDetails}
+        status={facilityAlertStatus}
+        alertCategory={alertCategory}
+      />
+
+      <FacilityInfoCard facility={data.schoolDetails} />
 
       {alertCategory === "ALERTS" ? (
         <AlertDetailsDeviceList

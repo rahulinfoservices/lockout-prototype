@@ -127,11 +127,11 @@ export const FacilityDeviceHealthCard = ({
             className={cn("rounded-full px-3 py-1", {
               "bg-red-100": isOffline,
               "bg-yellow-100": isLowBattery,
-              "bg-blue-50": isOnline,
+              "bg-gray-100": isOnline,
             })}
           >
             <Text
-              className={cn("text-base font-medium text-blue-700", {
+              className={cn("text-base font-medium text-gray-700", {
                 "text-red-800": isOffline,
                 "text-yellow-800": isLowBattery,
               })}
@@ -145,11 +145,11 @@ export const FacilityDeviceHealthCard = ({
               className={cn("rounded-full px-3 py-1", {
                 "bg-red-100": isOffline,
                 "bg-yellow-100": isLowBattery,
-                "bg-cyan-50": isOnline,
+                "bg-gray-100": isOnline,
               })}
             >
               <Text
-                className={cn("text-base font-medium text-cyan-700", {
+                className={cn("text-base font-medium text-gray-700", {
                   "text-red-800": isOffline,
                   "text-yellow-800": isLowBattery,
                 })}
