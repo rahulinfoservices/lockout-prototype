@@ -10,10 +10,11 @@ export interface AlertDeviceListItemProps {
   zone: ZoneDetails;
   room: RoomDetails;
   alert: NullableSecurityAlert;
+  position: number;
 }
 
 export const AlertDeviceListItem = (props: AlertDeviceListItemProps) => {
-  const { item, alert, zone, room } = props;
+  const { item, alert, zone, room ,position} = props;
 
   const isAlert =
     alert?.alertType === "full_lockdown_mode" &&
@@ -23,7 +24,7 @@ export const AlertDeviceListItem = (props: AlertDeviceListItemProps) => {
     <View className="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
       <View className="mb-3 flex-row items-center justify-between">
         <Text className="text-lg font-semibold text-gray-800">
-          Device #{item.deviceId}
+          Device {position} : {item.deviceId}
         </Text>
 
         <View

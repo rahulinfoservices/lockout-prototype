@@ -23,13 +23,14 @@ export const HealthDetailsDeviceList = (
   const deviceList = getSortedDeviceListByDeviceHealth(devices, alert);
 
   const renderDeviceItem: ListRenderItem<DeviceDetails> = useCallback(
-    ({ item }) => {
+    ({ item , index }) => {
       return (
         <HealthDeviceListItem
           item={item}
           alert={alert}
           zone={zone}
           room={room}
+          position ={index + 1}
         />
       );
     },

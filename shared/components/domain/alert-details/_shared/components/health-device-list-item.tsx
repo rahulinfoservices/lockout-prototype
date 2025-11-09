@@ -10,10 +10,11 @@ export interface HealthDeviceListItemProps {
   alert: NullableSecurityAlert;
   zone: ZoneDetails;
   room: RoomDetails;
+  position: number;
 }
 
 export const HealthDeviceListItem = (props: HealthDeviceListItemProps) => {
-  const { item, alert, zone, room } = props;
+  const { item, alert, zone, room ,position } = props;
   const isDeviceIdSame = alert?.deviceId === item.deviceId;
   const isOnline =
     !alert?.deviceHealth || alert.deviceHealth === "Online" || !isDeviceIdSame;
@@ -24,7 +25,7 @@ export const HealthDeviceListItem = (props: HealthDeviceListItemProps) => {
     <View className="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
       <View className="mb-3 flex-row items-center justify-between">
         <Text className="text-lg font-semibold text-gray-800">
-          Device #{item.deviceId}
+          Device {position} : {item.deviceId}
         </Text>
 
         <View

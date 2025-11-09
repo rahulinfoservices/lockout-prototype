@@ -21,13 +21,14 @@ export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   const deviceList = getSortedDeviceListByAlertType(devices, alert);
 
   const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
-    ({ item }) => {
+    ({ item , index}) => {
       return (
         <AlertDeviceListItem
           item={item}
           alert={alert}
           zone={zone}
           room={room}
+          position ={index + 1}
         />
       );
     },
