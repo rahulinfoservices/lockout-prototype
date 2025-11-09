@@ -1,9 +1,11 @@
-import { ChevronDown } from "lucide-react-native";
+import { ChevronDown, ChevronUp } from "lucide-react-native";
 import { styled } from "nativewind";
 import React, { useState } from "react";
-import { Animated, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { cn } from "tailwind-variants/lite";
 
-const ChevronIcon = styled(ChevronDown);
+const ChevronDownIcon = styled(ChevronDown);
+const ChevronUpIcon = styled(ChevronUp);
 
 interface FacilityStateDropdownProps {
   states: string[];
@@ -17,21 +19,10 @@ export const FacilityStateDropdown = ({
   onSelect,
 }: FacilityStateDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const rotation = new Animated.Value(0);
 
   const toggleDropdown = () => {
-    Animated.timing(rotation, {
-      toValue: isOpen ? 0 : 1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-    setIsOpen(!isOpen);
+    setIsOpen(prevState => !prevState);
   };
-
-  const rotateInterpolate = rotation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "180deg"],
-  });
 
   const handleSelect = (state: string) => {
     onSelect(state);
@@ -39,34 +30,37 @@ export const FacilityStateDropdown = ({
   };
 
   return (
-    <View className="px-4 py-1 mt-1" >
+    <View className="mt-1 py-2">
       {/* Dropdown Button */}
       <TouchableOpacity
-        className="flex-row justify-between items-center rounded-lg border border-gray-300 bg-gray-100 px-4 py-3"
+        className="flex-row items-center justify-between rounded-lg border border-gray-300 bg-gray-100 px-4 py-3"
         onPress={toggleDropdown}
         activeOpacity={0.8}
       >
-        <Text className="text-gray-800 text-base">{selectedState}</Text>
-        <Animated.View style={{ transform: [{ rotate: rotateInterpolate }] }}>
-          <ChevronIcon className="text-gray-600" size={20} />
-        </Animated.View>
+        <Text className="text-base text-gray-800">{selectedState}</Text>
+
+        {isOpen ? (
+          <ChevronUpIcon className="text-gray-600" size={20} />
+        ) : (
+          <ChevronDownIcon className="text-gray-600" size={20} />
+        )}
       </TouchableOpacity>
 
       {/* Overlay Dropdown List */}
       {isOpen && (
-        <View style={styles.overlay}>
+        <View className="absolute top-full right-0 left-0 z-10 bg-white shadow-lg">
           <FlatList
             data={states}
-            keyExtractor={(item) => item}
+            keyExtractor={item => item}
             renderItem={({ item }) => (
               <TouchableOpacity
                 className="px-4 py-3"
                 onPress={() => handleSelect(item)}
               >
                 <Text
-                  className={`text-gray-800 ${
-                    item === selectedState ? "font-bold" : ""
-                  }`}
+                  className={cn("text-gray-800", {
+                    "font-bold": item === selectedState,
+                  })}
                 >
                   {item}
                 </Text>
@@ -78,22 +72,3 @@ export const FacilityStateDropdown = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  overlay: {
-    position: "absolute",
-    top: 50, // button height
-    left: 16,
-    right: 16,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "#d1d5db",
-    borderRadius: 8,
-    maxHeight: 200,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    zIndex: 10,
-  },
-});

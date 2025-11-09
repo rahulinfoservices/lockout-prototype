@@ -56,16 +56,18 @@ export default function Facilities(props: FacilitiesProps) {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <FacilityStateDropdown
-        states={facilityStates}
-        selectedState={selectedState}
-        onSelect={state => setSelectedState(state)}
-      />
+      <View className="flex-row items-center gap-4 border-b border-gray-200 bg-white px-4 py-2">
+        <FacilityStateDropdown
+          states={facilityStates}
+          selectedState={selectedState}
+          onSelect={state => setSelectedState(state)}
+        />
 
-      <FacilitiesSearch
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+        <FacilitiesSearch
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+      </View>
 
       {alertCategory === "ALERTS" ? (
         <FacilitiesAlertList
