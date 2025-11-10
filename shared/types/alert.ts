@@ -15,6 +15,7 @@ export interface SecurityAlert {
   roomId: string;
   schoolId: string;
   schoolStatus: string;
+  zipCode: string;
   ts: Date;
 }
 

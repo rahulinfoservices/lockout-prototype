@@ -11,10 +11,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 
 import { AuthProvider, useAuth } from "@/shared/contexts/auth";
-import {
-  configureNotifications,
-  requestNotificationPermissions,
-} from "@/shared/utils/push-notifications";
+import { usePushNotificationsObserver } from "@/shared/hooks/use-push-notifications-observer";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -43,8 +40,6 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
-      configureNotifications();
-      requestNotificationPermissions();
     }
   }, [loaded]);
 
@@ -66,6 +61,7 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  usePushNotificationsObserver();
   const { user } = useAuth();
 
   return (

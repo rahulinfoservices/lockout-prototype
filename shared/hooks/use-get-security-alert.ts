@@ -1,7 +1,12 @@
 import database from "@react-native-firebase/database";
+import * as Notifications from "expo-notifications";
 import { useEffect, useState } from "react";
 
-import { AlertCategory, NullableSecurityAlert } from "@/shared/types/alert";
+import {
+  AlertCategory,
+  NullableSecurityAlert,
+  SecurityAlert,
+} from "@/shared/types/alert";
 
 export const useGetAlert = (alertCategory: AlertCategory) => {
   const [alert, setAlert] = useState<NullableSecurityAlert>(null);
@@ -17,8 +22,32 @@ export const useGetAlert = (alertCategory: AlertCategory) => {
     const onValueChange = alertsRef.on(
       "value",
       snapshot => {
-        const data = snapshot.val();
+        const data: SecurityAlert = snapshot.val();
         setAlert(data);
+
+        if (alertCategory === "ALERTS") {
+          Notifications.scheduleNotificationAsync({
+            content: {
+              title: "Security Alert",
+              body: data.description,
+              data: {
+                alert: data,
+              },
+            },
+            trigger: null,
+          });
+        } else {
+          Notifications.scheduleNotificationAsync({
+            content: {
+              title: "Device Health Alert",
+              body: data.description,
+              data: {
+                telemetry: data,
+              },
+            },
+            trigger: null,
+          });
+        }
 
         // setAlert(alertsList);
         setError("");
