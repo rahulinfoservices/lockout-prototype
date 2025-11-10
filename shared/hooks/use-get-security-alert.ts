@@ -41,6 +41,8 @@ export const useGetSecurityAlert = () => {
             alert.alertType === "full_lockdown_mode"
               ? "full_lockdown.wav"
               : "all_clear.wav",
+          categoryIdentifier: "security-alerts",
+          interruptionLevel: "critical",
         },
         trigger: {
           channelId:

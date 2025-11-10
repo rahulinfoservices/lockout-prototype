@@ -54,6 +54,8 @@ export const useGetDeviceHealthAlert = () => {
           body: `Your device's (${alert.deviceId}) health status has changed to ${alert.deviceHealth}`,
           data: { telemetry: alert },
           sound: getSound(alert.deviceHealth),
+          categoryIdentifier: "device-health",
+          interruptionLevel: "critical",
         },
         trigger: {
           channelId: getChannelId(alert.deviceHealth),
