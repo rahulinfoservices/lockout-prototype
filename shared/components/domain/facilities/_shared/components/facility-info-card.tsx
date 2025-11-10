@@ -1,9 +1,9 @@
 import { MapPin, Phone } from "lucide-react-native";
 import { styled } from "nativewind";
+import { useMemo } from "react";
 import { Text, View } from "react-native";
 
 import { Facility } from "@/shared/types/facility";
-import { useMemo } from "react";
 
 interface FacilityInfoCardProps {
   facility?: Facility;
