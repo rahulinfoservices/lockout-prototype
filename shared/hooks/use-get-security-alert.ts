@@ -1,6 +1,6 @@
 import { getDatabase, onValue, ref } from "@react-native-firebase/database";
 import * as Notifications from "expo-notifications";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { useAlertStore } from "../stores/use-alert-store";
 import { SecurityAlert } from "../types/alert";
@@ -11,6 +11,7 @@ export const useGetSecurityAlert = () => {
   const setAlert = useAlertStore(state => state.setSecurityAlert);
   const setError = useAlertStore(state => state.setSecurityError);
   const setLastAlertId = useAlertStore(state => state.setLastSecurityAlertId);
+  const isInitialLoad = useRef(true);
 
   useEffect(() => {
     const db = getDatabase();
@@ -30,7 +31,7 @@ export const useGetSecurityAlert = () => {
   }, [setAlert, setError]);
 
   useEffect(() => {
-    if (alert) {
+    if (alert && !isInitialLoad.current) {
       Notifications.scheduleNotificationAsync({
         content: {
           title: "Security Alert",
@@ -39,7 +40,12 @@ export const useGetSecurityAlert = () => {
         },
         trigger: null,
       });
+
       setLastAlertId(alert.alertId);
+    }
+
+    if (alert && isInitialLoad.current) {
+      isInitialLoad.current = false;
     }
   }, [alert, setLastAlertId]);
 };
