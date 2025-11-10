@@ -3,6 +3,7 @@ import { styled } from "nativewind";
 import { Text, View } from "react-native";
 
 import { Facility } from "@/shared/types/facility";
+import { useMemo } from "react";
 
 interface FacilityInfoCardProps {
   facility?: Facility;
@@ -12,24 +13,16 @@ const MapPinIcon = styled(MapPin);
 const PhoneIcon = styled(Phone);
 
 export const FacilityInfoCard = ({ facility }: FacilityInfoCardProps) => {
-  // 🔍 Smart field selection with fallbacks
   const name =
-    facility?.fullName?.trim() ||
-    // facility?.name?.trim() ||
-    "St. Michael Elementary School";
+    facility?.fullName || facility?.name || "St. Michael Elementary School";
 
-  let location = "";
-  if (facility?.address?.trim()) {
-    location = facility.address.trim();
-  }
-  //  else if (facility?.district || facility?.zip) {
-  //   const district = facility?.district?.trim() || "";
-  //   const state = facility?.zip?.trim() || "";
-  //   location = [district, state].filter(Boolean).join(", ");
-  // }
-  else {
-    location = "8944 50th Ave, Remus, MI 49340";
-  }
+  const location = useMemo(() => {
+    if (facility?.address) {
+      return facility.address.trim();
+    }
+
+    return "8944 50th Ave, Remus, MI 49340";
+  }, [facility?.address]);
 
   const phone = facility?.phone?.trim() || "(989) 967-3681";
 

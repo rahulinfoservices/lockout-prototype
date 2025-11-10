@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { styled } from "nativewind";
+import { useMemo } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
@@ -25,21 +26,18 @@ export const DetailsHeader = (props: DetailsHeaderProps) => {
   const isAlert = status === "full_lockdown_mode";
   const isAllclear = status === "all_clear";
 
-  const statusText = (() => {
+  const statusText = useMemo(() => {
     if (isAlert) return "FULL LOCKDOWN";
     if (isOffline) return "OFFLINE";
     if (isLowBattery) return "LOW BATTERY";
     if (isOnline) return "ONLINE";
     if (isAllclear) return "ALL CLEAR";
     return ""; // fallback if none match
-  })();
+  }, [isAlert, isAllclear, isLowBattery, isOffline, isOnline]);
+
   return (
     <View className="px-1 pb-1">
-      <View
-        style={{
-          marginTop: 10,
-        }}
-      >
+      <View className="mt-2.5">
         <View className="flex-row items-center justify-between">
           {/* Left: Back Button */}
           <TouchableOpacity
