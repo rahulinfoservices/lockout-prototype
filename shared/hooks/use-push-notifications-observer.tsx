@@ -33,36 +33,60 @@ export const requestNotificationPermissions = async (): Promise<boolean> => {
 export const configureAndroidChannels = async () => {
   if (Platform.OS !== "android") return;
 
+  const common = {
+    importance: Notifications.AndroidImportance.MAX,
+    enableLights: true,
+    vibrationPattern: [0, 250, 250, 250],
+    enableVibrate: true,
+    bypassDnd: true,
+  };
+
   // Security alerts
   await Notifications.setNotificationChannelAsync("security-full-lockdown", {
     name: "Security: Full Lockdown",
-    importance: Notifications.AndroidImportance.MAX,
     sound: "full_lockdown.wav",
+    lightColor: "#FF0000",
+    description: "This is a full lockdown alert",
+    lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
+    groupId: "security-alerts",
+    ...common,
   });
 
   await Notifications.setNotificationChannelAsync("security-all-clear", {
     name: "Security: All Clear",
-    importance: Notifications.AndroidImportance.MAX,
     sound: "all_clear.wav",
+    lightColor: "#00FF00",
+    description: "This is an all clear alert",
+    groupId: "security-alerts",
+    ...common,
   });
 
   // Device health
   await Notifications.setNotificationChannelAsync("device-online", {
     name: "Device Health: Online",
-    importance: Notifications.AndroidImportance.HIGH,
     sound: "online.wav",
+    lightColor: "#00FF00",
+    description: "Device is online",
+    groupId: "device-health",
+    ...common,
   });
 
   await Notifications.setNotificationChannelAsync("device-offline", {
     name: "Device Health: Offline",
-    importance: Notifications.AndroidImportance.HIGH,
     sound: "offline.wav",
+    lightColor: "#FF0000",
+    description: "Device is offline",
+    groupId: "device-health",
+    ...common,
   });
 
   await Notifications.setNotificationChannelAsync("device-low-battery", {
     name: "Device Health: Low Battery",
-    importance: Notifications.AndroidImportance.HIGH,
     sound: "low_battery.wav",
+    lightColor: "#FF0000",
+    description: "Device is low battery",
+    groupId: "device-health",
+    ...common,
   });
 };
 
