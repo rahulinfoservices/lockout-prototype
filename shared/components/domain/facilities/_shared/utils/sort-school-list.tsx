@@ -1,8 +1,8 @@
 import { NullableSecurityAlert } from "@/shared/types/alert";
-import { Facility } from "@/shared/types/facility";
+import { FacilityData } from "@/shared/types/facility";
 
 export const getSortedFacilitiesByAlertType = (
-  facilities: Facility[],
+  facilities: FacilityData[],
   alert: NullableSecurityAlert,
 ) => {
   return facilities.sort((a, b) => {
@@ -20,7 +20,7 @@ export const getSortedFacilitiesByAlertType = (
 };
 
 export const getSortedFacilitiesByDeviceHealth = (
-  facilities: Facility[],
+  facilities: FacilityData[],
   alert: NullableSecurityAlert,
 ) => {
   return facilities.sort((a, b) => {

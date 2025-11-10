@@ -8,14 +8,21 @@ import {
 } from "@react-native-firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 
-import { DeviceDetails } from "../types/device";
-import { Facility, RoomDetails, ZoneDetails } from "../types/facility";
+import { DeviceDetailsData, DeviceDetailsDocument } from "../types/device";
+import {
+  FacilityData,
+  FacilityDocument,
+  RoomDetailsData,
+  RoomDetailsDocument,
+  ZoneDetailsData,
+  ZoneDetailsDocument,
+} from "../types/facility";
 
 export interface SecurityAlertData {
-  schoolDetails: Facility | null;
-  zoneDetails: ZoneDetails | null;
-  roomDetails: RoomDetails | null;
-  devices: DeviceDetails[];
+  schoolDetails: FacilityData | null;
+  zoneDetails: ZoneDetailsData | null;
+  roomDetails: RoomDetailsData | null;
+  devices: DeviceDetailsData[];
 }
 
 export const useGetSecurityAlertDetails = (
@@ -48,9 +55,9 @@ export const useGetSecurityAlertDetails = (
         schoolId,
       );
 
-      const schoolDoc = await getDoc<Facility>(schoolRef);
+      const schoolDoc = await getDoc<FacilityDocument>(schoolRef);
 
-      let schoolDetails = null;
+      let schoolDetails: FacilityData | null = null;
       if (schoolDoc.exists()) {
         const d = schoolDoc.data();
         schoolDetails = {
@@ -59,8 +66,8 @@ export const useGetSecurityAlertDetails = (
           district: d?.district ?? "",
           zip: d?.zip ?? "",
           stateCode: d?.stateCode ?? "",
-          createdAt: d?.createdAt ?? new Date(),
-          updatedAt: d?.updatedAt ?? new Date(),
+          createdAt: d?.createdAt.toDate() ?? new Date(),
+          updatedAt: d?.updatedAt.toDate() ?? new Date(),
           fullName: d?.fullName ?? "",
           address: d?.address ?? "",
           phone: d?.phone ?? "",
@@ -68,43 +75,43 @@ export const useGetSecurityAlertDetails = (
       }
 
       const zoneRef = doc(collection(schoolRef, "ZONES"), "ZONE1-GREEN");
-      const zoneDoc = await getDoc<ZoneDetails>(zoneRef);
+      const zoneDoc = await getDoc<ZoneDetailsDocument>(zoneRef);
 
-      let zoneDetails = null;
+      let zoneDetails: ZoneDetailsData | null = null;
       if (zoneDoc.exists()) {
         const z = zoneDoc.data();
         zoneDetails = {
           name: z?.name ?? "",
           color: z?.color ?? "",
-          createdAt: z?.createdAt ?? new Date(),
-          updatedAt: z?.updatedAt ?? new Date(),
+          createdAt: z?.createdAt.toDate() ?? new Date(),
+          updatedAt: z?.updatedAt.toDate() ?? new Date(),
         };
       }
 
       const roomRef = doc(collection(zoneRef, "ROOMS"), "ADMIN_OFFICE");
-      const roomDoc = await getDoc<RoomDetails>(roomRef);
+      const roomDoc = await getDoc<RoomDetailsDocument>(roomRef);
 
-      let roomDetails = null;
+      let roomDetails: RoomDetailsData | null = null;
       if (roomDoc.exists()) {
         const r = roomDoc.data();
         roomDetails = {
           name: r?.name ?? "",
           roomId: r?.roomId ?? "",
-          createdAt: r?.createdAt ?? new Date(),
-          updatedAt: r?.updatedAt ?? new Date(),
+          createdAt: r?.createdAt.toDate() ?? new Date(),
+          updatedAt: r?.updatedAt.toDate() ?? new Date(),
         };
       }
 
-      const devicesSnapshot: FirebaseFirestoreTypes.QuerySnapshot<DeviceDetails> =
+      const devicesSnapshot: FirebaseFirestoreTypes.QuerySnapshot<DeviceDetailsDocument> =
         await getDocs(collection(roomRef, "DEVICES"));
-      const devices = devicesSnapshot.docs.map(d => {
+      const devices: DeviceDetailsData[] = devicesSnapshot.docs.map(d => {
         const v = d.data();
         return {
           deviceId: v.deviceId ?? "",
           securityStatus: v.securityStatus ?? "",
           deviceHealthStatus: v.deviceHealthStatus ?? "",
-          createdAt: v.createdAt ?? new Date(),
-          updatedAt: v.updatedAt ?? new Date(),
+          createdAt: v.createdAt.toDate() ?? new Date(),
+          updatedAt: v.updatedAt.toDate() ?? new Date(),
         };
       });
 

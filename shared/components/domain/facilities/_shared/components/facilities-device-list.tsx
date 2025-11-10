@@ -2,13 +2,13 @@ import { useCallback } from "react";
 import { FlatList, ListRenderItem } from "react-native";
 
 import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
-import { Facility } from "@/shared/types/facility";
+import { FacilityData } from "@/shared/types/facility";
 
 import { getSortedFacilitiesByDeviceHealth } from "../utils/sort-school-list";
 import { FacilityDeviceHealthCard } from "./facilty-device-health-card";
 
 interface FacilitiesDeviceListProps {
-  facilities: Facility[];
+  facilities: FacilityData[];
   renderEmptyList: () => React.JSX.Element;
 }
 
@@ -17,23 +17,24 @@ export const FacilitiesDeviceList = (props: FacilitiesDeviceListProps) => {
   const { alert, error: alertError } = useGetAlert("TELEMETRY");
   const facilityList = getSortedFacilitiesByDeviceHealth(facilities, alert);
 
-  const renderFacilityDeviceHealthCard: ListRenderItem<Facility> = useCallback(
-    ({ item }) => (
-      <FacilityDeviceHealthCard
-        item={item}
-        status={
-          item.schoolId === "ST MICHAEL-ES" ? alert?.deviceHealth : undefined
-        }
-        statusUpdatedAt={
-          item.schoolId === "ST MICHAEL-ES"
-            ? (alert?.ts ?? item.updatedAt)
-            : item.updatedAt
-        }
-        error={item.schoolId === "ST MICHAEL-ES" ? alertError : undefined}
-      />
-    ),
-    [alert, alertError],
-  );
+  const renderFacilityDeviceHealthCard: ListRenderItem<FacilityData> =
+    useCallback(
+      ({ item }) => (
+        <FacilityDeviceHealthCard
+          item={item}
+          status={
+            item.schoolId === "ST MICHAEL-ES" ? alert?.deviceHealth : undefined
+          }
+          statusUpdatedAt={
+            item.schoolId === "ST MICHAEL-ES"
+              ? (alert?.ts ?? item.updatedAt)
+              : item.updatedAt
+          }
+          error={item.schoolId === "ST MICHAEL-ES" ? alertError : undefined}
+        />
+      ),
+      [alert, alertError],
+    );
 
   return (
     <FlatList

@@ -7,10 +7,10 @@ import {
 } from "@react-native-firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 
-import { Facility } from "../types/facility";
+import { FacilityData, FacilityDocument } from "../types/facility";
 
 export const useGetFacilities = () => {
-  const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [facilities, setFacilities] = useState<FacilityData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -26,7 +26,7 @@ export const useGetFacilities = () => {
 
       const facilitiesSnapshot = await getDocs(statesRef);
 
-      const allFacilities: Facility[] = [];
+      const allFacilities: FacilityData[] = [];
 
       for (const zipDoc of facilitiesSnapshot.docs) {
         const zipCode = zipDoc.id;
@@ -36,7 +36,7 @@ export const useGetFacilities = () => {
           "FACILITY NAME",
         );
 
-        const facilityNamesSnapshot: FirebaseFirestoreTypes.QuerySnapshot<Facility> =
+        const facilityNamesSnapshot: FirebaseFirestoreTypes.QuerySnapshot<FacilityDocument> =
           await getDocs(facilityNamesRef);
 
         facilityNamesSnapshot.forEach(facilityDoc => {
@@ -50,8 +50,8 @@ export const useGetFacilities = () => {
             fullName: facilityData.fullName || "",
             address: facilityData.address || "",
             phone: facilityData.phone || "",
-            createdAt: facilityData.createdAt || new Date(),
-            updatedAt: facilityData.updatedAt || new Date(),
+            createdAt: facilityData.createdAt.toDate() || new Date(),
+            updatedAt: facilityData.updatedAt.toDate() || new Date(),
           });
         });
       }

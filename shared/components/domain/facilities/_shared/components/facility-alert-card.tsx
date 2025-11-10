@@ -13,10 +13,10 @@ import Animated, {
 import { cn } from "tailwind-variants/lite";
 
 import { SecurityAlert } from "@/shared/types/alert";
-import { Facility } from "@/shared/types/facility";
+import { FacilityData } from "@/shared/types/facility";
 
 interface FacilityCardProps {
-  item: Facility;
+  item: FacilityData;
   status?: SecurityAlert["alertType"];
   statusUpdatedAt: Date;
   error?: string;
