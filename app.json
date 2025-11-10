@@ -38,7 +38,18 @@
       "@react-native-firebase/auth",
       "@react-native-firebase/crashlytics",
       "expo-router",
-      "expo-notifications",
+      [
+        "expo-notifications",
+        {
+          "sounds": [
+            "./assets/sounds/all_clear.wav",
+            "./assets/sounds/full_lockdown.wav",
+            "./assets/sounds/low_battery.wav",
+            "./assets/sounds/offline.wav",
+            "./assets/sounds/online.wav"
+          ]
+        }
+      ],
       [
         "expo-build-properties",
         {

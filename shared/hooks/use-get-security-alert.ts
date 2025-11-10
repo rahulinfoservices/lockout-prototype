@@ -37,8 +37,17 @@ export const useGetSecurityAlert = () => {
           title: "Security Alert",
           body: alert.description,
           data: { alert },
+          sound:
+            alert.alertType === "full_lockdown_mode"
+              ? "full_lockdown.wav"
+              : "all_clear.wav",
         },
-        trigger: null,
+        trigger: {
+          channelId:
+            alert.alertType === "full_lockdown_mode"
+              ? "security-full-lockdown"
+              : "security-all-clear",
+        },
       });
 
       setLastAlertId(alert.alertId);
