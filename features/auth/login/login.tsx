@@ -123,15 +123,6 @@ export default function Login() {
                   )}
                 />
 
-                {/* Forgot Password */}
-                <View className="items-end">
-                  <Pressable>
-                    <Text className="text-lg font-medium text-teal-500">
-                      Forgot password?
-                    </Text>
-                  </Pressable>
-                </View>
-
                 {/* Login Button */}
                 <Button
                   onPress={handleSubmit(handleSignIn)}
