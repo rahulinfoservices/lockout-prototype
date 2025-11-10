@@ -1,9 +1,8 @@
 import { Download } from "lucide-react-native";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-details";
-import { useAlertStore } from "@/shared/stores/use-alert-store";
 import { AlertCategory } from "@/shared/types/alert";
 
 import { FacilityInfoCard } from "../facilities/_shared/components/facility-info-card";
@@ -25,22 +24,6 @@ export default function AlertDetails(props: AlertDetailsProps) {
     schoolId,
     zipCode,
   );
-  const [facilityAlertStatus, setFacilityAlertStatus] =
-    useState<string>("ALL CLEAR");
-  const securityAlert = useAlertStore(state => state.securityAlert);
-  const deviceHealthAlert = useAlertStore(state => state.deviceHealthAlert);
-
-  useEffect(() => {
-    if (alertCategory === "ALERTS") {
-      setFacilityAlertStatus(securityAlert?.alertType ?? "UNKNOWN");
-    } else {
-      setFacilityAlertStatus(deviceHealthAlert?.deviceHealth ?? "UNKNOWN");
-    }
-  }, [
-    alertCategory,
-    deviceHealthAlert?.deviceHealth,
-    securityAlert?.alertType,
-  ]);
 
   const renderHeader = useCallback(() => {
     return (
@@ -86,7 +69,6 @@ export default function AlertDetails(props: AlertDetailsProps) {
     <View className="flex-1 bg-gray-50">
       <DetailsHeader
         facilty={data.schoolDetails}
-        status={facilityAlertStatus}
         alertCategory={alertCategory}
       />
 

@@ -1,4 +1,4 @@
-import { router, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { Activity, BookDown, ShieldAlert } from "lucide-react-native";
 
 export default function ProtectedLayout() {
@@ -31,11 +31,6 @@ export default function ProtectedLayout() {
           tabBarIcon: ({ color, size }) => (
             <Activity size={size} color={color} />
           ),
-        }}
-        listeners={{
-          tabPress: () => {
-            router.dismissTo("/device-health");
-          },
         }}
       />
 

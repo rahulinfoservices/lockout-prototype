@@ -1,45 +1,63 @@
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { styled } from "nativewind";
-import { useMemo } from "react";
+import { useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
+import { useAlertStore } from "@/shared/stores/use-alert-store";
 import { AlertCategory } from "@/shared/types/alert";
 import { Facility } from "@/shared/types/facility";
 
 interface DetailsHeaderProps {
   facilty: Facility;
-  status?: string; // optional status prop
   alertCategory?: AlertCategory;
 }
 
 const ChevronLeftIcon = styled(ArrowLeft);
 
 export const DetailsHeader = (props: DetailsHeaderProps) => {
-  const { facilty, status = "active" } = props;
+  const { facilty, alertCategory } = props;
   const router = useRouter();
+  const alert = useAlertStore(state =>
+    alertCategory === "ALERTS" ? state.securityAlert : state.deviceHealthAlert,
+  );
 
-  const isOnline = status === "Online";
-  const isLowBattery = status === "LowBat";
-  const isOffline = status === "Offline";
-  const isAlert = status === "full_lockdown_mode";
-  const isAllclear = status === "all_clear";
+  const getStatusText = useCallback(() => {
+    if (alertCategory === "ALERTS") {
+      if (alert?.alertType === "full_lockdown_mode") return "FULL LOCKDOWN";
+      if (alert?.alertType === "all_clear") return "ALL CLEAR";
+    } else {
+      if (alert?.deviceHealth === "Online") return "ONLINE";
+      if (alert?.deviceHealth === "LowBat") return "LOW BATTERY";
+      if (alert?.deviceHealth === "Offline") return "OFFLINE";
+    }
+  }, [alert?.alertType, alert?.deviceHealth, alertCategory]);
 
-  const statusText = useMemo(() => {
-    if (isAlert) return "FULL LOCKDOWN";
-    if (isOffline) return "OFFLINE";
-    if (isLowBattery) return "LOW BATTERY";
-    if (isOnline) return "ONLINE";
-    if (isAllclear) return "ALL CLEAR";
-    return ""; // fallback if none match
-  }, [isAlert, isAllclear, isLowBattery, isOffline, isOnline]);
+  const getStatusColor = useCallback(() => {
+    if (alertCategory === "ALERTS") {
+      if (alert?.alertType === "full_lockdown_mode") return "danger";
+      if (alert?.alertType === "all_clear") return "success";
+    } else {
+      if (alert?.deviceHealth === "Online") return "success";
+      if (alert?.deviceHealth === "LowBat") return "warning";
+      if (alert?.deviceHealth === "Offline") return "danger";
+    }
+  }, [alert?.alertType, alert?.deviceHealth, alertCategory]);
+
+  const onBack = useCallback(() => {
+    if (alertCategory === "ALERTS") {
+      router.dismissTo("/security-alerts");
+    } else {
+      router.dismissTo("/device-health");
+    }
+  }, [alertCategory, router]);
 
   return (
     <View className="mt-2.5 mb-1 px-4">
       <View className="flex-row items-center justify-between">
         {/* Left: Back Button */}
-        <Pressable className="py-2" onPress={() => router.back()}>
+        <Pressable className="py-2" onPress={onBack}>
           <ChevronLeftIcon className="text-gray-700" size={24} />
         </Pressable>
 
@@ -56,19 +74,19 @@ export const DetailsHeader = (props: DetailsHeaderProps) => {
         {/* Right: Status Badge */}
         <View
           className={cn("rounded-full px-3 py-1.5", {
-            "bg-red-100": isOffline || isAlert,
-            "bg-yellow-100": isLowBattery,
-            "bg-green-100": isOnline || isAllclear,
+            "bg-red-100": getStatusColor() === "danger",
+            "bg-yellow-100": getStatusColor() === "warning",
+            "bg-green-100": getStatusColor() === "success",
           })}
         >
           <Text
             className={cn("text-sm font-semibold", {
-              "text-red-700": isOffline || isAlert,
-              "text-yellow-700": isLowBattery,
-              "text-green-700": isOnline || isAllclear,
+              "text-red-700": getStatusColor() === "danger",
+              "text-yellow-700": getStatusColor() === "warning",
+              "text-green-700": getStatusColor() === "success",
             })}
           >
-            {statusText}
+            {getStatusText()}
           </Text>
         </View>
       </View>
