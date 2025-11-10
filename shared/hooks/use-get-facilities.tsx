@@ -1,41 +1,45 @@
-import firestore from "@react-native-firebase/firestore";
+import {
+  collection,
+  doc,
+  FirebaseFirestoreTypes,
+  getDocs,
+  getFirestore,
+} from "@react-native-firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 
-import { Facility } from "@/shared/types/facility";
+import { Facility } from "../types/facility";
 
-// Fetch all facilities under MI state
 export const useGetFacilities = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
 
   const getFacilities = useCallback(async () => {
     setIsLoading(true);
 
     try {
-      const facilitiesSnapshot = await firestore()
-        .collection("STATES")
-        .doc("MI")
-        .collection("ZIP CODES")
-        .get();
+      const db = getFirestore();
+      const statesRef = collection(
+        doc(collection(db, "STATES"), "MI"),
+        "ZIP CODES",
+      );
+
+      const facilitiesSnapshot = await getDocs(statesRef);
 
       const allFacilities: Facility[] = [];
 
-      // Iterate through each zip code document
       for (const zipDoc of facilitiesSnapshot.docs) {
         const zipCode = zipDoc.id;
 
-        // Get all facilities under this zip code
-        const facilityNamesSnapshot = await firestore()
-          .collection("STATES")
-          .doc("MI")
-          .collection("ZIP CODES")
-          .doc(zipCode)
-          .collection("FACILITY NAME")
-          .get();
+        const facilityNamesRef = collection(
+          doc(statesRef, zipCode),
+          "FACILITY NAME",
+        );
 
-        // Add each facility to the array
-        facilityNamesSnapshot.docs.forEach(facilityDoc => {
+        const facilityNamesSnapshot: FirebaseFirestoreTypes.QuerySnapshot<Facility> =
+          await getDocs(facilityNamesRef);
+
+        facilityNamesSnapshot.forEach(facilityDoc => {
           const facilityData = facilityDoc.data();
           allFacilities.push({
             name: facilityData.name || facilityDoc.id,
@@ -46,23 +50,22 @@ export const useGetFacilities = () => {
             fullName: facilityData.fullName || "",
             address: facilityData.address || "",
             phone: facilityData.phone || "",
-            createdAt: facilityData.createdAt?.toDate() || new Date(),
-            updatedAt: facilityData.updatedAt?.toDate() || new Date(),
+            createdAt: facilityData.createdAt || new Date(),
+            updatedAt: facilityData.updatedAt || new Date(),
           });
         });
       }
 
-      // Sort facilities: "ST MICHAEL-ES" first, then alphabetically
-      const sortedFacilities = allFacilities.sort((a, b) => {
+      allFacilities.sort((a, b) => {
         if (a.schoolId === "ST MICHAEL-ES") return -1;
         if (b.schoolId === "ST MICHAEL-ES") return 1;
         return a.schoolId.localeCompare(b.schoolId);
       });
 
-      setFacilities(sortedFacilities);
+      setFacilities(allFacilities);
       setError("");
-    } catch (error) {
-      setError((error as Error).message);
+    } catch (err) {
+      setError((err as Error).message);
     } finally {
       setIsLoading(false);
     }

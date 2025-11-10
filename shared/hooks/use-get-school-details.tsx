@@ -1,8 +1,15 @@
-import firestore from "@react-native-firebase/firestore";
+import {
+  collection,
+  doc,
+  FirebaseFirestoreTypes,
+  getDoc,
+  getDocs,
+  getFirestore,
+} from "@react-native-firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 
-import { DeviceDetails } from "@/shared/types/device";
-import { Facility, RoomDetails, ZoneDetails } from "@/shared/types/facility";
+import { DeviceDetails } from "../types/device";
+import { Facility, RoomDetails, ZoneDetails } from "../types/facility";
 
 export interface SecurityAlertData {
   schoolDetails: Facility | null;
@@ -22,93 +29,89 @@ export const useGetSecurityAlertDetails = (
     devices: [],
   });
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
 
   const getSecurityAlertDetails = useCallback(async () => {
     setIsLoading(true);
 
     try {
-      // Construct the path to the facility
-      const facilityRef = firestore()
-        .collection("STATES")
-        .doc("MI")
-        .collection("ZIP CODES")
-        .doc(zipCode)
-        .collection("FACILITY NAME")
-        .doc(schoolId);
+      const db = getFirestore();
 
-      // Fetch school details
-      const schoolDoc = await facilityRef.get();
-      let schoolDetails: Facility | null = null;
+      const schoolRef = doc(
+        collection(
+          doc(
+            collection(doc(collection(db, "STATES"), "MI"), "ZIP CODES"),
+            zipCode,
+          ),
+          "FACILITY NAME",
+        ),
+        schoolId,
+      );
 
+      const schoolDoc = await getDoc<Facility>(schoolRef);
+
+      let schoolDetails = null;
       if (schoolDoc.exists()) {
-        const schoolData = schoolDoc.data();
+        const d = schoolDoc.data();
         schoolDetails = {
-          name: schoolData?.name || "",
-          schoolId: schoolData?.schoolId || "",
-          district: schoolData?.district || "",
-          zip: schoolData?.zip || "",
-          stateCode: schoolData?.stateCode || "",
-          createdAt: schoolData?.createdAt?.toDate() || new Date(),
-          updatedAt: schoolData?.updatedAt?.toDate() || new Date(),
-          fullName: schoolData?.fullName || "",
-          address: schoolData?.address || "",
-          phone: schoolData?.phone || "",
+          name: d?.name ?? "",
+          schoolId: d?.schoolId ?? "",
+          district: d?.district ?? "",
+          zip: d?.zip ?? "",
+          stateCode: d?.stateCode ?? "",
+          createdAt: d?.createdAt ?? new Date(),
+          updatedAt: d?.updatedAt ?? new Date(),
+          fullName: d?.fullName ?? "",
+          address: d?.address ?? "",
+          phone: d?.phone ?? "",
         };
       }
 
-      // Fetch ZONE1-GREEN details
-      const zoneRef = facilityRef.collection("ZONES").doc("ZONE1-GREEN");
-      const zoneDoc = await zoneRef.get();
-      let zoneDetails: ZoneDetails | null = null;
+      const zoneRef = doc(collection(schoolRef, "ZONES"), "ZONE1-GREEN");
+      const zoneDoc = await getDoc<ZoneDetails>(zoneRef);
 
+      let zoneDetails = null;
       if (zoneDoc.exists()) {
-        const zoneData = zoneDoc.data();
+        const z = zoneDoc.data();
         zoneDetails = {
-          name: zoneData?.name || "",
-          color: zoneData?.color || "",
-          createdAt: zoneData?.createdAt?.toDate() || new Date(),
-          updatedAt: zoneData?.updatedAt?.toDate() || new Date(),
+          name: z?.name ?? "",
+          color: z?.color ?? "",
+          createdAt: z?.createdAt ?? new Date(),
+          updatedAt: z?.updatedAt ?? new Date(),
         };
       }
 
-      // Fetch ADMIN_OFFICE room details
-      const roomRef = zoneRef.collection("ROOMS").doc("ADMIN_OFFICE");
-      const roomDoc = await roomRef.get();
-      let roomDetails: RoomDetails | null = null;
+      const roomRef = doc(collection(zoneRef, "ROOMS"), "ADMIN_OFFICE");
+      const roomDoc = await getDoc<RoomDetails>(roomRef);
 
+      let roomDetails = null;
       if (roomDoc.exists()) {
-        const roomData = roomDoc.data();
+        const r = roomDoc.data();
         roomDetails = {
-          name: roomData?.name || "",
-          roomId: roomData?.roomId || "",
-          createdAt: roomData?.createdAt?.toDate() || new Date(),
-          updatedAt: roomData?.updatedAt?.toDate() || new Date(),
+          name: r?.name ?? "",
+          roomId: r?.roomId ?? "",
+          createdAt: r?.createdAt ?? new Date(),
+          updatedAt: r?.updatedAt ?? new Date(),
         };
       }
 
-      // Fetch all devices under ADMIN_OFFICE
-      const devicesSnapshot = await roomRef.collection("DEVICES").get();
-      const devices: DeviceDetails[] = devicesSnapshot.docs.map(doc => {
-        const deviceData = doc.data();
+      const devicesSnapshot: FirebaseFirestoreTypes.QuerySnapshot<DeviceDetails> =
+        await getDocs(collection(roomRef, "DEVICES"));
+      const devices = devicesSnapshot.docs.map(d => {
+        const v = d.data();
         return {
-          deviceId: deviceData.deviceId || "",
-          securityStatus: deviceData.securityStatus || "",
-          deviceHealthStatus: deviceData.deviceHealthStatus || "",
-          createdAt: deviceData.createdAt?.toDate() || new Date(),
-          updatedAt: deviceData.updatedAt?.toDate() || new Date(),
+          deviceId: v.deviceId ?? "",
+          securityStatus: v.securityStatus ?? "",
+          deviceHealthStatus: v.deviceHealthStatus ?? "",
+          createdAt: v.createdAt ?? new Date(),
+          updatedAt: v.updatedAt ?? new Date(),
         };
       });
 
-      setData({
-        schoolDetails,
-        zoneDetails,
-        roomDetails,
-        devices,
-      });
+      setData({ schoolDetails, zoneDetails, roomDetails, devices });
       setError("");
-    } catch (error) {
-      setError((error as Error).message);
+    } catch (err) {
+      setError((err as Error).message);
     } finally {
       setIsLoading(false);
     }
