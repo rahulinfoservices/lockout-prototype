@@ -24,6 +24,11 @@ export const FacilitiesAlertList = (props: FacilitiesAlertListProps) => {
         status={
           item.schoolId === "ST MICHAEL-ES" ? alert?.alertType : undefined
         }
+        statusUpdatedAt={
+          item.schoolId === "ST MICHAEL-ES"
+            ? (alert?.ts ?? item.updatedAt)
+            : item.updatedAt
+        }
         error={item.schoolId === "ST MICHAEL-ES" ? alertError : undefined}
       />
     ),

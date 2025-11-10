@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from "date-fns";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
@@ -17,14 +18,23 @@ import { Facility } from "@/shared/types/facility";
 interface FacilityCardProps {
   item: Facility;
   status?: SecurityAlert["alertType"];
+  statusUpdatedAt: Date;
   error?: string;
 }
 
-export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
+export const FacilityCard = ({
+  item,
+  status,
+  statusUpdatedAt,
+  error,
+}: FacilityCardProps) => {
   const router = useRouter();
   const isLockdown = status === "full_lockdown_mode";
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
+  const timeAgo = formatDistanceToNow(new Date(statusUpdatedAt), {
+    addSuffix: true, // adds "ago" to the end
+  });
 
   const onPress = useCallback(() => {
     router.push({
@@ -92,6 +102,10 @@ export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
         activeOpacity={0.7}
         onPress={onPress}
       >
+        <Text className="mb-1 w-full text-base text-gray-500">
+          Updated {timeAgo}
+        </Text>
+
         <View className="mb-2 flex-row items-center justify-between">
           <Text
             className={cn("text-xl font-semibold text-gray-800", {
@@ -106,9 +120,10 @@ export const FacilityCard = ({ item, status, error }: FacilityCardProps) => {
             </View>
           ) : (
             <View className="rounded-full bg-green-100 px-3 py-1">
-              <Text className="text-sm font-bold text-green-700">All Clear</Text>
+              <Text className="text-sm font-bold text-green-700">
+                All Clear
+              </Text>
             </View>
-            
           )}
         </View>
 

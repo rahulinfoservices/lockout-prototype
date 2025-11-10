@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from "date-fns";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
@@ -17,12 +18,14 @@ import { Facility } from "@/shared/types/facility";
 interface FacilityDeviceHealthCardProps {
   item: Facility;
   status?: SecurityAlert["deviceHealth"];
+  statusUpdatedAt: Date;
   error?: string;
 }
 
 export const FacilityDeviceHealthCard = ({
   item,
   status,
+  statusUpdatedAt,
   error,
 }: FacilityDeviceHealthCardProps) => {
   const router = useRouter();
@@ -31,6 +34,9 @@ export const FacilityDeviceHealthCard = ({
   const isOffline = status === "Offline";
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
+  const timeAgo = formatDistanceToNow(new Date(statusUpdatedAt), {
+    addSuffix: true, // adds "ago" to the end
+  });
 
   const onPress = useCallback(() => {
     router.push({
@@ -98,6 +104,9 @@ export const FacilityDeviceHealthCard = ({
         activeOpacity={0.7}
         onPress={onPress}
       >
+        <Text className="mb-1 w-full text-base text-gray-500">
+          Updated {timeAgo}
+        </Text>
         <View className="mb-2 flex-row items-center justify-between">
           <Text
             className={cn("text-xl font-semibold text-gray-800", {

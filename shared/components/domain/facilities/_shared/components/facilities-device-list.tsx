@@ -24,6 +24,11 @@ export const FacilitiesDeviceList = (props: FacilitiesDeviceListProps) => {
         status={
           item.schoolId === "ST MICHAEL-ES" ? alert?.deviceHealth : undefined
         }
+        statusUpdatedAt={
+          item.schoolId === "ST MICHAEL-ES"
+            ? (alert?.ts ?? item.updatedAt)
+            : item.updatedAt
+        }
         error={item.schoolId === "ST MICHAEL-ES" ? alertError : undefined}
       />
     ),

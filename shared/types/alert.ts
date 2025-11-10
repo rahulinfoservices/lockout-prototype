@@ -15,7 +15,7 @@ export interface SecurityAlert {
   roomId: string;
   schoolId: string;
   schoolStatus: string;
-  ts: string;
+  ts: Date;
 }
 
 export type NullableSecurityAlert = SecurityAlert | null;
