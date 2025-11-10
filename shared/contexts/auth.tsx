@@ -6,7 +6,13 @@ import {
   signInWithEmailAndPassword,
   signOut as signUserOut,
 } from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
+import {
+  collection,
+  doc,
+  getFirestore,
+  serverTimestamp,
+  setDoc,
+} from "@react-native-firebase/firestore";
 import {
   createContext,
   type PropsWithChildren,
@@ -70,12 +76,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     const { uid } = userCredentials.user;
 
-    // 2. Save extra user data in Firestore
-    await firestore().collection("users").doc(uid).set({
+    const db = getFirestore();
+
+    await setDoc(doc(collection(doc(db, "users"), uid)), {
       name: data.name,
       email: data.email,
-      createdAt: firestore.FieldValue.serverTimestamp(),
-      updatedAt: firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
   }, []);
 
