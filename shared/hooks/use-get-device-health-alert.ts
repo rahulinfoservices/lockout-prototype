@@ -5,16 +5,18 @@ import { useEffect } from "react";
 import { useAlertStore } from "../stores/use-alert-store";
 import { SecurityAlert } from "../types/alert";
 
-export const useGetSecurityAlert = () => {
-  const alert = useAlertStore(state => state.securityAlert);
-  // const lastAlertId = useAlertStore(state => state.lastSecurityAlertId);
-  const setAlert = useAlertStore(state => state.setSecurityAlert);
-  const setError = useAlertStore(state => state.setSecurityError);
-  const setLastAlertId = useAlertStore(state => state.setLastSecurityAlertId);
+export const useGetDeviceHealthAlert = () => {
+  const alert = useAlertStore(state => state.deviceHealthAlert);
+  // const lastAlertId = useAlertStore(state => state.lastDeviceHealthAlertId);
+  const setAlert = useAlertStore(state => state.setDeviceHealthAlert);
+  const setError = useAlertStore(state => state.setDeviceHealthError);
+  const setLastAlertId = useAlertStore(
+    state => state.setLastDeviceHealthAlertId,
+  );
 
   useEffect(() => {
     const db = getDatabase();
-    const alertsRef = ref(db, "ALERTS/MI/FACILITIES/MI_49340_ST-MICHAEL-ES");
+    const alertsRef = ref(db, "TELEMETRY/MI/FACILITIES/MI_49340_ST-MICHAEL-ES");
 
     const unsubscribe = onValue(
       alertsRef,
@@ -33,7 +35,7 @@ export const useGetSecurityAlert = () => {
     if (alert) {
       Notifications.scheduleNotificationAsync({
         content: {
-          title: "Security Alert",
+          title: "Device Health Alert",
           body: alert.description,
           data: { alert },
         },

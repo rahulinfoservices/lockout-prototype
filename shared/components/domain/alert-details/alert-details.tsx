@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import { useGetSecurityAlertDetails } from "@/shared/hooks/use-get-school-details";
-import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
+import { useAlertStore } from "@/shared/stores/use-alert-store";
 import { AlertCategory } from "@/shared/types/alert";
 
 import { FacilityInfoCard } from "../facilities/_shared/components/facility-info-card";
@@ -21,21 +21,26 @@ export interface AlertDetailsProps {
 
 export default function AlertDetails(props: AlertDetailsProps) {
   const { schoolId, zipCode, alertCategory } = props;
-  const { alert } = useGetAlert(alertCategory);
   const { data, error, isLoading } = useGetSecurityAlertDetails(
     schoolId,
     zipCode,
   );
   const [facilityAlertStatus, setFacilityAlertStatus] =
     useState<string>("ALL CLEAR");
+  const securityAlert = useAlertStore(state => state.securityAlert);
+  const deviceHealthAlert = useAlertStore(state => state.deviceHealthAlert);
 
   useEffect(() => {
     if (alertCategory === "ALERTS") {
-      setFacilityAlertStatus(alert?.alertType ?? "UNKNOWN");
+      setFacilityAlertStatus(securityAlert?.alertType ?? "UNKNOWN");
     } else {
-      setFacilityAlertStatus(alert?.deviceHealth ?? "UNKNOWN");
+      setFacilityAlertStatus(deviceHealthAlert?.deviceHealth ?? "UNKNOWN");
     }
-  }, [alert, alertCategory]);
+  }, [
+    alertCategory,
+    deviceHealthAlert?.deviceHealth,
+    securityAlert?.alertType,
+  ]);
 
   const renderHeader = useCallback(() => {
     return (

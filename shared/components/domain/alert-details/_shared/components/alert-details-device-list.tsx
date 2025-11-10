@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { Alert, FlatList, ListRenderItem, Text, View } from "react-native";
 
-import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
+import { useAlertStore } from "@/shared/stores/use-alert-store";
 import { DeviceDetails } from "@/shared/types/device";
 import { RoomDetails, ZoneDetails } from "@/shared/types/facility";
 
@@ -17,18 +17,19 @@ export interface AlertDetailsDeviceListProps {
 
 export const AlertDetailsDeviceList = (props: AlertDetailsDeviceListProps) => {
   const { devices, zone, room, renderHeader } = props;
-  const { alert, error: alertError } = useGetAlert("ALERTS");
+  const alert = useAlertStore(state => state.securityAlert);
+  const alertError = useAlertStore(state => state.securityError);
   const deviceList = getSortedDeviceListByAlertType(devices, alert);
 
   const renderAlertItem: ListRenderItem<DeviceDetails> = useCallback(
-    ({ item , index}) => {
+    ({ item, index }) => {
       return (
         <AlertDeviceListItem
           item={item}
           alert={alert}
           zone={zone}
           room={room}
-          position ={index + 1}
+          position={index + 1}
         />
       );
     },

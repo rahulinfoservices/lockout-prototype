@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { FlatList, ListRenderItem } from "react-native";
 
-import { useGetAlert } from "@/shared/hooks/use-get-security-alert";
+import { useAlertStore } from "@/shared/stores/use-alert-store";
 import { FacilityData } from "@/shared/types/facility";
 
 import { getSortedFacilitiesByAlertType } from "../utils/sort-school-list";
@@ -14,7 +14,8 @@ interface FacilitiesAlertListProps {
 
 export const FacilitiesAlertList = (props: FacilitiesAlertListProps) => {
   const { facilities, renderEmptyList } = props;
-  const { alert, error: alertError } = useGetAlert("ALERTS");
+  const alert = useAlertStore(state => state.securityAlert);
+  const alertError = useAlertStore(state => state.securityError);
   const facilityList = getSortedFacilitiesByAlertType(facilities, alert);
 
   const renderFacilityAlertCard: ListRenderItem<FacilityData> = useCallback(
