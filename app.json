@@ -41,6 +41,7 @@
       [
         "expo-notifications",
         {
+          "icon": "./assets/images/logo/lockoutusa_icon.png",
           "sounds": [
             "./assets/sounds/all_clear.wav",
             "./assets/sounds/full_lockdown.wav",
