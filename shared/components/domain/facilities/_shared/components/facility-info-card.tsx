@@ -21,8 +21,8 @@ export const FacilityInfoCard = ({ facility }: FacilityInfoCardProps) => {
       return facility.address.trim();
     }
 
-    return "8944 50th Ave, Remus, MI 49340";
-  }, [facility?.address]);
+    return `8944 50th Ave, Remus, MI ${facility?.zip}`;
+  }, [facility?.address, facility?.zip]);
 
   const phone = facility?.phone?.trim() || "(989) 967-3681";
 
