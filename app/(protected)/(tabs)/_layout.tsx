@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { Activity, BookDown, ShieldAlert } from "lucide-react-native";
 
 export default function ProtectedLayout() {
@@ -8,6 +8,7 @@ export default function ProtectedLayout() {
         headerShown: false,
         tabBarActiveTintColor: "teal",
         tabBarLabelStyle: { fontSize: 14 },
+        popToTopOnBlur: true,
       }}
       backBehavior="order"
     >
@@ -31,9 +32,14 @@ export default function ProtectedLayout() {
             <Activity size={size} color={color} />
           ),
         }}
+        listeners={{
+          tabPress: () => {
+            router.dismissTo("/device-health");
+          },
+        }}
       />
 
-       <Tabs.Screen
+      <Tabs.Screen
         name="report"
         options={{
           title: "Report",
@@ -44,7 +50,5 @@ export default function ProtectedLayout() {
         }}
       />
     </Tabs>
-
-    
   );
 }
