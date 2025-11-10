@@ -66,6 +66,11 @@ export const configureAndroidChannels = async () => {
   });
 };
 
+const initialSetup = async () => {
+  await requestNotificationPermissions();
+  await configureAndroidChannels();
+};
+
 export const usePushNotificationsObserver = () => {
   const redirect = useCallback((notification: Notifications.Notification) => {
     if (notification.request.content.data.alert) {
@@ -85,8 +90,7 @@ export const usePushNotificationsObserver = () => {
   }, []);
 
   useEffect(() => {
-    configureAndroidChannels();
-    requestNotificationPermissions();
+    initialSetup();
   }, []);
 
   useEffect(() => {
