@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { styled } from "nativewind";
 import { useMemo } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
 import { AlertCategory } from "@/shared/types/alert";
@@ -36,46 +36,40 @@ export const DetailsHeader = (props: DetailsHeaderProps) => {
   }, [isAlert, isAllclear, isLowBattery, isOffline, isOnline]);
 
   return (
-    <View className="px-1 pb-1">
-      <View className="mt-2.5">
-        <View className="flex-row items-center justify-between">
-          {/* Left: Back Button */}
-          <TouchableOpacity
-            className="rounded-lg p-3"
-            onPress={() => router.back()}
-          >
-            <ChevronLeftIcon className="text-gray-700" size={24} />
-          </TouchableOpacity>
+    <View className="mt-2.5 mb-1 px-4">
+      <View className="flex-row items-center justify-between">
+        {/* Left: Back Button */}
+        <Pressable className="py-2" onPress={() => router.back()}>
+          <ChevronLeftIcon className="text-gray-700" size={24} />
+        </Pressable>
 
-          {/* Center: Facility Info */}
-          <View className="ml-4 flex-1">
-            <Text className="text-xl font-bold text-gray-800">
-              {facilty.name || "Unknown Facility"}
-            </Text>
-            <Text className="text-sm text-gray-600">
-              {facilty.district || "Unknown District"} • {facilty.zip || ""}
-            </Text>
-          </View>
+        {/* Center: Facility Info */}
+        <View className="ml-4 flex-1">
+          <Text className="text-xl font-bold text-gray-800">
+            {facilty.name || "Unknown Facility"}
+          </Text>
+          <Text className="text-sm text-gray-600">
+            {facilty.district || "Unknown District"} • {facilty.zip || ""}
+          </Text>
+        </View>
 
-          {/* Right: Status Badge */}
-
-          <View
-            className={cn("rounded-full px-3 py-1.5", {
-              "bg-red-100": isOffline || isAlert,
-              "bg-yellow-100": isLowBattery,
-              "bg-green-100": isOnline || isAllclear,
+        {/* Right: Status Badge */}
+        <View
+          className={cn("rounded-full px-3 py-1.5", {
+            "bg-red-100": isOffline || isAlert,
+            "bg-yellow-100": isLowBattery,
+            "bg-green-100": isOnline || isAllclear,
+          })}
+        >
+          <Text
+            className={cn("text-sm font-semibold", {
+              "text-red-700": isOffline || isAlert,
+              "text-yellow-700": isLowBattery,
+              "text-green-700": isOnline || isAllclear,
             })}
           >
-            <Text
-              className={cn("text-sm font-semibold", {
-                "text-red-700": isOffline || isAlert,
-                "text-yellow-700": isLowBattery,
-                "text-green-700": isOnline || isAllclear,
-              })}
-            >
-              {statusText}
-            </Text>
-          </View>
+            {statusText}
+          </Text>
         </View>
       </View>
     </View>
