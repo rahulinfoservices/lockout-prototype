@@ -2,10 +2,12 @@ import "react-native-reanimated";
 import "../global.css";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 
 import { AuthProvider, useAuth } from "@/shared/contexts/auth";
@@ -45,11 +47,15 @@ export default function RootLayout() {
   }
 
   return (
-    <KeyboardProvider>
-      <AuthProvider>
-        <RootLayoutNav />
-      </AuthProvider>
-    </KeyboardProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <KeyboardProvider>
+        <BottomSheetModalProvider>
+          <AuthProvider>
+            <RootLayoutNav />
+          </AuthProvider>
+        </BottomSheetModalProvider>
+      </KeyboardProvider>
+    </GestureHandlerRootView>
   );
 }
 

@@ -46,7 +46,7 @@ export default function Signup() {
     <View className="flex-1 bg-linear-to-br from-cyan-500 via-teal-500 to-cyan-600">
       <Container>
         <KeyboardAwareScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="handled"
           contentContainerClassName="grow justify-center items-center"
         >
           <View className="w-full p-8">
