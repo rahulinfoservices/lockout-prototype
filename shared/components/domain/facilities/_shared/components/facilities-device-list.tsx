@@ -45,6 +45,8 @@ export const FacilitiesDeviceList = (props: FacilitiesDeviceListProps) => {
       contentContainerClassName="p-4"
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={renderEmptyList}
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="handled"
     />
   );
 };

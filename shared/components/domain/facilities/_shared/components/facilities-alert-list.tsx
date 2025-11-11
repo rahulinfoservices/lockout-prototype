@@ -44,6 +44,8 @@ export const FacilitiesAlertList = (props: FacilitiesAlertListProps) => {
       contentContainerClassName="p-4"
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={renderEmptyList}
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="handled"
     />
   );
 };
