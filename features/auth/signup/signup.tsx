@@ -153,6 +153,8 @@ export default function Signup() {
                         autoCapitalize="none"
                         autoComplete="password"
                         error={errors.confirmPassword?.message}
+                        returnKeyType="done"
+                        onSubmitEditing={handleSubmit(signUp)}
                         leftAdornment={<LockIcon size={20} />}
                         rightAdornment={
                           <Pressable

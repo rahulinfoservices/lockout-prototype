@@ -99,6 +99,8 @@ export default function Login() {
                         autoCapitalize="none"
                         autoComplete="password"
                         error={errors.password?.message}
+                        returnKeyType="done"
+                        onSubmitEditing={handleSubmit(handleSignIn)}
                         leftAdornment={<LockIcon size={20} />}
                         rightAdornment={
                           <Pressable

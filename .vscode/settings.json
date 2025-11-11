@@ -9,6 +9,6 @@
   },
   "tailwindCSS.classAttributes": ["class", "className", "headerClassName"],
   "tailwindCSS.experimental.classRegex": [
-    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
+    ["(?:className|headerClassName)=[\"'`]([^\"'`]*)[\"'`]", "\\1"]
   ]
 }
