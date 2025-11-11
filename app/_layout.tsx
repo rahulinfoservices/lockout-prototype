@@ -11,6 +11,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 
 import { AuthProvider, useAuth } from "@/shared/contexts/auth";
+import OTAUpdateProvider from "@/shared/contexts/ota-update";
 import { usePushNotificationsObserver } from "@/shared/hooks/use-push-notifications-observer";
 
 export {
@@ -45,11 +46,13 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardProvider>
-        <BottomSheetModalProvider>
-          <AuthProvider>
-            <RootLayoutNav />
-          </AuthProvider>
-        </BottomSheetModalProvider>
+        <OTAUpdateProvider>
+          <BottomSheetModalProvider>
+            <AuthProvider>
+              <RootLayoutNav />
+            </AuthProvider>
+          </BottomSheetModalProvider>
+        </OTAUpdateProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>
   );
