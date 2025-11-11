@@ -9,7 +9,15 @@
     "lint": "expo lint",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "android:clean": "npx expo prebuild -p android --clean"
+    "ios:clean": "npx expo prebuild -p ios --clean",
+    "android:clean": "npx expo prebuild -p android --clean",
+    "ios:build-simulator": "eas build --platform ios --profile ios-simulator",
+    "ios:build-development": "eas build --platform ios --profile development",
+    "ios:build-preview": "eas build --platform ios --profile preview",
+    "android:build-development": "eas build --platform android --profile development",
+    "android:build-preview": "eas build --platform android --profile preview",
+    "build:development": "eas build --platform all --profile development",
+    "build:preview": "eas build --platform all --profile preview"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
