@@ -7,13 +7,13 @@ import { SecurityAlert } from "../types/alert";
 
 export const useGetDeviceHealthAlert = () => {
   const alert = useAlertStore(state => state.deviceHealthAlert);
-  // const lastAlertId = useAlertStore(state => state.lastDeviceHealthAlertId);
+  const prevAlert = useRef(alert);
+  const lastAlertId = useAlertStore(state => state.lastDeviceHealthAlertId);
   const setAlert = useAlertStore(state => state.setDeviceHealthAlert);
   const setError = useAlertStore(state => state.setDeviceHealthError);
   const setLastAlertId = useAlertStore(
     state => state.setLastDeviceHealthAlertId,
   );
-  const isInitialLoad = useRef(true);
 
   const getChannelId = useCallback((deviceHealth: string) => {
     if (deviceHealth === "Online") return "device-online";
@@ -47,7 +47,7 @@ export const useGetDeviceHealthAlert = () => {
   }, [setAlert, setError]);
 
   useEffect(() => {
-    if (alert && !isInitialLoad.current) {
+    if (!!alert && !!prevAlert.current && lastAlertId !== alert.alertId) {
       Notifications.scheduleNotificationAsync({
         content: {
           title: "Device Health Alert",
@@ -65,8 +65,8 @@ export const useGetDeviceHealthAlert = () => {
       setLastAlertId(alert.alertId);
     }
 
-    if (alert && isInitialLoad.current) {
-      isInitialLoad.current = false;
+    if (!!alert && !prevAlert.current) {
+      prevAlert.current = alert;
     }
-  }, [alert, getChannelId, getSound, setLastAlertId]);
+  }, [alert, getChannelId, getSound, lastAlertId, setLastAlertId]);
 };
