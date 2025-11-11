@@ -6,17 +6,34 @@ import { DeviceItem } from "@/shared/components/domain/report/_shared/components
 import { DownloadModal } from "@/shared/components/domain/report/_shared/components/report-download-modal";
 import { ReportsList } from "@/shared/components/domain/report/_shared/components/report-list";
 
-
-
-
 const criticalReports: ReportItem[] = [
-  { id: "1", title: "Low-Battery Report", description: "Reports devices with battery below 20%", type: "critical" },
-  { id: "2", title: "High Maintenance Device", description: "Shows items with frequent pull/replacement", type: "critical" },
+  {
+    id: "1",
+    title: "Low-Battery Report",
+    description: "Reports devices with battery below 20%",
+    type: "critical",
+  },
+  {
+    id: "2",
+    title: "High Maintenance Device",
+    description: "Shows items with frequent pull/replacement",
+    type: "critical",
+  },
 ];
 
 const facilityReports: ReportItem[] = [
-  { id: "3", title: "Last 5 Lockdowns", description: "Most recent 5 facility lockdown events", type: "facility" },
-  { id: "4", title: "12-Month No Lockdowns", description: "Facilities with no lockdowns in last year", type: "facility" },
+  {
+    id: "3",
+    title: "Last 5 Lockdowns",
+    description: "Most recent 5 facility lockdown events",
+    type: "facility",
+  },
+  {
+    id: "4",
+    title: "12-Month No Lockdowns",
+    description: "Facilities with no lockdowns in last year",
+    type: "facility",
+  },
 ];
 // Date dropdown options
 const dateOptions = [
@@ -29,7 +46,7 @@ const dateOptions = [
   "This Month",
   "Last Month",
   "Year to Date",
-  "Custom Range…"
+  "Custom Range…",
 ];
 
 const deviceList: DeviceItem[] = [
@@ -65,7 +82,6 @@ const deviceList: DeviceItem[] = [
   },
 ];
 
-
 const facilityList: DeviceItem[] = [
   {
     id: "FAC-001",
@@ -89,26 +105,29 @@ const facilityList: DeviceItem[] = [
   },
 ];
 
-
-
 export const ReportsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalType, setModalType] = useState<"critical" | "facility">("critical");
+  const [modalType, setModalType] = useState<"critical" | "facility">(
+    "critical",
+  );
 
-  const handleDownload = (report: ReportItem, type: "critical" | "facility") => {
+  const handleDownload = (
+    report: ReportItem,
+    type: "critical" | "facility",
+  ) => {
     setModalType(type);
     setModalVisible(true);
   };
 
   return (
-    <ScrollView className="px-4 pt-6 bg-gray-50">
+    <ScrollView className="bg-gray-50 px-4 pt-6">
       {/* Critical Reports Section */}
       <ReportsList
         title="Device Health Reports"
         reports={criticalReports}
         showDateFilter={true}
         dateOptions={dateOptions}
-        onDownload={(report) => handleDownload(report, "critical")}
+        onDownload={report => handleDownload(report, "critical")}
       />
 
       {/* Facility Reports Section */}
@@ -116,7 +135,7 @@ export const ReportsScreen = () => {
         title="Facility Reports"
         reports={facilityReports}
         showDateFilter={false}
-        onDownload={(report) => handleDownload(report, "critical")}
+        onDownload={report => handleDownload(report, "critical")}
       />
 
       {/* Download Modal */}
@@ -125,7 +144,7 @@ export const ReportsScreen = () => {
         onClose={() => setModalVisible(false)}
         devices={modalType === "critical" ? deviceList : facilityList}
         generatedDate={new Date().toLocaleDateString()}
-
+        title="Download Report"
       />
     </ScrollView>
   );
