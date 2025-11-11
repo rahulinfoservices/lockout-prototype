@@ -83,7 +83,7 @@ export const FacilityStateDropdown = ({
   );
 
   return (
-    <View className="mt-1 py-2">
+    <View>
       {/* Dropdown Button */}
       <Pressable
         className="flex-row items-center justify-between rounded-lg border border-gray-300 bg-gray-100 px-4 py-3"

@@ -56,7 +56,7 @@ export default function Facilities(props: FacilitiesProps) {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <View className="flex-row items-center gap-4 border-b border-gray-200 bg-white px-4 py-2">
+      <View className="flex-row items-center gap-4 border-b border-gray-200 bg-white px-4 py-3">
         <FacilityStateDropdown
           states={facilityStates}
           selectedState={selectedState}

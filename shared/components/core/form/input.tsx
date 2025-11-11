@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TextInput, TextInputProps, View } from "react-native";
+import { twMerge } from "tailwind-merge";
 import { cn } from "tailwind-variants/lite";
 
 interface InputProps extends TextInputProps {
@@ -31,13 +32,15 @@ export default function Input({
         ) : null}
 
         <TextInput
-          className={cn(
-            "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-xl text-black placeholder:text-gray-400 focus:border-2 focus:border-teal-500 focus:outline-none",
-            {
-              "pl-12": !!leftAdornment,
-              "pr-12": !!rightAdornment,
-              "border-red-500": !!error,
-            },
+          className={twMerge(
+            cn(
+              "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-xl text-black placeholder:text-gray-400 focus:border-2 focus:border-teal-500 focus:outline-none",
+              {
+                "pl-12": !!leftAdornment,
+                "pr-12": !!rightAdornment,
+                "border-red-500": !!error,
+              },
+            ),
             className,
           )}
           {...textInputProps}
