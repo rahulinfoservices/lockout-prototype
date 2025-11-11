@@ -78,4 +78,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   owner: "infoservices",
+  updates: {
+    url: "https://u.expo.dev/21568fe3-5a72-4358-a677-4b9b59bf93df",
+  },
+  runtimeVersion: {
+    policy: "appVersion",
+  },
 });
