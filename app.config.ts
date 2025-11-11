@@ -41,9 +41,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     favicon: "./assets/images/favicon.png",
   },
   plugins: [
-    "@react-native-firebase/app",
-    "@react-native-firebase/auth",
-    "@react-native-firebase/crashlytics",
     "expo-router",
     [
       "expo-notifications",
@@ -59,6 +56,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         ],
       },
     ],
+    "@react-native-firebase/app",
+    "@react-native-firebase/auth",
+    "@react-native-firebase/crashlytics",
     [
       "expo-build-properties",
       {
