@@ -53,7 +53,7 @@ export default function Signup() {
             <AuthLogo />
 
             {/* Signup Form Card */}
-            <View className="rounded-3xl bg-white p-8 shadow-2xl">
+            <View className="mt-4 rounded-3xl bg-white p-8 shadow-2xl">
               <View className="gap-2">
                 {/* Name Field */}
                 <Controller

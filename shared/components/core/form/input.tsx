@@ -32,7 +32,7 @@ export default function Input({
 
         <TextInput
           className={cn(
-            "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-xl placeholder:text-gray-400 focus:border-2 focus:border-teal-500 focus:outline-none",
+            "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-xl text-black placeholder:text-gray-400 focus:border-2 focus:border-teal-500 focus:outline-none",
             {
               "pl-12": !!leftAdornment,
               "pr-12": !!rightAdornment,
