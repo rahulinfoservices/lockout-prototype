@@ -20,6 +20,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: "com.lockout.prototype",
     googleServicesFile:
       process.env.GOOGLE_SERVICES_PLIST ?? "./GoogleService-Info.plist",
+    infoPlist: {
+      ITSAppUsesNonExemptEncryption: false,
+    },
   },
   android: {
     adaptiveIcon: {
