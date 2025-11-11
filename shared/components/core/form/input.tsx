@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, TextInput, TextInputProps, View } from "react-native";
 import { cn } from "tailwind-variants/lite";
 
@@ -17,8 +17,6 @@ export default function Input({
   className = "",
   ...textInputProps
 }: InputProps) {
-  const [isFocused, setIsFocused] = useState(false);
-
   return (
     <View className="gap-0.5">
       {label ? (
@@ -34,22 +32,15 @@ export default function Input({
 
         <TextInput
           className={cn(
-            "w-full rounded-xl border bg-gray-50 pt-4 pb-4 text-xl",
-            isFocused ? "border-teal-500" : "border-gray-200",
-            leftAdornment ? "pl-12" : "pl-4",
-            rightAdornment ? "pr-12" : "pr-4",
-            error && "border-red-500",
+            "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-xl placeholder:text-gray-400 focus:border-2 focus:border-teal-500 focus:outline-none",
+            {
+              "pl-12": !!leftAdornment,
+              "pr-12": !!rightAdornment,
+              "border-red-500": !!error,
+            },
             className,
           )}
           {...textInputProps}
-          onFocus={e => {
-            setIsFocused(true);
-            textInputProps.onFocus?.(e);
-          }}
-          onBlur={e => {
-            setIsFocused(false);
-            textInputProps.onBlur?.(e);
-          }}
         />
 
         {rightAdornment ? (

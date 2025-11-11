@@ -75,9 +75,7 @@ export default function Login() {
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoComplete="email"
-                        leftAdornment={
-                          <MailIcon className="text-gray-400" size={20} />
-                        }
+                        leftAdornment={<MailIcon size={20} />}
                       />
 
                       <FormError>{errors.email?.message}</FormError>
@@ -101,18 +99,16 @@ export default function Login() {
                         autoCapitalize="none"
                         autoComplete="password"
                         error={errors.password?.message}
-                        leftAdornment={
-                          <LockIcon className="text-gray-400" size={20} />
-                        }
+                        leftAdornment={<LockIcon size={20} />}
                         rightAdornment={
                           <Pressable
                             className="p-1"
                             onPress={() => setShowPassword(!showPassword)}
                           >
                             {showPassword ? (
-                              <EyeOffIcon className="text-gray-400" size={20} />
+                              <EyeOffIcon size={20} />
                             ) : (
-                              <EyeIcon className="text-gray-400" size={20} />
+                              <EyeIcon size={20} />
                             )}
                           </Pressable>
                         }
