@@ -10,10 +10,7 @@ import {
   View,
 } from "react-native";
 
-import {
-  DeviceCard,
-  DeviceItem,
-} from "@/shared/components/domain/report/_shared/components/report-device-card";
+import { DeviceCard, DeviceItem } from "./report-device-card";
 
 interface DownloadModalProps {
   visible: boolean;

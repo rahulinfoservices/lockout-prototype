@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 
-import {
-  ReportItem,
-  ReportsCard,
-} from "@/shared/components/domain/report/_shared/components/report-card";
-import { DateDropdown } from "@/shared/components/domain/report/_shared/components/report-dropdown";
+import { ReportItem, ReportsCard } from "./report-card";
+import { DateDropdown } from "./report-dropdown";
 
 interface ReportsListProps {
   title: string;
