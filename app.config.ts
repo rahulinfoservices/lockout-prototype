@@ -64,6 +64,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         ios: {
           useFrameworks: "static",
+          buildReactNativeFromSource: true,
         },
       },
     ],
