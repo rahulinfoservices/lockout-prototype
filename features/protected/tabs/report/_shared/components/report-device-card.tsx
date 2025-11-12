@@ -1,9 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export type DeviceItem = {
+export type ReportDeviceItem = {
   id: string;
-  name: string;
   type: string;
   facility: string;
   location: string;
@@ -12,11 +11,11 @@ export type DeviceItem = {
   status: "Online" | "Offline" | "Low Battery" | "Warning";
 };
 
-interface DeviceCardProps {
-  device: DeviceItem;
+interface ReportDeviceCardProps {
+  device: ReportDeviceItem;
 }
 
-export const DeviceCard = ({ device }: DeviceCardProps) => {
+export const ReportDeviceCard = ({ device }: ReportDeviceCardProps) => {
   // Status color mapping
   const statusColor =
     device.status === "Online"
@@ -26,45 +25,41 @@ export const DeviceCard = ({ device }: DeviceCardProps) => {
         : "bg-yellow-100 text-yellow-800";
 
   return (
-    <View className="bg-white rounded-xl border border-gray-300 overflow-hidden mb-4">
+    <View className="mb-4 overflow-hidden rounded-xl border border-gray-300 bg-white">
       {/* Header: Device ID + Status */}
-      <View className="flex-row justify-between items-center bg-gray-100 px-5 py-3 border-b border-gray-200">
-        <Text className="font-semibold text-gray-700 text-lg">{device.id}</Text>
+      <View className="flex-row items-center justify-between border-b border-gray-200 bg-gray-100 px-5 py-3">
+        <Text className="text-lg font-semibold text-gray-700">{device.id}</Text>
         <Text
-          className={`px-3 py-1 rounded-full ${statusColor} text-sm font-semibold`}
+          className={`rounded-full px-3 py-1 ${statusColor} text-sm font-semibold`}
         >
-          {device.status.toUpperCase()}
+          {device.status ? device.status.toUpperCase() : "UNKNOWN"}
         </Text>
       </View>
 
       {/* Device Details */}
-      <View className="px-5 py-4 space-y-3">
+      <View className="space-y-3 px-5 py-4 pr-6">
+       
         <View className="flex-row">
-          <Text className="w-32 text-gray-700 font-semibold">Device Name:</Text>
-          <Text className="text-gray-800">{device.name}</Text>
+          <Text className="w-32 font-semibold text-gray-700">Device Type:</Text>
+          <Text className="flex-1 text-gray-800">{device.type}</Text>
         </View>
         <View className="flex-row">
-          <Text className="w-32 text-gray-700 font-semibold">Device Type:</Text>
-          <Text className="text-gray-800">{device.type}</Text>
+          <Text className="w-32 font-semibold text-gray-700">Facility:</Text>
+          <Text className="flex-1 text-gray-800">{device.facility}</Text>
         </View>
         <View className="flex-row">
-          <Text className="w-32 text-gray-700 font-semibold">Facility:</Text>
-          <Text className="text-gray-800">{device.facility}</Text>
+          <Text className="w-32 font-semibold text-gray-700">Location:</Text>
+          <Text className="flex-1 text-gray-800">{device.location}</Text>
         </View>
         <View className="flex-row">
-          <Text className="w-32 text-gray-700 font-semibold">Location:</Text>
-          <Text className="text-gray-800">{device.location}</Text>
+          <Text className="w-32 font-semibold text-gray-700">Address:</Text>
+          <Text className="flex-1 text-gray-800">{device.address}</Text>
         </View>
         <View className="flex-row">
-          <Text className="w-32 text-gray-700 font-semibold">Address:</Text>
-          <Text className="text-gray-800">{device.address}</Text>
-        </View>
-        <View className="flex-row">
-          <Text className="w-32 text-gray-700 font-semibold">Time:</Text>
-          <Text className="text-gray-800">{device.time}</Text>
+          <Text className="w-32 font-semibold text-gray-700">Time:</Text>
+          <Text className="flex-1 text-gray-800">{device.time}</Text>
         </View>
       </View>
-
     </View>
   );
 };
