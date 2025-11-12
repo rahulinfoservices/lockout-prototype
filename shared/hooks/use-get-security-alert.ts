@@ -8,7 +8,7 @@ import { SecurityAlert } from "../types/alert";
 export const useGetSecurityAlert = () => {
   const alert = useAlertStore(state => state.securityAlert);
   const prevAlert = useRef(alert);
-  const lastAlertId = useAlertStore(state => state.lastSecurityAlertId);
+  // const lastAlertId = useAlertStore(state => state.lastSecurityAlertId);
   const setAlert = useAlertStore(state => state.setSecurityAlert);
   const setError = useAlertStore(state => state.setSecurityError);
   const setLastAlertId = useAlertStore(state => state.setLastSecurityAlertId);
@@ -31,7 +31,7 @@ export const useGetSecurityAlert = () => {
   }, [setAlert, setError]);
 
   useEffect(() => {
-    if (!!alert && !!prevAlert.current && lastAlertId !== alert.alertId) {
+    if (!!alert && !!prevAlert.current) {
       Notifications.scheduleNotificationAsync({
         content: {
           title: "Security Alert",
@@ -58,5 +58,5 @@ export const useGetSecurityAlert = () => {
     if (!!alert && !prevAlert.current) {
       prevAlert.current = alert;
     }
-  }, [alert, lastAlertId, setLastAlertId]);
+  }, [alert, setLastAlertId]);
 };

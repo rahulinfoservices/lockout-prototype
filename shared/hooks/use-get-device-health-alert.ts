@@ -8,7 +8,7 @@ import { SecurityAlert } from "../types/alert";
 export const useGetDeviceHealthAlert = () => {
   const alert = useAlertStore(state => state.deviceHealthAlert);
   const prevAlert = useRef(alert);
-  const lastAlertId = useAlertStore(state => state.lastDeviceHealthAlertId);
+  // const lastAlertId = useAlertStore(state => state.lastDeviceHealthAlertId);
   const setAlert = useAlertStore(state => state.setDeviceHealthAlert);
   const setError = useAlertStore(state => state.setDeviceHealthError);
   const setLastAlertId = useAlertStore(
@@ -47,7 +47,7 @@ export const useGetDeviceHealthAlert = () => {
   }, [setAlert, setError]);
 
   useEffect(() => {
-    if (!!alert && !!prevAlert.current && lastAlertId !== alert.alertId) {
+    if (!!alert && !!prevAlert.current) {
       Notifications.scheduleNotificationAsync({
         content: {
           title: "Device Health Alert",
@@ -68,5 +68,5 @@ export const useGetDeviceHealthAlert = () => {
     if (!!alert && !prevAlert.current) {
       prevAlert.current = alert;
     }
-  }, [alert, getChannelId, getSound, lastAlertId, setLastAlertId]);
+  }, [alert, getChannelId, getSound, setLastAlertId]);
 };
