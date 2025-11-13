@@ -2,7 +2,7 @@ import { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "lockout-prototype",
+  name: "Lockout Demo",
   slug: "lockout-prototype",
   version: "1.0.0",
   orientation: "portrait",
