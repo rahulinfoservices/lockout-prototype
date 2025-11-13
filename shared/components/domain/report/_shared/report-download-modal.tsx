@@ -10,12 +10,14 @@ import {
   View,
 } from "react-native";
 
-import { DeviceCard, DeviceItem } from "./report-device-card";
+import { ReportDeviceItem } from "@/shared/types/report";
+
+import { ReportDeviceCard } from "./report-device-card";
 
 interface DownloadModalProps {
   visible: boolean;
   onClose: () => void;
-  devices: DeviceItem[];
+  devices: ReportDeviceItem[];
   generatedDate: string;
   title: string;
 }
@@ -98,7 +100,7 @@ export const DownloadModal = ({
               <FlatList
                 data={devices}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => <DeviceCard device={item} />}
+                renderItem={({ item }) => <ReportDeviceCard device={item} />}
                 contentContainerStyle={{ paddingBottom: 16, gap: 16 }} // spacing between items
                 showsVerticalScrollIndicator={false}
                 style={{ marginHorizontal: -4 }} // optional: slight negative margin for alignment

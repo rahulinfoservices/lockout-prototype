@@ -1,13 +1,9 @@
+
 import { Download } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-export type ReportItem = {
-  id: string;
-  title: string;
-  description?: string;
-  type: "critical" | "facility";
-};
+import { ReportItem } from "@/shared/types/report";
 
 interface ReportCardProps {
   report: ReportItem;
