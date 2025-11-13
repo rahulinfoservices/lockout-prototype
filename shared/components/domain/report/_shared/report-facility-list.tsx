@@ -1,7 +1,9 @@
 import React from "react";
 import { FlatList, View } from "react-native";
 
-import { ReportFacilityCard, ReportFacilityItem } from "./report-facility-card";
+import { ReportFacilityItem } from "@/shared/types/report";
+
+import { ReportFacilityCard } from "./report-facility-card";
 
 interface ReportFacilityListProps {
   facilities: ReportFacilityItem[];

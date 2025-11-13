@@ -1,16 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export type ReportDeviceItem = {
-  id: string;
-  type: string;
-  facility: string;
-  location: string;
-  address: string;
-  time: string;
-  status: "Online" | "Offline" | "Low Battery" | "Warning";
-};
-
+import { ReportDeviceItem } from "@/shared/types/report";
+ 
 interface ReportDeviceCardProps {
   device: ReportDeviceItem;
 }

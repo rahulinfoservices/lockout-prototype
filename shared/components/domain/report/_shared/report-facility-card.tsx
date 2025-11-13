@@ -1,15 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export type ReportFacilityItem = {
-  id: string;
-  name: string;
-  phone: string;
-  location: string;
-  address: string;
-  time: string;
-  status: "All Clear" | "Lockdown" | "Maintenance";
-};
+import { ReportFacilityItem } from "@/shared/types/report";
 
 interface ReportFacilityCardProps {
   facility: ReportFacilityItem;

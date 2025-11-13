@@ -1,7 +1,9 @@
 import React from "react";
 import { FlatList, View } from "react-native";
 
-import { ReportDeviceCard, ReportDeviceItem } from "./report-device-card";
+import { ReportDeviceItem } from "@/shared/types/report";
+
+import { ReportDeviceCard } from "./report-device-card";
 
 interface DeviceListProps {
   devices: ReportDeviceItem[];
