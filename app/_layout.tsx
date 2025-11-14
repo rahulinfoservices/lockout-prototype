@@ -20,6 +20,10 @@ export {
 } from "expo-router";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.setOptions({
+  duration: 300,
+  fade: true,
+});
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -35,7 +39,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      // SplashScreen.hideAsync();
     }
   }, [loaded]);
 
