@@ -42,11 +42,130 @@ Firebase Firestore is used for storing/reading data related to the device health
 
 The project structure is as follows:
 
-- **app**
-  This is the main folder for the app. It contains the logic for the navigation and the layout of the app. This folder should not have any UI components. All features should be placed in the features folder.
-- **features**
-  This folder contains all the features of the app such as security alerts, reports, device health, etc. To make sure the feature related code is as modular as possible, we add the code that will only be used in the feature under \_shared and the code that will be used in multiple features under shared.
-  - **\_shared**
-    A folder for shared feature code. This folder contains code that is only used for the feature under which it is placed.For example, if we have a feature called settings, then `_shared` folder will contain the modules that will only be used in the settings feature.
-- shared
-  This folder contains code that is used in multiple features or across the app. For example, we can have a buttons component or a Auth context or some commonly used hooks and helper functions.
+### `app/`
+This is the main folder for the app. It contains the **logic for the navigation ,screen entry points and the layout of the app**. This folder should not have any UI components. All features should be placed in the features folder.  
+
+#### Structure Rules
+- `(auth)` → Screens shown **before authentication** (login/signup).
+- `(protected)` → Screens accessible **after login**.
+- `_layout.tsx` in each folder → Controls everything **inside that folder only**.
+
+#### Key Files
+
+##### `app/_layout.tsx`  
+Main controller of the entire app.  
+Handles:
+- **Global Providers**
+  - `AuthProvider`
+  - `OTAUpdateProvider`
+  - `BottomSheetModalProvider`
+  - `KeyboardProvider`
+  - `GestureHandlerRootView`
+- Font loading  
+- Splash screen visibility  
+- Auth-based routing:
+  - Logged in → `(protected)`
+  - Not logged in → `(auth)`
+
+##### `(auth)/_layout.tsx`
+- Handles **unauthenticated navigation stack**.
+
+##### `(protected)/_layout.tsx`
+- Wraps secured screens using `Stack`.
+- Shows **AppHeader**.
+- Applies alerts.
+
+##### `(protected)/(tabs)/_layout.tsx`
+- Defines bottom tab navigation using `<Tabs />`.
+
+>  _Each `_layout.tsx` controls the behavior, navigation, and layout of its folder scope._
+
+####  `AuthProvider` (hooks)
+Handles:
+- Login  
+- Signup  
+- Logout  
+- Session persistence  
+
+> All **UI and logic** must be imported from the `features` directory—nothing directly coded in `app/`.
+
+###  `features/`
+This folder contains all the features of the app such as security alerts, reports, device health, etc. To make sure the feature related code is as modular as possible, we add the code that will only be used in the feature under \_shared and the code that will be used in multiple features under shared.
+
+#### Rules
+- One folder per domain (e.g., `auth`, `device-health`, `report`, `security-alerts`)
+- **_shared/** folder (inside feature)
+  - A folder for shared feature code. This folder contains code that is only used for the feature under which it is placed.For example, if we have a feature called settings, then `_shared` folder will contain the modules that will only be used in the settings feature.
+  - Not global, not imported by other features
+
+> Screens import UI **only from features**, never from `shared`.
+
+
+
+### `shared/`
+Contains **global, reusable code** used across multiple features.For example, we can have a buttons component or a Auth context or some commonly used hooks and helper functions.
+
+#### Structure
+
+##### `components/`
+- `core/` → Foundation UI (e.g., Divider, Loader, Form elements)
+- `domain/` → Domain-specific reusable UI
+  - `_shared/components` → Used only within domain component
+  - `_shared/utils` → Domain-level helper utilities
+
+##### `hooks/`
+- Reusable **global hooks**.
+
+##### `contexts/`
+- Global **React Context Providers** (e.g., session, user state, OTA updates).
+
+##### `stores/`
+- Global **state management** shared across screens.
+
+##### `types/`
+- Global **TypeScript models & types**.
+
+
+
+### `app.config.js`
+- Expo **project-wide settings**  
+- Platform-specific configuration  
+- Expo plugins  
+- OTA update settings  
+
+
+
+### `eas.json`
+- Defines **build types** (development, testing, production)
+- Used for:
+  - Final build generation  
+  - Internal testing via development builds  
+
+## Summary Diagram
+
+app/
+ ├── _layout.tsx  ← Global providers + routing
+ ├── (auth)/_layout.tsx
+ └── (protected)/
+      ├── _layout.tsx
+      └── (tabs)/_layout.tsx
+
+features/
+ └── <feature>/
+      ├── UI + logic
+      └── _shared/
+
+shared/
+ ├── components/
+ │    ├── core/
+ │    └── domain/
+ │         └── _shared/
+ ├── hooks/
+ ├── contexts/
+ ├── stores/
+ └── types/
+
+app.config.js  ← Expo settings
+eas.json       ← EAS build types
+
+

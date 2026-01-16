@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
-import { Dropdown } from "@/shared/components/domain/report/_shared/glob-dropdown";
-import { ReportDeviceList } from "@/shared/components/domain/report/_shared/report-device-list";
-import { ReportFacilityList } from "@/shared/components/domain/report/_shared/report-facility-list";
-import { ReportsList } from "@/shared/components/domain/report/_shared/report-list";
-import { ReportModal } from "@/shared/components/domain/report/_shared/report-modal/index";
+import { Dropdown } from "@/features/protected/tabs/report/_shared/glob-dropdown";
+import { ReportDeviceList } from "@/features/protected/tabs/report/_shared/report-device-list";
+import { ReportFacilityList } from "@/features/protected/tabs/report/_shared/report-facility-list";
+import { ReportsList } from "@/features/protected/tabs/report/_shared/report-list";
+import { ReportModal } from "@/features/protected/tabs/report/_shared/report-modal/index";
 import {
   criticalReports,
   dateOptions,

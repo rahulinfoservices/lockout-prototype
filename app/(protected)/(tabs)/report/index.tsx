@@ -1,5 +1,6 @@
-import ReportList from "@/features/protected/tabs/report/report_list";
+import Reports from "@/features/protected/tabs/report/reports";
+
 
 export default function ReportPage() {
-  return <ReportList />;
+    return <Reports />;
 }
