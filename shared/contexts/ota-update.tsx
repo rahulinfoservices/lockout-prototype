@@ -14,7 +14,7 @@ export default function OTAUpdateProvider({ children }: PropsWithChildren) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   async function onFetchUpdateAsync() {
-    if (!__DEV__) {
+    if (!__DEV__ || !Updates.isEnabled) {
       try {
         const update = await Updates.checkForUpdateAsync();
 

@@ -1,22 +1,31 @@
 export interface SecurityAlert {
-  alertId: string;
-  alertType: "full_lockdown_mode" | "all_clear";
-  description: string;
-  deviceHealth: "Online" | "LowBat" | "Offline";
-  deviceId: string;
-  deviceType: string;
-  district: string;
-  facility: string;
-  facility_from: string;
-  lat: number;
-  lon: number;
-  messageType: string;
-  notificationSentToSOS: boolean;
-  roomId: string;
-  schoolId: string;
-  schoolStatus: string;
-  zipCode: string;
-  ts: Date;
+  alertId?: string;
+  alertType?: "full_lockdown_mode" | "all_clear";
+  description?: string;
+  deviceHealth?: "Online" | "LowBat" | "Offline";
+  deviceId?: string;
+  deviceType?: string;
+  district?: string;
+  facility?: string;
+  facility_from?: string;
+  lat?: number;
+  lon?: number;
+  messageType?: string;
+  notificationSentToSOS?: boolean;
+  roomId?: string;
+  schoolId?: string;
+  schoolStatus?: string;
+  zipCode?: string;
+  ts?: Date;
+
+  alert?: string;
+  dispatch?: string
+  handled?: boolean;
+  location?: string
+  time?: number;
+  type?: string;
+  username?: string;
+  zone?: string
 }
 
 export type NullableSecurityAlert = SecurityAlert | null;

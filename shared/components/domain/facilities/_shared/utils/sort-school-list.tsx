@@ -1,7 +1,9 @@
 import { NullableSecurityAlert } from "@/shared/types/alert";
 import { FacilityData } from "@/shared/types/facility";
 
-export const getSortedFacilitiesByAlertType = (
+const PRIORITY_ALERT_IDS = new Set([408, 409,407, 45,402,469,417]);
+
+export const getSortedFacilitiesByAlertTypeRealTimeDb = (
   facilities: FacilityData[],
   alert: NullableSecurityAlert,
 ) => {
@@ -17,6 +19,26 @@ export const getSortedFacilitiesByAlertType = (
     if (isBMatchingAlert) return 1;
     return 0;
   });
+};
+
+export const getSortedFacilitiesByAlertType = (
+  facilities: FacilityData[],
+  alert?: NullableSecurityAlert 
+): FacilityData[] => {
+ return [...facilities].sort((a, b) => {
+    const aPriority =
+      PRIORITY_ALERT_IDS.has(Number(a?.alert?.alert));
+
+    const bPriority =
+      PRIORITY_ALERT_IDS.has(Number(b?.alert?.alert));
+
+    // Priority alerts first
+    if (aPriority && !bPriority) return -1;
+    if (!aPriority && bPriority) return 1;
+
+    // Keep original order otherwise
+    return 0;
+  })
 };
 
 export const getSortedFacilitiesByDeviceHealth = (

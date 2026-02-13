@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Activity, BookDown, ShieldAlert } from "lucide-react-native";
+import { BookDown, Settings, ShieldAlert } from "lucide-react-native";
 
 export default function ProtectedLayout() {
   return (
@@ -15,8 +15,8 @@ export default function ProtectedLayout() {
       <Tabs.Screen
         name="security-alerts"
         options={{
-          title: "Security Alerts",
-          tabBarLabel: "Security Alerts",
+          title: "Facility",
+          tabBarLabel: "Facility",
           tabBarIcon: ({ color, size }) => (
             <ShieldAlert size={size} color={color} />
           ),
@@ -26,13 +26,15 @@ export default function ProtectedLayout() {
       <Tabs.Screen
         name="device-health"
         options={{
-          title: "Device Health",
-          tabBarLabel: "Device Health",
+          title: "Settings",
+          tabBarLabel: "Settings",
           tabBarIcon: ({ color, size }) => (
-            <Activity size={size} color={color} />
+            <Settings size={size} color={color} />
           ),
         }}
       />
+
+      
 
       <Tabs.Screen
         name="report"

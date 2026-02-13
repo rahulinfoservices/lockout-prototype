@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FlatList, ListRenderItem } from "react-native";
 
 import { useAlertStore } from "@/shared/stores/use-alert-store";
@@ -16,10 +16,40 @@ export const FacilitiesAlertList = (props: FacilitiesAlertListProps) => {
   const { facilities, renderEmptyList } = props;
   const alert = useAlertStore(state => state.securityAlert);
   const alertError = useAlertStore(state => state.securityError);
-  const facilityList = getSortedFacilitiesByAlertType(facilities, alert);
+
+
+    // Merge latest alert into facility list
+  const facilityListWithAlerts = useMemo(
+    () =>
+      facilities.map(facility => {
+       
+        const schoolId = `${facility.stateCode}-${facility.zip}_${facility.schoolId
+          .trim()
+          .replace(/\s+/g, "-")}`;
+           console.warn("Processing facility:", schoolId);
+           console.warn("Current alert:", alert?.alertId);
+
+        if (alert &&  (
+          alert.alertId === schoolId 
+        )) {
+          return {
+            ...facility,
+            alert,
+            alertType: alert.alertType,
+            alertTs: alert.ts,
+            alertError,
+          };
+        }
+        return facility;
+      }),
+    [facilities, alert, alertError]
+  );
+
+   const facilityList = getSortedFacilitiesByAlertType(facilityListWithAlerts, alert);
 
   const renderFacilityAlertCard: ListRenderItem<FacilityData> = useCallback(
     ({ item }) => (
+      console.warn("Rendering FacilityCard for:", item),
       <FacilityCard
         item={item}
         status={

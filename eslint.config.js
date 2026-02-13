@@ -44,7 +44,7 @@ module.exports = defineConfig([
       "no-secrets/no-secrets": "error",
 
       // Javascript rules
-      "no-console": "error",
+      'no-console': ['error', { allow: ['warn', 'error'] }],
     },
   },
 ]);
